@@ -67,11 +67,19 @@ class CourseOfferingTest < ActiveSupport::TestCase
   end
 
   test "destroys class sessions when destroyed" do
-    offering = course_offerings(:padi_ow_upcoming)
+    # Use the draft offering (no enrollments) to test cascade delete
+    offering = course_offerings(:padi_aow_draft)
+    offering.class_sessions.create!(scheduled_date: Date.current + 30.days, start_time: "09:00")
     session_count = offering.class_sessions.count
     assert_difference("ClassSession.count", -session_count) do
       offering.destroy
     end
+  end
+
+  test "cannot destroy when enrollments exist" do
+    offering = course_offerings(:padi_ow_upcoming)
+    assert_not offering.destroy
+    assert_includes offering.errors[:base].join, "Cannot delete"
   end
 
   test "generates UUID primary key" do

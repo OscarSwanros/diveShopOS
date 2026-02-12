@@ -123,11 +123,65 @@
     <% end %>
   </div>
 
-  <%# Enrollments section - populated when Enrollment model is available %>
+  <%# Enrollments section %>
   <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
     <div class="flex items-center justify-between mb-4">
       <h2 class="text-xl font-semibold"><%= t("course_offerings.show.enrollments") %></h2>
+      <% if policy(Enrollment).create? && !@course_offering.full? %>
+        <%= link_to t("enrollments.new.title"), new_course_course_offering_enrollment_path(@course, @course_offering),
+          class: "inline-flex items-center px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+      <% end %>
     </div>
-    <p class="text-sm text-gray-500"><%= t("enrollments.empty") %></p>
+
+    <% if @enrollments.any? %>
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase"><%= t("enrollments.table.student") %></th>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase"><%= t("enrollments.table.status") %></th>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase"><%= t("enrollments.table.paid") %></th>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase"><%= t("enrollments.table.enrolled") %></th>
+              <th class="px-4 py-2 text-right text-xs font-medium text-gray-500 uppercase"><%= t("common.actions") %></th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <% @enrollments.each do |enrollment| %>
+              <tr>
+                <td class="px-4 py-2 text-sm text-gray-900">
+                  <%= link_to enrollment.customer.full_name, customer_path(enrollment.customer), class: "text-blue-600 hover:text-blue-800" %>
+                </td>
+                <td class="px-4 py-2 text-sm">
+                  <% badge_class = case enrollment.status
+                    when "pending" then "bg-gray-100 text-gray-800"
+                    when "confirmed" then "bg-blue-100 text-blue-800"
+                    when "active" then "bg-green-100 text-green-800"
+                    when "completed" then "bg-green-100 text-green-800"
+                    when "withdrawn" then "bg-red-100 text-red-800"
+                    when "failed" then "bg-red-100 text-red-800"
+                    end %>
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium <%= badge_class %>">
+                    <%= t("enrollments.statuses.#{enrollment.status}") %>
+                  </span>
+                </td>
+                <td class="px-4 py-2 text-sm">
+                  <% if enrollment.paid? %>
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800"><%= t("enrollments.paid_status.paid") %></span>
+                  <% else %>
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800"><%= t("enrollments.paid_status.unpaid") %></span>
+                  <% end %>
+                </td>
+                <td class="px-4 py-2 text-sm text-gray-900"><%= enrollment.enrolled_at ? l(enrollment.enrolled_at, format: :long) : "---" %></td>
+                <td class="px-4 py-2 text-sm text-right space-x-2">
+                  <%= link_to t("common.edit"), edit_course_course_offering_enrollment_path(@course, @course_offering, enrollment), class: "text-blue-600 hover:text-blue-800" %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% else %>
+      <p class="text-sm text-gray-500"><%= t("enrollments.empty") %></p>
+    <% end %>
   </div>
 </div>

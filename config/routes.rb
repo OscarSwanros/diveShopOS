@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :courses do
     resources :course_offerings, except: [ :index ] do
       resources :class_sessions, except: [ :index ]
+      resources :enrollments, only: [ :new, :create, :edit, :update, :destroy ]
     end
   end
 

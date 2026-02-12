@@ -6,6 +6,8 @@ class CourseOffering < ApplicationRecord
   belongs_to :instructor, class_name: "User"
 
   has_many :class_sessions, dependent: :destroy
+  has_many :enrollments, dependent: :restrict_with_error
+
   enum :status, { draft: 0, published: 1, in_progress: 2, completed: 3, cancelled: 4 }
 
   validates :start_date, presence: true
@@ -24,7 +26,7 @@ class CourseOffering < ApplicationRecord
   end
 
   def spots_remaining
-    max_students
+    max_students - enrollments.countable.count
   end
 
   def full?

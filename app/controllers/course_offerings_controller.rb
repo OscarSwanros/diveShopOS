@@ -6,6 +6,7 @@ class CourseOfferingsController < ApplicationController
 
   def show
     @class_sessions = @course_offering.class_sessions.by_date
+    @enrollments = @course_offering.enrollments.includes(:customer).order("customers.last_name")
   end
 
   def new

@@ -1,0 +1,5 @@
+<div class="max-w-2xl">
+  <h1 class="text-2xl font-bold mb-6"><%= t("enrollments.new.title") %></h1>
+  <p class="text-sm text-gray-500 mb-4"><%= @course.name %> &middot; <%= l(@course_offering.start_date, format: :long) %></p>
+  <%= render "form", enrollment: @enrollment, course: @course, course_offering: @course_offering, customers: @customers %>
+</div>

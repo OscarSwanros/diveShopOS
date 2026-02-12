@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_13_000007) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_13_000008) do
   create_table "certifications", id: :string, force: :cascade do |t|
     t.string "agency", null: false
     t.string "certification_level", null: false
@@ -123,6 +123,24 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_000007) do
     t.index ["organization_id", "active"], name: "index_dive_sites_on_organization_id_and_active"
     t.index ["organization_id", "name"], name: "index_dive_sites_on_organization_id_and_name", unique: true
     t.index ["organization_id"], name: "index_dive_sites_on_organization_id"
+  end
+
+  create_table "enrollments", id: :string, force: :cascade do |t|
+    t.string "certification_id"
+    t.datetime "completed_at"
+    t.string "course_offering_id", null: false
+    t.datetime "created_at", null: false
+    t.string "customer_id", null: false
+    t.datetime "enrolled_at"
+    t.text "notes"
+    t.boolean "paid", default: false, null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "updated_at", null: false
+    t.index ["certification_id"], name: "index_enrollments_on_certification_id"
+    t.index ["course_offering_id", "customer_id"], name: "index_enrollments_on_course_offering_id_and_customer_id", unique: true
+    t.index ["course_offering_id", "status"], name: "index_enrollments_on_course_offering_id_and_status"
+    t.index ["course_offering_id"], name: "index_enrollments_on_course_offering_id"
+    t.index ["customer_id"], name: "index_enrollments_on_customer_id"
   end
 
   create_table "excursions", id: :string, force: :cascade do |t|
@@ -241,6 +259,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_000007) do
   add_foreign_key "courses", "organizations"
   add_foreign_key "customers", "organizations"
   add_foreign_key "dive_sites", "organizations"
+  add_foreign_key "enrollments", "certifications"
+  add_foreign_key "enrollments", "course_offerings"
+  add_foreign_key "enrollments", "customers"
   add_foreign_key "excursions", "organizations"
   add_foreign_key "instructor_ratings", "users"
   add_foreign_key "medical_records", "customers"

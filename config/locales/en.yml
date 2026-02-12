@@ -434,14 +434,25 @@ en:
       open_water: "Open Water"
 
   enrollments:
+    created: "Student enrolled."
+    updated: "Enrollment updated."
+    withdrawn: "Student withdrawn from course."
     empty: "No students enrolled yet."
     new:
       title: "Enroll Student"
+    edit:
+      title: "Edit Enrollment"
     table:
       student: "Student"
       status: "Status"
       paid: "Payment"
       enrolled: "Enrolled"
+    form:
+      student: "Student"
+      select_student: "Select a student..."
+      status: "Status"
+      paid: "Paid"
+      notes: "Notes"
     statuses:
       pending: "Pending"
       confirmed: "Confirmed"
@@ -457,3 +468,20 @@ en:
     excursions:
       check_capacity:
         at_capacity: "This excursion is at capacity (%{count}/%{capacity}). Cannot add more participants."
+    courses:
+      check_instructor_rating:
+        no_rating: "%{instructor} does not have a current %{agency} rating."
+      check_student_ratio:
+        at_capacity: "This offering is at capacity (%{count}/%{max}). Cannot enroll more students."
+      check_minimum_age:
+        too_young: "%{customer} is %{age} years old, but this course requires a minimum age of %{min_age}."
+        no_dob: "%{customer} has no date of birth on file. Cannot verify age requirement."
+      check_medical_clearance:
+        no_clearance: "%{customer} does not have a valid medical clearance for water activities."
+      validate_completion:
+        missing_sessions:
+          one: "Student has not attended %{count} required session."
+          other: "Student has not attended %{count} required sessions."
+    scheduling:
+      check_instructor_conflict:
+        conflict: "%{instructor} has a scheduling conflict on %{date}."

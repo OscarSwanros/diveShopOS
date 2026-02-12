@@ -4,6 +4,7 @@ class Customer < ApplicationRecord
   belongs_to :organization
 
   has_many :certifications, dependent: :destroy
+  has_many :enrollments, dependent: :destroy
   has_many :medical_records, dependent: :destroy
 
   validates :first_name, presence: true

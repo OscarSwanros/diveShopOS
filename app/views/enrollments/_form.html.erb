@@ -1,0 +1,43 @@
+<%= form_with model: [course, course_offering, enrollment], class: "space-y-4" do |f| %>
+  <% if enrollment.errors.any? %>
+    <div class="p-3 bg-red-100 text-red-800 rounded-md text-sm" role="alert">
+      <ul class="list-disc list-inside">
+        <% enrollment.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :customer_id, t("enrollments.form.student"), class: "block text-sm font-medium text-gray-700" %>
+    <%= f.collection_select :customer_id, customers, :id, :full_name,
+      { prompt: t("enrollments.form.select_student") },
+      class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:max-w-xs" %>
+  </div>
+
+  <% if enrollment.persisted? %>
+    <div>
+      <%= f.label :status, t("enrollments.form.status"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.select :status, Enrollment.statuses.keys.map { |s| [t("enrollments.statuses.#{s}"), s] },
+        {}, class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:max-w-xs" %>
+    </div>
+  <% end %>
+
+  <div class="flex items-center">
+    <%= f.check_box :paid, class: "h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" %>
+    <%= f.label :paid, t("enrollments.form.paid"), class: "ml-2 block text-sm text-gray-700" %>
+  </div>
+
+  <div>
+    <%= f.label :notes, t("enrollments.form.notes"), class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_area :notes, rows: 2,
+      class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+  <div class="flex items-center space-x-4">
+    <%= f.submit class: "inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer" %>
+    <%= link_to t("common.cancel"), course_course_offering_path(course, course_offering),
+      class: "inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-md border border-gray-300 hover:bg-gray-50" %>
+  </div>
+<% end %>
