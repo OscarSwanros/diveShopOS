@@ -1,0 +1,14 @@
+# frozen_string_literal: true
+
+class User < ApplicationRecord
+  belongs_to :organization
+
+  has_secure_password
+
+  enum :role, { staff: 0, manager: 1, owner: 2 }
+
+  validates :email_address, presence: true, uniqueness: { scope: :organization_id }, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :name, presence: true
+
+  normalizes :email_address, with: ->(e) { e.strip.downcase }
+end

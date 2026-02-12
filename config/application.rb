@@ -6,7 +6,7 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module Vamosabucear
+module DiveShopOS
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.1
@@ -16,12 +16,13 @@ module Vamosabucear
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
 
-    # Configuration for the application, engines, and railties goes here.
-    #
-    # These settings can be overridden in specific environments using the files
-    # in config/environments, which are processed later.
-    #
-    # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
+    # Use UUIDs as primary keys for all models
+    config.generators do |g|
+      g.orm :active_record, primary_key_type: :string
+    end
+
+    # Tenant resolution middleware (loaded before autoloader)
+    require_relative "../lib/tenant_resolver"
+    config.middleware.use TenantResolver
   end
 end
