@@ -1,0 +1,48 @@
+<div class="space-y-6">
+  <div class="flex items-center justify-between">
+    <h1 class="text-2xl font-bold"><%= @dive_site.name %></h1>
+    <div class="space-x-2">
+      <% if policy(@dive_site).update? %>
+        <%= link_to t("common.edit"), edit_dive_site_path(@dive_site),
+          class: "inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-md border border-gray-300 hover:bg-gray-50" %>
+      <% end %>
+      <%= link_to t("common.back"), dive_sites_path,
+        class: "inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-md border border-gray-300 hover:bg-gray-50" %>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <dl class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div>
+        <dt class="text-sm font-medium text-gray-500"><%= t("dive_sites.show.difficulty") %></dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= t("dive_sites.difficulty_levels.#{@dive_site.difficulty_level}") %></dd>
+      </div>
+      <div>
+        <dt class="text-sm font-medium text-gray-500"><%= t("dive_sites.show.max_depth") %></dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= @dive_site.max_depth_meters ? "#{@dive_site.max_depth_meters}m" : "---" %></dd>
+      </div>
+      <% if @dive_site.location_description.present? %>
+        <div class="sm:col-span-2">
+          <dt class="text-sm font-medium text-gray-500"><%= t("dive_sites.show.location") %></dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @dive_site.location_description %></dd>
+        </div>
+      <% end %>
+      <% if @dive_site.description.present? %>
+        <div class="sm:col-span-2">
+          <dt class="text-sm font-medium text-gray-500"><%= t("dive_sites.show.description") %></dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @dive_site.description %></dd>
+        </div>
+      <% end %>
+      <div>
+        <dt class="text-sm font-medium text-gray-500"><%= t("dive_sites.show.status") %></dt>
+        <dd class="mt-1 text-sm">
+          <% if @dive_site.active? %>
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800"><%= t("dive_sites.status.active") %></span>
+          <% else %>
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800"><%= t("dive_sites.status.inactive") %></span>
+          <% end %>
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>

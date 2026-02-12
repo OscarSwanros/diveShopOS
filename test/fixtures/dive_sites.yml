@@ -1,0 +1,48 @@
+coral_garden:
+  id: "site-coral-garden-uuid-0001"
+  organization_id: "org-reef-divers-uuid-0001"
+  name: "Coral Garden"
+  description: "Beautiful shallow reef with abundant marine life"
+  max_depth_meters: 18.0
+  difficulty_level: 0
+  latitude: 20.2108
+  longitude: -87.4297
+  location_description: "North of Cozumel, 15 min boat ride"
+  active: true
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+the_wall:
+  id: "site-the-wall-uuid-0002"
+  organization_id: "org-reef-divers-uuid-0001"
+  name: "The Wall"
+  description: "Dramatic drop-off starting at 20m"
+  max_depth_meters: 40.0
+  difficulty_level: 2
+  latitude: 20.1945
+  longitude: -87.4502
+  location_description: "South side of Cozumel"
+  active: true
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+inactive_site:
+  id: "site-inactive-uuid-0003"
+  organization_id: "org-reef-divers-uuid-0001"
+  name: "Old Pier"
+  description: "Decommissioned pier dive"
+  max_depth_meters: 12.0
+  difficulty_level: 0
+  active: false
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+other_org_site:
+  id: "site-other-org-uuid-0004"
+  organization_id: "org-blue-water-uuid-0002"
+  name: "Blue Hole"
+  max_depth_meters: 30.0
+  difficulty_level: 2
+  active: true
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

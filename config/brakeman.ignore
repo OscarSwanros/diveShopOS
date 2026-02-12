@@ -1,0 +1,16 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Mass Assignment",
+      "warning_code": 105,
+      "fingerprint": "135c5850e8e2d3958e9862188f2d70475ec419ecc51e49634f2479fb548aed57",
+      "check_name": "PermitAttributes",
+      "message": "Potentially dangerous key allowed for mass assignment",
+      "file": "app/controllers/trip_participants_controller.rb",
+      "line": 59,
+      "note": "Trip participant role (diver/guide/divemaster/instructor) is a dive role, not an authorization role"
+    }
+  ],
+  "updated": "2026-02-12",
+  "brakeman_version": "8.0.2"
+}

@@ -1,0 +1,70 @@
+<%= form_with model: [excursion, trip_participant], class: "space-y-4" do |f| %>
+  <% if trip_participant.errors.any? %>
+    <div class="p-3 bg-red-100 text-red-800 rounded-md text-sm" role="alert">
+      <ul class="list-disc list-inside">
+        <% trip_participant.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :name, t("trip_participants.form.name"), class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :name, required: true,
+      class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <div>
+      <%= f.label :email, t("trip_participants.form.email"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.email_field :email,
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+
+    <div>
+      <%= f.label :phone, t("trip_participants.form.phone"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.telephone_field :phone,
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+    <div>
+      <%= f.label :role, t("trip_participants.form.role"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.select :role, TripParticipant.roles.keys.map { |r| [t("trip_participants.roles.#{r}"), r] },
+        {}, class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+
+    <div>
+      <%= f.label :certification_level, t("trip_participants.form.certification_level"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :certification_level,
+        placeholder: t("trip_participants.form.certification_placeholder"),
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+
+    <div>
+      <%= f.label :certification_agency, t("trip_participants.form.certification_agency"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :certification_agency,
+        placeholder: t("trip_participants.form.agency_placeholder"),
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+  </div>
+
+  <div>
+    <%= f.label :notes, t("trip_participants.form.notes"), class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_area :notes, rows: 2,
+      class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+  <div class="flex items-center">
+    <%= f.check_box :paid, class: "h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" %>
+    <%= f.label :paid, t("trip_participants.form.paid"), class: "ml-2 text-sm text-gray-700" %>
+  </div>
+
+  <div class="flex items-center space-x-4">
+    <%= f.submit class: "inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer" %>
+    <%= link_to t("common.cancel"), excursion_path(excursion),
+      class: "inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-md border border-gray-300 hover:bg-gray-50" %>
+  </div>
+<% end %>

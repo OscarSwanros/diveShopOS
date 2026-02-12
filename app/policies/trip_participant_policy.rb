@@ -1,0 +1,21 @@
+# frozen_string_literal: true
+
+class TripParticipantPolicy < ApplicationPolicy
+  def create?
+    true
+  end
+
+  def update?
+    true
+  end
+
+  def destroy?
+    true
+  end
+
+  class Scope < Scope
+    def resolve
+      scope.joins(:excursion).where(excursions: { organization_id: user.organization_id })
+    end
+  end
+end

@@ -1,0 +1,51 @@
+diver_jane:
+  id: "tp-jane-uuid-0001"
+  excursion_id: "exc-morning-reef-uuid-0001"
+  name: "Jane Diver"
+  email: "jane@example.com"
+  phone: "+1-555-0101"
+  certification_level: "Advanced Open Water"
+  certification_agency: "PADI"
+  role: 0
+  paid: true
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+diver_bob:
+  id: "tp-bob-uuid-0002"
+  excursion_id: "exc-morning-reef-uuid-0001"
+  name: "Bob Bubbles"
+  email: "bob@example.com"
+  certification_level: "Open Water"
+  certification_agency: "SSI"
+  role: 0
+  paid: false
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+guide_pedro:
+  id: "tp-pedro-uuid-0003"
+  excursion_id: "exc-morning-reef-uuid-0001"
+  name: "Pedro Ramirez"
+  role: 2
+  paid: false
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+full_trip_diver_one:
+  id: "tp-full-one-uuid-0004"
+  excursion_id: "exc-full-trip-uuid-0003"
+  name: "Full Trip Diver 1"
+  role: 0
+  paid: true
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+full_trip_diver_two:
+  id: "tp-full-two-uuid-0005"
+  excursion_id: "exc-full-trip-uuid-0003"
+  name: "Full Trip Diver 2"
+  role: 0
+  paid: true
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

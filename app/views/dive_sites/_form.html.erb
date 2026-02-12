@@ -1,0 +1,68 @@
+<%= form_with model: dive_site, class: "space-y-4" do |f| %>
+  <% if dive_site.errors.any? %>
+    <div class="p-3 bg-red-100 text-red-800 rounded-md text-sm" role="alert">
+      <ul class="list-disc list-inside">
+        <% dive_site.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :name, t("dive_sites.form.name"), class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :name, required: true,
+      class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+  <div>
+    <%= f.label :description, t("dive_sites.form.description"), class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_area :description, rows: 3,
+      class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <div>
+      <%= f.label :difficulty_level, t("dive_sites.form.difficulty"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.select :difficulty_level, DiveSite.difficulty_levels.keys.map { |l| [t("dive_sites.difficulty_levels.#{l}"), l] },
+        {}, class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+
+    <div>
+      <%= f.label :max_depth_meters, t("dive_sites.form.max_depth"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.number_field :max_depth_meters, step: 0.1, min: 0,
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+  </div>
+
+  <div>
+    <%= f.label :location_description, t("dive_sites.form.location"), class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :location_description,
+      class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <div>
+      <%= f.label :latitude, t("dive_sites.form.latitude"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.number_field :latitude, step: 0.0000001,
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+
+    <div>
+      <%= f.label :longitude, t("dive_sites.form.longitude"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.number_field :longitude, step: 0.0000001,
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+  </div>
+
+  <div class="flex items-center">
+    <%= f.check_box :active, class: "h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" %>
+    <%= f.label :active, t("dive_sites.form.active"), class: "ml-2 text-sm text-gray-700" %>
+  </div>
+
+  <div class="flex items-center space-x-4">
+    <%= f.submit class: "inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer" %>
+    <%= link_to t("common.cancel"), dive_sites_path,
+      class: "inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-md border border-gray-300 hover:bg-gray-50" %>
+  </div>
+<% end %>

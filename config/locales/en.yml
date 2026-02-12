@@ -1,31 +1,166 @@
-# Files in the config/locales directory are used for internationalization and
-# are automatically loaded by Rails. If you want to use locales other than
-# English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more about the API, please read the Rails Internationalization guide
-# at https://guides.rubyonrails.org/i18n.html.
-#
-# Be aware that YAML interprets the following case-insensitive strings as
-# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
-# must be quoted to be interpreted as strings. For example:
-#
-#     en:
-#       "yes": yup
-#       enabled: "ON"
-
 en:
-  hello: "Hello world"
+  common:
+    edit: "Edit"
+    back: "Back"
+    delete: "Delete"
+    cancel: "Cancel"
+    actions: "Actions"
+    confirm_delete: "Are you sure you want to delete this?"
+
+  sessions:
+    sign_in: "Sign In"
+    sign_in_button: "Sign In"
+    email: "Email"
+    password: "Password"
+    please_sign_in: "Please sign in to continue."
+    signed_in: "Signed in successfully."
+    signed_out: "Signed out."
+    invalid_credentials: "Invalid email or password."
+
+  dive_sites:
+    created: "Dive site created."
+    updated: "Dive site updated."
+    deleted: "Dive site deleted."
+    index:
+      title: "Dive Sites"
+      new: "New Dive Site"
+      empty: "No dive sites yet. Add your first dive site to get started."
+    new:
+      title: "New Dive Site"
+    edit:
+      title: "Edit Dive Site"
+    show:
+      difficulty: "Difficulty"
+      max_depth: "Max Depth"
+      location: "Location"
+      description: "Description"
+      status: "Status"
+    table:
+      name: "Name"
+      difficulty: "Difficulty"
+      max_depth: "Max Depth"
+      status: "Status"
+    form:
+      name: "Name"
+      description: "Description"
+      difficulty: "Difficulty"
+      max_depth: "Max Depth (meters)"
+      location: "Location Description"
+      latitude: "Latitude"
+      longitude: "Longitude"
+      active: "Active"
+    difficulty_levels:
+      beginner: "Beginner"
+      intermediate: "Intermediate"
+      advanced: "Advanced"
+      expert: "Expert"
+    status:
+      active: "Active"
+      inactive: "Inactive"
+
+  excursions:
+    created: "Excursion created."
+    updated: "Excursion updated."
+    deleted: "Excursion deleted."
+    index:
+      title: "Excursions"
+      new: "New Excursion"
+      empty: "No excursions yet. Schedule your first excursion to get started."
+    new:
+      title: "New Excursion"
+    edit:
+      title: "Edit Excursion"
+    show:
+      status: "Status"
+      capacity: "Participants"
+      price: "Price"
+      description: "Description"
+      staff_notes: "Staff Notes"
+      dives: "Dive Plan"
+      manifest: "Trip Manifest"
+      departs: "Departs"
+      returns: "Returns"
+    table:
+      title: "Title"
+      date: "Date"
+      status: "Status"
+      participants: "Participants"
+    form:
+      title: "Title"
+      description: "Description"
+      date: "Date"
+      departure_time: "Departure Time"
+      return_time: "Return Time"
+      capacity: "Capacity"
+      price: "Price (cents)"
+      price_hint: "Enter price in cents (e.g., 15000 = $150.00)"
+      status: "Status"
+      notes: "Staff Notes"
+      notes_hint: "Internal notes visible to staff only."
+    statuses:
+      draft: "Draft"
+      published: "Published"
+      cancelled: "Cancelled"
+      completed: "Completed"
+    filters:
+      all: "All"
+
+  trip_dives:
+    created: "Dive added to trip."
+    updated: "Dive updated."
+    deleted: "Dive removed from trip."
+    empty: "No dives planned yet."
+    new:
+      title: "Add Dive"
+    edit:
+      title: "Edit Dive"
+    table:
+      site: "Dive Site"
+      max_depth: "Max Depth"
+      bottom_time: "Bottom Time"
+    form:
+      dive_number: "Dive #"
+      dive_site: "Dive Site"
+      select_site: "Select a dive site..."
+      max_depth: "Planned Max Depth (m)"
+      bottom_time: "Planned Bottom Time (min)"
+      notes: "Notes"
+
+  trip_participants:
+    created: "Participant added."
+    updated: "Participant updated."
+    deleted: "Participant removed."
+    empty: "No participants yet."
+    new:
+      title: "Add Participant"
+    edit:
+      title: "Edit Participant"
+    table:
+      name: "Name"
+      role: "Role"
+      certification: "Certification"
+      paid: "Payment"
+    form:
+      name: "Name"
+      email: "Email"
+      phone: "Phone"
+      role: "Role"
+      certification_level: "Certification Level"
+      certification_placeholder: "e.g., Open Water, Advanced"
+      certification_agency: "Agency"
+      agency_placeholder: "e.g., PADI, SSI"
+      notes: "Notes"
+      paid: "Paid"
+    roles:
+      diver: "Diver"
+      guide: "Guide"
+      divemaster: "Divemaster"
+      instructor: "Instructor"
+    paid_status:
+      paid: "Paid"
+      unpaid: "Unpaid"
+
+  services:
+    excursions:
+      check_capacity:
+        at_capacity: "This excursion is at capacity (%{count}/%{capacity}). Cannot add more participants."

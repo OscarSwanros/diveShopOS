@@ -1,0 +1,19 @@
+morning_dive_one:
+  id: "td-morning-one-uuid-0001"
+  excursion_id: "exc-morning-reef-uuid-0001"
+  dive_site_id: "site-coral-garden-uuid-0001"
+  dive_number: 1
+  planned_max_depth_meters: 18.0
+  planned_bottom_time_minutes: 55
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+morning_dive_two:
+  id: "td-morning-two-uuid-0002"
+  excursion_id: "exc-morning-reef-uuid-0001"
+  dive_site_id: "site-the-wall-uuid-0002"
+  dive_number: 2
+  planned_max_depth_meters: 30.0
+  planned_bottom_time_minutes: 40
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

@@ -1,0 +1,17 @@
+reef_divers:
+  id: "org-reef-divers-uuid-0001"
+  name: "Reef Divers"
+  slug: "reef-divers"
+  locale: "en"
+  time_zone: "America/Cancun"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+blue_water:
+  id: "org-blue-water-uuid-0002"
+  name: "Blue Water Dive School"
+  slug: "blue-water"
+  locale: "en"
+  time_zone: "US/Eastern"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
