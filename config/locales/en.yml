@@ -160,6 +160,145 @@ en:
       paid: "Paid"
       unpaid: "Unpaid"
 
+  customers:
+    created: "Customer created."
+    updated: "Customer updated."
+    deactivated: "Customer deactivated."
+    index:
+      title: "Customers"
+      new: "New Customer"
+      empty: "No customers yet. Add your first customer to get started."
+    new:
+      title: "New Customer"
+    edit:
+      title: "Edit Customer"
+    show:
+      email: "Email"
+      phone: "Phone"
+      date_of_birth: "Date of Birth"
+      age: "%{age} years old"
+      emergency_contact: "Emergency Contact"
+      notes: "Notes"
+      certifications: "Certifications"
+      medical_records: "Medical Records"
+    table:
+      name: "Name"
+      email: "Email"
+      phone: "Phone"
+      status: "Status"
+    form:
+      first_name: "First Name"
+      last_name: "Last Name"
+      email: "Email"
+      phone: "Phone"
+      date_of_birth: "Date of Birth"
+      emergency_contact_name: "Emergency Contact Name"
+      emergency_contact_phone: "Emergency Contact Phone"
+      notes: "Notes"
+    status:
+      active: "Active"
+      inactive: "Inactive"
+
+  certifications:
+    created: "Certification added."
+    updated: "Certification updated."
+    deleted: "Certification removed."
+    empty: "No certifications on file."
+    new:
+      title: "Add Certification"
+    edit:
+      title: "Edit Certification"
+    show:
+      agency: "Agency"
+      level: "Level"
+      number: "Number"
+      issued_date: "Issued Date"
+      expiration_date: "Expiration Date"
+      status: "Status"
+      notes: "Notes"
+    table:
+      level: "Level"
+      agency: "Agency"
+      number: "Number"
+      status: "Status"
+    form:
+      agency: "Agency"
+      agency_placeholder: "e.g., PADI, SSI, NAUI"
+      level: "Certification Level"
+      level_placeholder: "e.g., Open Water, Advanced"
+      number: "Certification Number"
+      issued_date: "Issued Date"
+      expiration_date: "Expiration Date"
+      notes: "Notes"
+    status:
+      active: "Active"
+      expired: "Expired"
+
+  medical_records:
+    created: "Medical record added."
+    updated: "Medical record updated."
+    deleted: "Medical record removed."
+    empty: "No medical records on file."
+    new:
+      title: "Add Medical Record"
+    edit:
+      title: "Edit Medical Record"
+    show:
+      title: "Medical Record"
+      status: "Status"
+      clearance_date: "Clearance Date"
+      expiration_date: "Expiration Date"
+      physician: "Physician"
+      notes: "Notes"
+    table:
+      status: "Status"
+      clearance_date: "Clearance Date"
+      expiration: "Expiration"
+      physician: "Physician"
+    form:
+      status: "Status"
+      clearance_date: "Clearance Date"
+      expiration_date: "Expiration Date"
+      physician: "Physician Name"
+      notes: "Notes"
+    statuses:
+      pending_review: "Pending Review"
+      cleared: "Cleared"
+      not_cleared: "Not Cleared"
+      expired: "Expired"
+
+  instructor_ratings:
+    created: "Instructor rating added."
+    updated: "Instructor rating updated."
+    deleted: "Instructor rating removed."
+    index:
+      title: "Instructor Ratings"
+      new: "New Rating"
+      empty: "No instructor ratings yet."
+    new:
+      title: "New Instructor Rating"
+    edit:
+      title: "Edit Instructor Rating"
+    table:
+      instructor: "Instructor"
+      agency: "Agency"
+      level: "Rating"
+      status: "Status"
+    form:
+      instructor: "Instructor"
+      select_instructor: "Select an instructor..."
+      agency: "Agency"
+      agency_placeholder: "e.g., PADI, SSI"
+      level: "Rating Level"
+      level_placeholder: "e.g., Open Water Instructor"
+      number: "Rating Number"
+      expiration_date: "Expiration Date"
+      active: "Active"
+    status:
+      current: "Current"
+      expired: "Expired"
+      inactive: "Inactive"
+
   services:
     excursions:
       check_capacity:

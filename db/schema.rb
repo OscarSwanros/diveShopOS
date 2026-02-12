@@ -10,7 +10,44 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_12_230004) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_13_000004) do
+  create_table "certifications", id: :string, force: :cascade do |t|
+    t.string "agency", null: false
+    t.string "certification_level", null: false
+    t.string "certification_number"
+    t.datetime "created_at", null: false
+    t.string "customer_id", null: false
+    t.datetime "discarded_at"
+    t.date "expiration_date"
+    t.date "issued_date"
+    t.string "issuing_organization_id"
+    t.text "notes"
+    t.datetime "updated_at", null: false
+    t.index ["customer_id", "agency", "certification_level"], name: "index_certs_on_customer_agency_level"
+    t.index ["customer_id"], name: "index_certifications_on_customer_id"
+    t.index ["discarded_at"], name: "index_certifications_on_discarded_at"
+    t.index ["issuing_organization_id"], name: "index_certifications_on_issuing_organization_id"
+  end
+
+  create_table "customers", id: :string, force: :cascade do |t|
+    t.boolean "active", default: true, null: false
+    t.datetime "created_at", null: false
+    t.date "date_of_birth"
+    t.string "email"
+    t.string "emergency_contact_name"
+    t.string "emergency_contact_phone"
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.text "notes"
+    t.string "organization_id", null: false
+    t.string "phone"
+    t.datetime "updated_at", null: false
+    t.index ["organization_id", "active"], name: "index_customers_on_org_and_active"
+    t.index ["organization_id", "email"], name: "index_customers_on_org_and_email", unique: true, where: "email IS NOT NULL"
+    t.index ["organization_id", "last_name", "first_name"], name: "index_customers_on_org_and_name"
+    t.index ["organization_id"], name: "index_customers_on_organization_id"
+  end
+
   create_table "dive_sites", id: :string, force: :cascade do |t|
     t.boolean "active", default: true, null: false
     t.datetime "created_at", null: false
@@ -45,6 +82,34 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_12_230004) do
     t.index ["organization_id", "scheduled_date"], name: "index_excursions_on_organization_id_and_scheduled_date"
     t.index ["organization_id", "status"], name: "index_excursions_on_organization_id_and_status"
     t.index ["organization_id"], name: "index_excursions_on_organization_id"
+  end
+
+  create_table "instructor_ratings", id: :string, force: :cascade do |t|
+    t.boolean "active", default: true, null: false
+    t.string "agency", null: false
+    t.datetime "created_at", null: false
+    t.date "expiration_date"
+    t.string "rating_level", null: false
+    t.string "rating_number"
+    t.datetime "updated_at", null: false
+    t.string "user_id", null: false
+    t.index ["user_id", "agency", "rating_level"], name: "index_instructor_ratings_on_user_agency_level", unique: true
+    t.index ["user_id"], name: "index_instructor_ratings_on_user_id"
+  end
+
+  create_table "medical_records", id: :string, force: :cascade do |t|
+    t.date "clearance_date"
+    t.datetime "created_at", null: false
+    t.string "customer_id", null: false
+    t.datetime "discarded_at"
+    t.date "expiration_date"
+    t.text "notes"
+    t.string "physician_name"
+    t.integer "status", default: 0, null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id", "status"], name: "index_medical_records_on_customer_and_status"
+    t.index ["customer_id"], name: "index_medical_records_on_customer_id"
+    t.index ["discarded_at"], name: "index_medical_records_on_discarded_at"
   end
 
   create_table "organizations", id: :string, force: :cascade do |t|
@@ -106,8 +171,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_12_230004) do
     t.index ["organization_id"], name: "index_users_on_organization_id"
   end
 
+  add_foreign_key "certifications", "customers"
+  add_foreign_key "certifications", "organizations", column: "issuing_organization_id"
+  add_foreign_key "customers", "organizations"
   add_foreign_key "dive_sites", "organizations"
   add_foreign_key "excursions", "organizations"
+  add_foreign_key "instructor_ratings", "users"
+  add_foreign_key "medical_records", "customers"
   add_foreign_key "trip_dives", "dive_sites"
   add_foreign_key "trip_dives", "excursions"
   add_foreign_key "trip_participants", "excursions"

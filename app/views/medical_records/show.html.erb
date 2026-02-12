@@ -1,0 +1,53 @@
+<div class="space-y-6">
+  <div class="flex items-center justify-between">
+    <div>
+      <h1 class="text-2xl font-bold"><%= t("medical_records.show.title") %></h1>
+      <p class="text-sm text-gray-500 mt-1"><%= @customer.full_name %></p>
+    </div>
+    <div class="space-x-2">
+      <% if policy(@medical_record).update? %>
+        <%= link_to t("common.edit"), edit_customer_medical_record_path(@customer, @medical_record),
+          class: "inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-md border border-gray-300 hover:bg-gray-50" %>
+      <% end %>
+      <%= link_to t("common.back"), customer_path(@customer),
+        class: "inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-md border border-gray-300 hover:bg-gray-50" %>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <dl class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+      <div>
+        <dt class="text-sm font-medium text-gray-500"><%= t("medical_records.show.status") %></dt>
+        <dd class="mt-1">
+          <% badge_class = case @medical_record.status
+            when "cleared" then "bg-green-100 text-green-800"
+            when "pending_review" then "bg-amber-100 text-amber-800"
+            when "not_cleared" then "bg-red-100 text-red-800"
+            when "expired" then "bg-gray-100 text-gray-800"
+            end %>
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium <%= badge_class %>">
+            <%= t("medical_records.statuses.#{@medical_record.status}") %>
+          </span>
+        </dd>
+      </div>
+      <div>
+        <dt class="text-sm font-medium text-gray-500"><%= t("medical_records.show.clearance_date") %></dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= @medical_record.clearance_date ? l(@medical_record.clearance_date, format: :long) : "---" %></dd>
+      </div>
+      <div>
+        <dt class="text-sm font-medium text-gray-500"><%= t("medical_records.show.expiration_date") %></dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= @medical_record.expiration_date ? l(@medical_record.expiration_date, format: :long) : "---" %></dd>
+      </div>
+      <div>
+        <dt class="text-sm font-medium text-gray-500"><%= t("medical_records.show.physician") %></dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= @medical_record.physician_name || "---" %></dd>
+      </div>
+    </dl>
+    <% if @medical_record.notes.present? %>
+      <div class="mt-4 pt-4 border-t border-gray-200">
+        <dt class="text-sm font-medium text-gray-500"><%= t("medical_records.show.notes") %></dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= @medical_record.notes %></dd>
+      </div>
+    <% end %>
+  </div>
+</div>

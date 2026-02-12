@@ -1,0 +1,48 @@
+jane_ow:
+  id: "cert-jane-ow-uuid-0001"
+  customer_id: "cust-jane-uuid-0001"
+  agency: "PADI"
+  certification_level: "Open Water"
+  certification_number: "1234567"
+  issued_date: "2020-06-15"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+jane_aow:
+  id: "cert-jane-aow-uuid-0002"
+  customer_id: "cust-jane-uuid-0001"
+  agency: "PADI"
+  certification_level: "Advanced Open Water"
+  certification_number: "1234568"
+  issued_date: "2021-03-10"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+bob_ow:
+  id: "cert-bob-ow-uuid-0003"
+  customer_id: "cust-bob-uuid-0002"
+  agency: "SSI"
+  certification_level: "Open Water"
+  certification_number: "SSI-9876"
+  issued_date: "2019-01-20"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+expired_cert:
+  id: "cert-expired-uuid-0004"
+  customer_id: "cust-bob-uuid-0002"
+  agency: "DAN"
+  certification_level: "First Aid"
+  expiration_date: <%= Date.current - 30.days %>
+  issued_date: "2023-01-01"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+discarded_cert:
+  id: "cert-discarded-uuid-0005"
+  customer_id: "cust-jane-uuid-0001"
+  agency: "NAUI"
+  certification_level: "Intro to Scuba"
+  discarded_at: <%= Time.current - 1.day %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

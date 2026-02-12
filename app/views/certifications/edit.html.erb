@@ -1,0 +1,5 @@
+<div class="max-w-2xl">
+  <h1 class="text-2xl font-bold mb-6"><%= t("certifications.edit.title") %></h1>
+  <p class="text-sm text-gray-500 mb-4"><%= @customer.full_name %></p>
+  <%= render "form", certification: @certification, customer: @customer %>
+</div>

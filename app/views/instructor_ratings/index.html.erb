@@ -1,0 +1,60 @@
+<div class="space-y-6">
+  <div class="flex items-center justify-between">
+    <h1 class="text-2xl font-bold"><%= t("instructor_ratings.index.title") %></h1>
+    <% if policy(InstructorRating).create? %>
+      <%= link_to t("instructor_ratings.index.new"), new_instructor_rating_path,
+        class: "inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+    <% end %>
+  </div>
+
+  <% if @instructor_ratings.any? %>
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t("instructor_ratings.table.instructor") %></th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t("instructor_ratings.table.agency") %></th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t("instructor_ratings.table.level") %></th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t("instructor_ratings.table.status") %></th>
+            <% if policy(InstructorRating).update? %>
+              <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t("common.actions") %></th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <% @instructor_ratings.each do |rating| %>
+            <tr>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= rating.user.name %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= rating.agency %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <%= rating.rating_level %>
+                <% if rating.rating_number.present? %>
+                  <span class="text-xs text-gray-500">(#<%= rating.rating_number %>)</span>
+                <% end %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm">
+                <% if rating.current? %>
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800"><%= t("instructor_ratings.status.current") %></span>
+                <% elsif rating.expired? %>
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800"><%= t("instructor_ratings.status.expired") %></span>
+                <% else %>
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800"><%= t("instructor_ratings.status.inactive") %></span>
+                <% end %>
+              </td>
+              <% if policy(rating).update? %>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-right space-x-2">
+                  <%= link_to t("common.edit"), edit_instructor_rating_path(rating), class: "text-blue-600 hover:text-blue-800" %>
+                  <%= button_to t("common.delete"), instructor_rating_path(rating), method: :delete,
+                    class: "text-red-600 hover:text-red-800",
+                    form: { data: { turbo_confirm: t("common.confirm_delete") } } %>
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p class="text-sm text-gray-500"><%= t("instructor_ratings.index.empty") %></p>
+  <% end %>
+</div>

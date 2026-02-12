@@ -1,0 +1,53 @@
+jane_diver:
+  id: "cust-jane-uuid-0001"
+  organization_id: "org-reef-divers-uuid-0001"
+  first_name: "Jane"
+  last_name: "Diver"
+  email: "jane@example.com"
+  phone: "+1-555-0101"
+  date_of_birth: "1990-05-15"
+  emergency_contact_name: "John Diver"
+  emergency_contact_phone: "+1-555-0100"
+  active: true
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+bob_bubbles:
+  id: "cust-bob-uuid-0002"
+  organization_id: "org-reef-divers-uuid-0001"
+  first_name: "Bob"
+  last_name: "Bubbles"
+  email: "bob@example.com"
+  date_of_birth: "1985-03-22"
+  active: true
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+minor_diver:
+  id: "cust-minor-uuid-0003"
+  organization_id: "org-reef-divers-uuid-0001"
+  first_name: "Tommy"
+  last_name: "Young"
+  date_of_birth: <%= Date.current - 14.years %>
+  active: true
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+inactive_customer:
+  id: "cust-inactive-uuid-0004"
+  organization_id: "org-reef-divers-uuid-0001"
+  first_name: "Inactive"
+  last_name: "Customer"
+  active: false
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+other_org_customer:
+  id: "cust-other-uuid-0005"
+  organization_id: "org-blue-water-uuid-0002"
+  first_name: "Other"
+  last_name: "Org Customer"
+  email: "other@bluewater.com"
+  active: true
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

@@ -1,0 +1,34 @@
+jane_cleared:
+  id: "med-jane-cleared-uuid-0001"
+  customer_id: "cust-jane-uuid-0001"
+  status: 1
+  clearance_date: "2025-06-01"
+  expiration_date: <%= Date.current + 6.months %>
+  physician_name: "Dr. Smith"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+bob_expired:
+  id: "med-bob-expired-uuid-0002"
+  customer_id: "cust-bob-uuid-0002"
+  status: 3
+  clearance_date: "2024-01-01"
+  expiration_date: <%= Date.current - 30.days %>
+  physician_name: "Dr. Jones"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+bob_pending:
+  id: "med-bob-pending-uuid-0003"
+  customer_id: "cust-bob-uuid-0002"
+  status: 0
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+discarded_medical:
+  id: "med-discarded-uuid-0004"
+  customer_id: "cust-jane-uuid-0001"
+  status: 1
+  discarded_at: <%= Time.current - 1.day %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

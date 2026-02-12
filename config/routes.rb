@@ -4,6 +4,15 @@ Rails.application.routes.draw do
   # Authentication
   resource :session, only: [ :new, :create, :destroy ]
 
+  # Customers with nested certifications and medical records
+  resources :customers do
+    resources :certifications, except: [ :index ]
+    resources :medical_records, except: [ :index ]
+  end
+
+  # Instructor ratings
+  resources :instructor_ratings, only: [ :index, :new, :create, :edit, :update, :destroy ]
+
   # Dive sites
   resources :dive_sites
 

@@ -3,6 +3,8 @@
 class User < ApplicationRecord
   belongs_to :organization
 
+  has_many :instructor_ratings, dependent: :destroy
+
   has_secure_password
 
   enum :role, { staff: 0, manager: 1, owner: 2 }

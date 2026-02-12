@@ -1,0 +1,38 @@
+maria_padi_instructor:
+  id: "ir-maria-padi-uuid-0001"
+  user_id: "user-maria-uuid-0001"
+  agency: "PADI"
+  rating_level: "Open Water Instructor"
+  rating_number: "PADI-123456"
+  active: true
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+carlos_ssi_instructor:
+  id: "ir-carlos-ssi-uuid-0002"
+  user_id: "user-carlos-uuid-0002"
+  agency: "SSI"
+  rating_level: "Instructor"
+  rating_number: "SSI-654321"
+  active: true
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+expired_rating:
+  id: "ir-expired-uuid-0003"
+  user_id: "user-carlos-uuid-0002"
+  agency: "DAN"
+  rating_level: "First Aid Instructor"
+  active: true
+  expiration_date: <%= Date.current - 30.days %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+inactive_rating:
+  id: "ir-inactive-uuid-0004"
+  user_id: "user-ana-uuid-0003"
+  agency: "PADI"
+  rating_level: "Divemaster"
+  active: false
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
