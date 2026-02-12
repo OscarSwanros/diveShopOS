@@ -108,3 +108,18 @@
 **Rationale**: Cross-domain reads are inherently coupling. Need a pattern that lets domains evolve independently while feeding a shared aggregation layer.
 
 **Consequences**: Whatever pattern is chosen becomes the standard for future cross-domain features (dashboards, reporting). Should be decided before building the Activity Feed.
+
+---
+
+## ADR-008: No Return Inside Rails.cache.fetch Blocks
+
+**Date**: 2026-02-12
+**Status**: Accepted
+
+**Context**: During development, a `return` statement was used inside a `Rails.cache.fetch` block. In Ruby, `return` exits the enclosing method, not just the block. This means the cache never receives the computed value and the fetch is effectively a no-op — the block runs every time.
+
+**Decision**: Never use `return` inside `Rails.cache.fetch` blocks. The last expression in the block is the cached value.
+
+**Rationale**: `Rails.cache.fetch` expects the block to yield the value to cache. A `return` bypasses the cache write entirely. This is a subtle bug that causes silent performance degradation — the cache appears to work but never stores anything.
+
+**Consequences**: Use the block's implicit return value. If early exit logic is needed, compute the value in a local variable and let it be the last expression.
