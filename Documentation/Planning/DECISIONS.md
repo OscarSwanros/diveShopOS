@@ -72,3 +72,39 @@
 **Rationale**: Clean policy objects. One policy per model. Easy to test. Well-maintained. Integrates naturally with Rails controllers.
 
 **Consequences**: Must remember to call `authorize` in every controller action. Policy scopes needed for index actions.
+
+---
+
+## ADR-006: Public-Facing Application Layer (Proposed)
+
+**Date**: 2026-02-12
+**Status**: Proposed
+
+**Context**: Feature requests FB-001 (Destinations Catalog) and FB-004 (Activity Feed) require exposing data to unauthenticated visitors on the shop's whitelabel domain. Currently, all controllers require authentication.
+
+**Decision**: TBD. Options under consideration:
+1. Separate `Public::` namespace with controllers that skip authentication and read published data
+2. Conditional authentication in existing controllers with public/private action split
+3. Separate public-facing Rails engine mounted at a subpath
+
+**Rationale**: Need a clean pattern for serving public content without compromising the authenticated staff interface. The whitelabel system already resolves the tenant from the domain, so organization scoping works for public pages too.
+
+**Consequences**: Must ensure public controllers cannot leak unpublished or internal data. Need clear conventions for which data is "publishable." The Excursion `status: published` pattern establishes the foundation.
+
+---
+
+## ADR-007: Cross-Domain Aggregation Pattern (Proposed)
+
+**Date**: 2026-02-12
+**Status**: Proposed
+
+**Context**: The Activity Feed (FB-004) needs to pull data from multiple domains (Excursions, Courses, etc.) into a single view. This is the first feature that reads across domain boundaries.
+
+**Decision**: TBD. Options under consideration:
+1. A dedicated query object that reads from multiple domain models directly
+2. A denormalized `activity_events` table populated by domain-specific jobs
+3. Turbo Frames that compose multiple domain-specific partials into one page
+
+**Rationale**: Cross-domain reads are inherently coupling. Need a pattern that lets domains evolve independently while feeding a shared aggregation layer.
+
+**Consequences**: Whatever pattern is chosen becomes the standard for future cross-domain features (dashboards, reporting). Should be decided before building the Activity Feed.

@@ -13,14 +13,16 @@
 ## Phase 1: MVP Core
 - [ ] Customer model with certifications, medical records
 - [ ] StaffMember model with instructor ratings
-- [ ] Excursion model with trip dives, participants
+- [x] DiveSite model (pulled forward from Tier 2 for Excursions)
+- [x] Excursion model with trip dives, participants
+- [x] Capacity gate safety service object
 - [ ] Booking model tying customers to activities
-- [ ] Safety gate service objects (certification, medical, waiver, capacity)
+- [ ] Safety gate service objects (certification, medical, waiver)
 - [ ] Basic CRUD views with Turbo/Stimulus
 - [ ] Dashboard for daily operations
 
 ## Phase 2: Education & Equipment
-- [ ] Course catalog and course offerings
+- [ ] Course catalog and course offerings (see [FB-002: capacity planning](FEATURE_BACKLOG.md#fb-002-courses-module-with-capacity-planning))
 - [ ] Enrollment with prerequisite validation
 - [ ] Equipment fleet tracking (serialized items)
 - [ ] Rental assignment workflow
@@ -28,8 +30,8 @@
 
 ## Phase 3: Operations
 - [ ] Waiver/compliance management (digital signatures)
-- [ ] Dive site database with conditions
-- [ ] Billing and payments
+- [ ] Dive site conditions and access requirements
+- [ ] Billing and payments (see [FB-003: per-customer payment tracking](FEATURE_BACKLOG.md#fb-003-finances-module))
 - [ ] Notification system (reminders, confirmations)
 - [ ] Reporting dashboards
 

@@ -16,6 +16,7 @@
 
 ### Planning
 - [Roadmap](Planning/ROADMAP.md) -- Feature roadmap with phases
+- [Feature Backlog](Planning/FEATURE_BACKLOG.md) -- Owner feature requests and prioritization
 - [Decisions](Planning/DECISIONS.md) -- Architectural Decision Records (ADRs)
 
 ### Release

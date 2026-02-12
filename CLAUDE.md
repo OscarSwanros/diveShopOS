@@ -150,6 +150,7 @@ All safety gates are auditable and override-able by authorized staff with a docu
 - @Documentation/Design/DESIGN_PHILOSOPHY.md -- Design philosophy
 - @Documentation/Domains/README.md -- Domain module index
 - @Documentation/Planning/ROADMAP.md -- Feature roadmap
+- @Documentation/Planning/FEATURE_BACKLOG.md -- Owner feature requests and prioritization
 - @Documentation/Planning/DECISIONS.md -- Architectural Decision Records
 
 ## Commands
