@@ -75,3 +75,9 @@ end
 - Add module to `Documentation/Domains/README.md`
 - Update CLAUDE.md domain module registry if needed
 - Add any new safety gates to the safety gates list
+
+### 8. Review Legal Documents
+
+When adding a new feature that collects, stores, or processes user data, review and update:
+- `docs/privacy-policy.md` -- ensure all new data types and processing are covered
+- `docs/terms-of-use.md` -- ensure terms cover any new functionality or liability considerations

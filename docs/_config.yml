@@ -1,0 +1,12 @@
+title: DiveShopOS
+description: The operating system for dive shops and schools.
+url: "https://diveshopos.com"
+baseurl: ""
+
+markdown: kramdown
+permalink: pretty
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor

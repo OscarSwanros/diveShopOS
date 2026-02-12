@@ -39,3 +39,9 @@
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
+
+# Jekyll (docs/ marketing site)
+docs/_site/
+docs/.jekyll-cache/
+docs/.jekyll-metadata
+docs/Gemfile.lock
