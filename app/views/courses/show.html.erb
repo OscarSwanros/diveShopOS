@@ -1,0 +1,131 @@
+<div class="space-y-6">
+  <div class="flex items-center justify-between">
+    <div>
+      <h1 class="text-2xl font-bold"><%= @course.name %></h1>
+      <p class="text-sm text-gray-500 mt-1"><%= @course.agency %> &middot; <%= @course.level %></p>
+    </div>
+    <div class="space-x-2">
+      <% if policy(@course).update? %>
+        <%= link_to t("common.edit"), edit_course_path(@course),
+          class: "inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-md border border-gray-300 hover:bg-gray-50" %>
+      <% end %>
+      <%= link_to t("common.back"), courses_path,
+        class: "inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-md border border-gray-300 hover:bg-gray-50" %>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <dl class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+      <div>
+        <dt class="text-sm font-medium text-gray-500"><%= t("courses.show.type") %></dt>
+        <dd class="mt-1">
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+            <%= t("courses.course_types.#{@course.course_type}") %>
+          </span>
+        </dd>
+      </div>
+      <div>
+        <dt class="text-sm font-medium text-gray-500"><%= t("courses.show.max_students") %></dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= @course.max_students %></dd>
+      </div>
+      <div>
+        <dt class="text-sm font-medium text-gray-500"><%= t("courses.show.price") %></dt>
+        <dd class="mt-1 text-sm text-gray-900">
+          <%= number_to_currency(@course.price_cents / 100.0, unit: @course.price_currency == "USD" ? "$" : @course.price_currency) %>
+        </dd>
+      </div>
+      <% if @course.min_age %>
+        <div>
+          <dt class="text-sm font-medium text-gray-500"><%= t("courses.show.min_age") %></dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @course.min_age %></dd>
+        </div>
+      <% end %>
+      <% if @course.duration_days %>
+        <div>
+          <dt class="text-sm font-medium text-gray-500"><%= t("courses.show.duration") %></dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= t("courses.show.duration_days", count: @course.duration_days) %></dd>
+        </div>
+      <% end %>
+      <div>
+        <dt class="text-sm font-medium text-gray-500"><%= t("courses.show.status") %></dt>
+        <dd class="mt-1">
+          <% if @course.active? %>
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800"><%= t("courses.status.active") %></span>
+          <% else %>
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800"><%= t("courses.status.inactive") %></span>
+          <% end %>
+        </dd>
+      </div>
+    </dl>
+    <% if @course.description.present? %>
+      <div class="mt-4 pt-4 border-t border-gray-200">
+        <dt class="text-sm font-medium text-gray-500"><%= t("courses.show.description") %></dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= @course.description %></dd>
+      </div>
+    <% end %>
+    <% if @course.prerequisites_description.present? %>
+      <div class="mt-4 pt-4 border-t border-gray-200">
+        <dt class="text-sm font-medium text-gray-500"><%= t("courses.show.prerequisites") %></dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= @course.prerequisites_description %></dd>
+      </div>
+    <% end %>
+  </div>
+
+  <%# Course Offerings section %>
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-xl font-semibold"><%= t("courses.show.offerings") %></h2>
+      <% if policy(CourseOffering).create? %>
+        <%= link_to t("course_offerings.new.title"), new_course_course_offering_path(@course),
+          class: "inline-flex items-center px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+      <% end %>
+    </div>
+
+    <% if @course_offerings.any? %>
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase"><%= t("course_offerings.table.dates") %></th>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase"><%= t("course_offerings.table.instructor") %></th>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase"><%= t("course_offerings.table.students") %></th>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase"><%= t("course_offerings.table.status") %></th>
+              <th class="px-4 py-2 text-right text-xs font-medium text-gray-500 uppercase"><%= t("common.actions") %></th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <% @course_offerings.each do |offering| %>
+              <tr>
+                <td class="px-4 py-2 text-sm text-gray-900">
+                  <%= l(offering.start_date, format: :long) %>
+                  <% if offering.end_date %>
+                    <span class="text-gray-500">- <%= l(offering.end_date, format: :long) %></span>
+                  <% end %>
+                </td>
+                <td class="px-4 py-2 text-sm text-gray-900"><%= offering.instructor.name %></td>
+                <td class="px-4 py-2 text-sm text-gray-900"><%= offering.enrollments.countable.count %> / <%= offering.max_students %></td>
+                <td class="px-4 py-2 text-sm">
+                  <% badge_class = case offering.status
+                    when "draft" then "bg-gray-100 text-gray-800"
+                    when "published" then "bg-green-100 text-green-800"
+                    when "in_progress" then "bg-blue-100 text-blue-800"
+                    when "completed" then "bg-blue-100 text-blue-800"
+                    when "cancelled" then "bg-red-100 text-red-800"
+                    end %>
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium <%= badge_class %>">
+                    <%= t("course_offerings.statuses.#{offering.status}") %>
+                  </span>
+                </td>
+                <td class="px-4 py-2 text-sm text-right">
+                  <%= link_to t("courses.show.view_offering"), course_course_offering_path(@course, offering), class: "text-blue-600 hover:text-blue-800" %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% else %>
+      <p class="text-sm text-gray-500"><%= t("course_offerings.empty") %></p>
+    <% end %>
+  </div>
+</div>

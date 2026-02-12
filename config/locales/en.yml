@@ -267,6 +267,64 @@ en:
       not_cleared: "Not Cleared"
       expired: "Expired"
 
+  courses:
+    created: "Course created."
+    updated: "Course updated."
+    deleted: "Course deleted."
+    index:
+      title: "Course Catalog"
+      new: "New Course"
+      empty: "No courses yet. Add your first course to get started."
+    new:
+      title: "New Course"
+    edit:
+      title: "Edit Course"
+    show:
+      type: "Type"
+      max_students: "Max Students"
+      price: "Price"
+      min_age: "Minimum Age"
+      duration: "Duration"
+      duration_days:
+        one: "%{count} day"
+        other: "%{count} days"
+      status: "Status"
+      description: "Description"
+      prerequisites: "Prerequisites"
+      offerings: "Scheduled Offerings"
+      view_offering: "View"
+    table:
+      name: "Course"
+      agency: "Agency"
+      level: "Level"
+      type: "Type"
+      price: "Price"
+      status: "Status"
+    form:
+      name: "Course Name"
+      description: "Description"
+      agency: "Agency"
+      agency_placeholder: "e.g., PADI, SSI, NAUI"
+      level: "Level"
+      level_placeholder: "e.g., Open Water, Rescue Diver"
+      type: "Course Type"
+      min_age: "Minimum Age"
+      max_students: "Max Students"
+      duration_days: "Duration (days)"
+      price: "Price (cents)"
+      price_hint: "Enter price in cents (e.g., 35000 = $350.00)"
+      prerequisites: "Prerequisites"
+      active: "Active"
+    course_types:
+      certification: "Certification"
+      specialty: "Specialty"
+      non_certification: "Non-Certification"
+      professional: "Professional"
+      continuing_education: "Continuing Education"
+    status:
+      active: "Active"
+      inactive: "Inactive"
+
   instructor_ratings:
     created: "Instructor rating added."
     updated: "Instructor rating updated."

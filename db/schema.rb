@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_13_000004) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_13_000005) do
   create_table "certifications", id: :string, force: :cascade do |t|
     t.string "agency", null: false
     t.string "certification_level", null: false
@@ -27,6 +27,28 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_000004) do
     t.index ["customer_id"], name: "index_certifications_on_customer_id"
     t.index ["discarded_at"], name: "index_certifications_on_discarded_at"
     t.index ["issuing_organization_id"], name: "index_certifications_on_issuing_organization_id"
+  end
+
+  create_table "courses", id: :string, force: :cascade do |t|
+    t.boolean "active", default: true, null: false
+    t.string "agency", null: false
+    t.integer "course_type", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.integer "duration_days"
+    t.string "level", null: false
+    t.integer "max_students", default: 8, null: false
+    t.integer "min_age"
+    t.string "name", null: false
+    t.string "organization_id", null: false
+    t.text "prerequisites_description"
+    t.integer "price_cents", default: 0, null: false
+    t.string "price_currency", default: "USD", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id", "active"], name: "index_courses_on_organization_id_and_active"
+    t.index ["organization_id", "agency"], name: "index_courses_on_organization_id_and_agency"
+    t.index ["organization_id", "name"], name: "index_courses_on_organization_id_and_name", unique: true
+    t.index ["organization_id"], name: "index_courses_on_organization_id"
   end
 
   create_table "customers", id: :string, force: :cascade do |t|
@@ -173,6 +195,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_000004) do
 
   add_foreign_key "certifications", "customers"
   add_foreign_key "certifications", "organizations", column: "issuing_organization_id"
+  add_foreign_key "courses", "organizations"
   add_foreign_key "customers", "organizations"
   add_foreign_key "dive_sites", "organizations"
   add_foreign_key "excursions", "organizations"

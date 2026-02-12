@@ -1,0 +1,87 @@
+<%= form_with model: course, class: "space-y-4" do |f| %>
+  <% if course.errors.any? %>
+    <div class="p-3 bg-red-100 text-red-800 rounded-md text-sm" role="alert">
+      <ul class="list-disc list-inside">
+        <% course.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :name, t("courses.form.name"), class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :name, required: true,
+      class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+  <div>
+    <%= f.label :description, t("courses.form.description"), class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_area :description, rows: 3,
+      class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+    <div>
+      <%= f.label :agency, t("courses.form.agency"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :agency, required: true, placeholder: t("courses.form.agency_placeholder"),
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+
+    <div>
+      <%= f.label :level, t("courses.form.level"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :level, required: true, placeholder: t("courses.form.level_placeholder"),
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+
+    <div>
+      <%= f.label :course_type, t("courses.form.type"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.select :course_type, Course.course_types.keys.map { |ct| [t("courses.course_types.#{ct}"), ct] },
+        {}, class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-4">
+    <div>
+      <%= f.label :min_age, t("courses.form.min_age"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.number_field :min_age, min: 0,
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+
+    <div>
+      <%= f.label :max_students, t("courses.form.max_students"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.number_field :max_students, required: true, min: 1,
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+
+    <div>
+      <%= f.label :duration_days, t("courses.form.duration_days"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.number_field :duration_days, min: 1,
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+
+    <div>
+      <%= f.label :price_cents, t("courses.form.price"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.number_field :price_cents, min: 0,
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+      <p class="mt-1 text-xs text-gray-500"><%= t("courses.form.price_hint") %></p>
+    </div>
+  </div>
+
+  <div>
+    <%= f.label :prerequisites_description, t("courses.form.prerequisites"), class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_area :prerequisites_description, rows: 2,
+      class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+  <div class="flex items-center">
+    <%= f.check_box :active, class: "h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" %>
+    <%= f.label :active, t("courses.form.active"), class: "ml-2 block text-sm text-gray-700" %>
+  </div>
+
+  <div class="flex items-center space-x-4">
+    <%= f.submit class: "inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer" %>
+    <%= link_to t("common.cancel"), courses_path,
+      class: "inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-md border border-gray-300 hover:bg-gray-50" %>
+  </div>
+<% end %>

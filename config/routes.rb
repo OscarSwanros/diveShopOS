@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   # Instructor ratings
   resources :instructor_ratings, only: [ :index, :new, :create, :edit, :update, :destroy ]
 
+  # Courses
+  resources :courses
+
   # Dive sites
   resources :dive_sites
 
