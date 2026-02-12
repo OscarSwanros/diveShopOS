@@ -39,6 +39,7 @@ class EnrollmentsController < ApplicationController
     @enrollment.enrolled_at = Time.current
 
     if @enrollment.save
+      EnrollmentMailer.confirmation(@enrollment).deliver_later
       redirect_to course_course_offering_path(@course, @course_offering),
         notice: I18n.t("enrollments.created")
     else

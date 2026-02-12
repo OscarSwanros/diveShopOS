@@ -1,0 +1,13 @@
+<h1><%= t("class_session_mailer.reschedule_notification.greeting", name: @customer.first_name) %></h1>
+
+<p><%= t("class_session_mailer.reschedule_notification.body", course: @course.name) %></p>
+
+<h2><%= t("class_session_mailer.reschedule_notification.new_schedule_heading") %></h2>
+
+<ul>
+  <li><strong><%= t("class_session_mailer.reschedule_notification.session_label") %></strong> <%= @class_session.title || t("class_sessions.session_types.#{@class_session.session_type}") %></li>
+  <li><strong><%= t("class_session_mailer.reschedule_notification.date_label") %></strong> <%= l(@class_session.scheduled_date, format: :long) %></li>
+  <li><strong><%= t("class_session_mailer.reschedule_notification.time_label") %></strong> <%= @class_session.start_time.strftime("%H:%M") %><%= " - #{@class_session.end_time.strftime('%H:%M')}" if @class_session.end_time %></li>
+</ul>
+
+<p><%= t("class_session_mailer.reschedule_notification.closing") %></p>

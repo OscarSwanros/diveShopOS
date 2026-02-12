@@ -475,6 +475,37 @@ en:
       paid: "Paid"
       unpaid: "Unpaid"
 
+  enrollment_mailer:
+    confirmation:
+      subject: "Enrollment Confirmed: %{course}"
+      greeting: "Hello %{name}!"
+      body: "You have been enrolled in %{course} at %{organization}."
+      details_heading: "Course Details"
+      course_label: "Course:"
+      start_date_label: "Start Date:"
+      instructor_label: "Instructor:"
+      closing: "We look forward to seeing you! - %{organization}"
+    completion:
+      subject: "Course Completed: %{course}"
+      greeting: "Congratulations %{name}!"
+      body: "You have successfully completed %{course}."
+      certification_heading: "Your Certification"
+      agency_label: "Agency:"
+      level_label: "Level:"
+      issued_label: "Issued:"
+      closing: "Thank you for diving with %{organization}!"
+
+  class_session_mailer:
+    reschedule_notification:
+      subject: "Schedule Change: %{course}"
+      greeting: "Hello %{name},"
+      body: "A session for %{course} has been rescheduled. Please note the updated schedule below."
+      new_schedule_heading: "Updated Schedule"
+      session_label: "Session:"
+      date_label: "New Date:"
+      time_label: "New Time:"
+      closing: "If you have any questions, please contact us."
+
   services:
     excursions:
       check_capacity:

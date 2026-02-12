@@ -35,7 +35,10 @@ class ClassSessionsController < ApplicationController
   end
 
   def update
+    schedule_changed = schedule_changing?
+
     if @class_session.update(class_session_params)
+      notify_reschedule if schedule_changed
       redirect_to course_course_offering_path(@course, @course_offering),
         notice: I18n.t("class_sessions.updated")
     else
@@ -66,6 +69,19 @@ class ClassSessionsController < ApplicationController
       :session_type, :title, :scheduled_date, :start_time, :end_time,
       :location_description, :dive_site_id, :notes
     )
+  end
+
+  def schedule_changing?
+    incoming = class_session_params
+    @class_session.scheduled_date.to_s != incoming[:scheduled_date].to_s ||
+      @class_session.start_time_before_type_cast.to_s != incoming[:start_time].to_s ||
+      @class_session.end_time_before_type_cast.to_s != incoming[:end_time].to_s
+  end
+
+  def notify_reschedule
+    @course_offering.enrollments.active_enrollments.includes(:customer).each do |enrollment|
+      ClassSessionMailer.reschedule_notification(@class_session, enrollment).deliver_later
+    end
   end
 
   def ensure_attendance_records

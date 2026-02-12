@@ -1,0 +1,11 @@
+<%= t("enrollment_mailer.confirmation.greeting", name: @customer.first_name) %>
+
+<%= t("enrollment_mailer.confirmation.body", course: @course.name, organization: @organization.name) %>
+
+<%= t("enrollment_mailer.confirmation.details_heading") %>
+
+- <%= t("enrollment_mailer.confirmation.course_label") %> <%= @course.name %> (<%= @course.agency %> <%= @course.level %>)
+- <%= t("enrollment_mailer.confirmation.start_date_label") %> <%= l(@course_offering.start_date, format: :long) %>
+- <%= t("enrollment_mailer.confirmation.instructor_label") %> <%= @course_offering.instructor.name %>
+
+<%= t("enrollment_mailer.confirmation.closing", organization: @organization.name) %>

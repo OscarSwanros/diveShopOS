@@ -1,0 +1,13 @@
+<h1><%= t("enrollment_mailer.confirmation.greeting", name: @customer.first_name) %></h1>
+
+<p><%= t("enrollment_mailer.confirmation.body", course: @course.name, organization: @organization.name) %></p>
+
+<h2><%= t("enrollment_mailer.confirmation.details_heading") %></h2>
+
+<ul>
+  <li><strong><%= t("enrollment_mailer.confirmation.course_label") %></strong> <%= @course.name %> (<%= @course.agency %> <%= @course.level %>)</li>
+  <li><strong><%= t("enrollment_mailer.confirmation.start_date_label") %></strong> <%= l(@course_offering.start_date, format: :long) %></li>
+  <li><strong><%= t("enrollment_mailer.confirmation.instructor_label") %></strong> <%= @course_offering.instructor.name %></li>
+</ul>
+
+<p><%= t("enrollment_mailer.confirmation.closing", organization: @organization.name) %></p>

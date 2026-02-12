@@ -1,0 +1,13 @@
+<%= t("enrollment_mailer.completion.greeting", name: @customer.first_name) %>
+
+<%= t("enrollment_mailer.completion.body", course: @course.name) %>
+
+<% if @certification %>
+<%= t("enrollment_mailer.completion.certification_heading") %>
+
+- <%= t("enrollment_mailer.completion.agency_label") %> <%= @certification.agency %>
+- <%= t("enrollment_mailer.completion.level_label") %> <%= @certification.certification_level %>
+- <%= t("enrollment_mailer.completion.issued_label") %> <%= l(@certification.issued_date, format: :long) %>
+<% end %>
+
+<%= t("enrollment_mailer.completion.closing", organization: @organization.name) %>

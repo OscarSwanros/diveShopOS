@@ -31,6 +31,8 @@ module Courses
 
         @enrollment.complete!(certification: certification)
 
+        EnrollmentMailer.completion(@enrollment.reload).deliver_later
+
         Result.new(success: true, reason: nil, certification: certification)
       end
     rescue ActiveRecord::RecordInvalid => e
