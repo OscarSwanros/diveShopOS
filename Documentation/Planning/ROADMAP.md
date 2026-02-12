@@ -11,19 +11,21 @@
 - [ ] Basic layout and navigation
 
 ## Phase 1: MVP Core
-- [ ] Customer model with certifications, medical records
-- [ ] StaffMember model with instructor ratings
+- [x] Customer model with certifications, medical records
+- [x] InstructorRating model (instructor ratings per agency)
 - [x] DiveSite model (pulled forward from Tier 2 for Excursions)
 - [x] Excursion model with trip dives, participants
 - [x] Capacity gate safety service object
 - [ ] Booking model tying customers to activities
-- [ ] Safety gate service objects (certification, medical, waiver)
+- [x] Safety gate service objects (age, medical, instructor rating, student ratio, instructor conflict)
 - [ ] Basic CRUD views with Turbo/Stimulus
 - [ ] Dashboard for daily operations
 
 ## Phase 2: Education & Equipment
-- [ ] Course catalog and course offerings (see [FB-002: capacity planning](FEATURE_BACKLOG.md#fb-002-courses-module-with-capacity-planning))
-- [ ] Enrollment with prerequisite validation
+- [x] Course catalog and course offerings (see [FB-002: capacity planning](FEATURE_BACKLOG.md#fb-002-courses-module-with-capacity-planning))
+- [x] Enrollment with safety gate validation
+- [x] Attendance tracking and course completion with certification issuance
+- [x] Enrollment and scheduling mailers (confirmation, completion, reschedule)
 - [ ] Equipment fleet tracking (serialized items)
 - [ ] Rental assignment workflow
 - [ ] Equipment service tracking (life-support gear emphasis)

@@ -9,8 +9,8 @@ DiveShopOS is organized around business domains. Each domain owns its models, co
 | Domain | Status | Models | Description |
 |--------|--------|--------|-------------|
 | **Core** | In Progress | Organization, User | Authentication, multi-tenancy |
-| Customers | Planned | Customer, Certification, MedicalRecord, Waiver | Diver profiles and compliance |
-| Staff | Planned | StaffMember, InstructorRating | Instructor and divemaster management |
+| **Customers** | In Progress | Customer, Certification, MedicalRecord | Diver profiles, certifications, medical clearance |
+| **Staff** | In Progress | InstructorRating (on User) | Instructor ratings per agency |
 | **Excursions** | In Progress | Excursion, TripDive, TripParticipant, DiveSite | Trip scheduling, manifests; also serves Destinations catalog ([FB-001](../Planning/FEATURE_BACKLOG.md#fb-001-destinations-catalog)) and Activity Feed ([FB-004](../Planning/FEATURE_BACKLOG.md#fb-004-activity-feed)) |
 | Bookings | Planned | Booking, BookingItem, Payment | Reservations and payments |
 
@@ -18,7 +18,7 @@ DiveShopOS is organized around business domains. Each domain owns its models, co
 
 | Domain | Status | Models | Description |
 |--------|--------|--------|-------------|
-| Courses | Planned | Course, CourseOffering, Enrollment | Course catalog and education; capacity planning cross-dependency with Equipment ([FB-002](../Planning/FEATURE_BACKLOG.md#fb-002-courses-module-with-capacity-planning)), serves Activity Feed ([FB-004](../Planning/FEATURE_BACKLOG.md#fb-004-activity-feed)) |
+| **Courses** | In Progress | Course, CourseOffering, ClassSession, Enrollment, SessionAttendance | Course catalog, scheduling, enrollment with safety gates, attendance, completion with certification issuance, mailers ([FB-002](../Planning/FEATURE_BACKLOG.md#fb-002-courses-module-with-capacity-planning)), serves Activity Feed ([FB-004](../Planning/FEATURE_BACKLOG.md#fb-004-activity-feed)) |
 | Equipment | Planned | EquipmentItem, ServiceRecord, RentalAssignment | Fleet and inventory |
 | Compliance | Planned | WaiverTemplate, IncidentReport | Compliance and safety records |
 | Sites | Partially Delivered | DiveSite, SiteCondition | Dive site database; DiveSite model pulled forward into Excursions build, serves Destinations catalog ([FB-001](../Planning/FEATURE_BACKLOG.md#fb-001-destinations-catalog)) |

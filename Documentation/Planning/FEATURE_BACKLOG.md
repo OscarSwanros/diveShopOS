@@ -25,17 +25,27 @@ Feature requests from the shop owner, cataloged for planning and prioritization.
 
 **Date**: 2026-02-12
 **Domains**: Courses, Equipment
-**Status**: Planned
+**Status**: In Progress (course catalog, enrollment, attendance, completion delivered; equipment capacity planning deferred)
 
 **Description**: A full course catalog with enrollment, progress tracking, and certification issuance. Includes capacity planning that cross-references equipment availability (e.g., enough regulators for a class of 8) and instructor availability.
 
 **Dependencies**:
-- Courses domain (catalog, offerings, enrollments)
-- Equipment domain (inventory tracking, availability queries)
-- Staff domain (instructor ratings, availability)
-- Excursions domain (establishes the "schedulable activity with participants" pattern)
+- Courses domain (catalog, offerings, enrollments) -- **delivered**
+- Equipment domain (inventory tracking, availability queries) -- deferred to Equipment build
+- Staff domain (instructor ratings, availability) -- **delivered** (InstructorRating model)
+- Excursions domain (establishes the "schedulable activity with participants" pattern) -- **delivered**
 
-**Notes**: The capacity planning aspect creates a cross-dependency between Courses and Equipment that needs careful interface design. The Excursions domain establishes the participant management pattern that Courses will reuse.
+**Delivered**:
+- Course catalog (Course model, agency-neutral, 5 course types)
+- CourseOffering (scheduled instances with instructor, pricing, status)
+- ClassSession (classroom/confined water/open water sessions)
+- Enrollment with safety gates (student ratio, minimum age, medical clearance)
+- Instructor rating validation and scheduling conflict detection
+- Attendance tracking (SessionAttendance, batch update UI)
+- Course completion with automatic certification issuance
+- Mailers (enrollment confirmation, completion, class session reschedule)
+
+**Notes**: The capacity planning aspect creates a cross-dependency between Courses and Equipment that needs careful interface design. Equipment capacity planning will be addressed when the Equipment domain is built.
 
 ---
 
