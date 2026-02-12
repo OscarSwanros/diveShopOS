@@ -1,0 +1,46 @@
+padi_ow_upcoming:
+  id: "co-padi-ow-upcoming-uuid-0001"
+  course_id: "course-padi-ow-uuid-0001"
+  organization_id: "org-reef-divers-uuid-0001"
+  instructor_id: "user-maria-uuid-0001"
+  start_date: <%= Date.current + 7.days %>
+  end_date: <%= Date.current + 11.days %>
+  max_students: 8
+  status: 1
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+padi_ow_full:
+  id: "co-padi-ow-full-uuid-0002"
+  course_id: "course-padi-ow-uuid-0001"
+  organization_id: "org-reef-divers-uuid-0001"
+  instructor_id: "user-maria-uuid-0001"
+  start_date: <%= Date.current + 14.days %>
+  max_students: 2
+  status: 1
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+padi_aow_draft:
+  id: "co-padi-aow-draft-uuid-0003"
+  course_id: "course-padi-aow-uuid-0002"
+  organization_id: "org-reef-divers-uuid-0001"
+  instructor_id: "user-carlos-uuid-0002"
+  start_date: <%= Date.current + 21.days %>
+  max_students: 6
+  price_cents: 28000
+  price_currency: "USD"
+  status: 0
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+other_org_offering:
+  id: "co-other-org-uuid-0004"
+  course_id: "course-other-uuid-0005"
+  organization_id: "org-blue-water-uuid-0002"
+  instructor_id: "user-other-uuid-0004"
+  start_date: <%= Date.current + 7.days %>
+  max_students: 6
+  status: 1
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

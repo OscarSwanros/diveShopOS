@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_13_000005) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_13_000007) do
   create_table "certifications", id: :string, force: :cascade do |t|
     t.string "agency", null: false
     t.string "certification_level", null: false
@@ -27,6 +27,44 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_000005) do
     t.index ["customer_id"], name: "index_certifications_on_customer_id"
     t.index ["discarded_at"], name: "index_certifications_on_discarded_at"
     t.index ["issuing_organization_id"], name: "index_certifications_on_issuing_organization_id"
+  end
+
+  create_table "class_sessions", id: :string, force: :cascade do |t|
+    t.string "course_offering_id", null: false
+    t.datetime "created_at", null: false
+    t.string "dive_site_id"
+    t.time "end_time"
+    t.string "location_description"
+    t.text "notes"
+    t.date "scheduled_date", null: false
+    t.integer "session_type", default: 0, null: false
+    t.time "start_time", null: false
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.index ["course_offering_id", "scheduled_date"], name: "index_class_sessions_on_offering_and_date"
+    t.index ["course_offering_id"], name: "index_class_sessions_on_course_offering_id"
+    t.index ["dive_site_id"], name: "index_class_sessions_on_dive_site_id"
+  end
+
+  create_table "course_offerings", id: :string, force: :cascade do |t|
+    t.string "course_id", null: false
+    t.datetime "created_at", null: false
+    t.date "end_date"
+    t.string "instructor_id", null: false
+    t.integer "max_students", null: false
+    t.text "notes"
+    t.string "organization_id", null: false
+    t.integer "price_cents"
+    t.string "price_currency"
+    t.date "start_date", null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_course_offerings_on_course_id"
+    t.index ["instructor_id", "start_date"], name: "index_course_offerings_on_instructor_id_and_start_date"
+    t.index ["instructor_id"], name: "index_course_offerings_on_instructor_id"
+    t.index ["organization_id", "start_date"], name: "index_course_offerings_on_organization_id_and_start_date"
+    t.index ["organization_id", "status"], name: "index_course_offerings_on_organization_id_and_status"
+    t.index ["organization_id"], name: "index_course_offerings_on_organization_id"
   end
 
   create_table "courses", id: :string, force: :cascade do |t|
@@ -195,6 +233,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_000005) do
 
   add_foreign_key "certifications", "customers"
   add_foreign_key "certifications", "organizations", column: "issuing_organization_id"
+  add_foreign_key "class_sessions", "course_offerings"
+  add_foreign_key "class_sessions", "dive_sites"
+  add_foreign_key "course_offerings", "courses"
+  add_foreign_key "course_offerings", "organizations"
+  add_foreign_key "course_offerings", "users", column: "instructor_id"
   add_foreign_key "courses", "organizations"
   add_foreign_key "customers", "organizations"
   add_foreign_key "dive_sites", "organizations"

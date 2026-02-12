@@ -1,0 +1,65 @@
+<%= form_with model: [course, course_offering], class: "space-y-4" do |f| %>
+  <% if course_offering.errors.any? %>
+    <div class="p-3 bg-red-100 text-red-800 rounded-md text-sm" role="alert">
+      <ul class="list-disc list-inside">
+        <% course_offering.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :instructor_id, t("course_offerings.form.instructor"), class: "block text-sm font-medium text-gray-700" %>
+    <%= f.collection_select :instructor_id, current_organization.users.order(:name), :id, :name,
+      { prompt: t("course_offerings.form.select_instructor") },
+      class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:max-w-xs" %>
+  </div>
+
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <div>
+      <%= f.label :start_date, t("course_offerings.form.start_date"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.date_field :start_date, required: true,
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+
+    <div>
+      <%= f.label :end_date, t("course_offerings.form.end_date"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.date_field :end_date,
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+    <div>
+      <%= f.label :max_students, t("course_offerings.form.max_students"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.number_field :max_students, required: true, min: 1,
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+
+    <div>
+      <%= f.label :price_cents, t("course_offerings.form.price"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.number_field :price_cents, min: 0,
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+      <p class="mt-1 text-xs text-gray-500"><%= t("course_offerings.form.price_hint") %></p>
+    </div>
+
+    <div>
+      <%= f.label :status, t("course_offerings.form.status"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.select :status, CourseOffering.statuses.keys.map { |s| [t("course_offerings.statuses.#{s}"), s] },
+        {}, class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+  </div>
+
+  <div>
+    <%= f.label :notes, t("course_offerings.form.notes"), class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_area :notes, rows: 2,
+      class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+  <div class="flex items-center space-x-4">
+    <%= f.submit class: "inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer" %>
+    <%= link_to t("common.cancel"), course_path(course),
+      class: "inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-md border border-gray-300 hover:bg-gray-50" %>
+  </div>
+<% end %>

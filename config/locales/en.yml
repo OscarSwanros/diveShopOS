@@ -357,6 +357,102 @@ en:
       expired: "Expired"
       inactive: "Inactive"
 
+  course_offerings:
+    created: "Course offering created."
+    updated: "Course offering updated."
+    deleted: "Course offering deleted."
+    empty: "No offerings scheduled yet."
+    new:
+      title: "Schedule Offering"
+    edit:
+      title: "Edit Offering"
+    show:
+      status: "Status"
+      instructor: "Instructor"
+      students: "Enrolled"
+      price: "Price"
+      notes: "Notes"
+      sessions: "Class Sessions"
+      enrollments: "Enrolled Students"
+    table:
+      dates: "Dates"
+      instructor: "Instructor"
+      students: "Students"
+      status: "Status"
+    form:
+      instructor: "Instructor"
+      select_instructor: "Select an instructor..."
+      start_date: "Start Date"
+      end_date: "End Date"
+      max_students: "Max Students"
+      price: "Price Override (cents)"
+      price_hint: "Leave blank to use course default price."
+      status: "Status"
+      notes: "Notes"
+    statuses:
+      draft: "Draft"
+      published: "Published"
+      in_progress: "In Progress"
+      completed: "Completed"
+      cancelled: "Cancelled"
+
+  class_sessions:
+    created: "Class session added."
+    updated: "Class session updated."
+    deleted: "Class session removed."
+    empty: "No sessions scheduled yet."
+    new:
+      title: "Add Session"
+    edit:
+      title: "Edit Session"
+    show:
+      type: "Session Type"
+      time: "Time"
+      location: "Location"
+      notes: "Notes"
+    table:
+      date: "Date"
+      time: "Time"
+      type: "Type"
+      title: "Title"
+      location: "Location"
+    form:
+      type: "Session Type"
+      title: "Title"
+      title_placeholder: "e.g., Module 1: Dive Theory"
+      date: "Date"
+      start_time: "Start Time"
+      end_time: "End Time"
+      location: "Location Description"
+      dive_site: "Dive Site"
+      no_dive_site: "No dive site (classroom)"
+      dive_site_hint: "For confined water or open water sessions."
+      notes: "Notes"
+    session_types:
+      classroom: "Classroom"
+      confined_water: "Confined Water"
+      open_water: "Open Water"
+
+  enrollments:
+    empty: "No students enrolled yet."
+    new:
+      title: "Enroll Student"
+    table:
+      student: "Student"
+      status: "Status"
+      paid: "Payment"
+      enrolled: "Enrolled"
+    statuses:
+      pending: "Pending"
+      confirmed: "Confirmed"
+      active: "Active"
+      completed: "Completed"
+      withdrawn: "Withdrawn"
+      failed: "Failed"
+    paid_status:
+      paid: "Paid"
+      unpaid: "Unpaid"
+
   services:
     excursions:
       check_capacity:

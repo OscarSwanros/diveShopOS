@@ -1,0 +1,47 @@
+ow_classroom_1:
+  id: "cs-ow-classroom-1-uuid-0001"
+  course_offering_id: "co-padi-ow-upcoming-uuid-0001"
+  session_type: 0
+  title: "Module 1: Dive Theory"
+  scheduled_date: <%= Date.current + 7.days %>
+  start_time: "09:00"
+  end_time: "12:00"
+  location_description: "Classroom A"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+ow_confined_1:
+  id: "cs-ow-confined-1-uuid-0002"
+  course_offering_id: "co-padi-ow-upcoming-uuid-0001"
+  session_type: 1
+  title: "Confined Water Dive 1"
+  scheduled_date: <%= Date.current + 8.days %>
+  start_time: "08:00"
+  end_time: "12:00"
+  location_description: "Training Pool"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+ow_open_water_1:
+  id: "cs-ow-open-water-1-uuid-0003"
+  course_offering_id: "co-padi-ow-upcoming-uuid-0001"
+  session_type: 2
+  title: "Open Water Dive 1 & 2"
+  scheduled_date: <%= Date.current + 10.days %>
+  start_time: "07:30"
+  end_time: "13:00"
+  dive_site_id: "site-coral-garden-uuid-0001"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+ow_open_water_2:
+  id: "cs-ow-open-water-2-uuid-0004"
+  course_offering_id: "co-padi-ow-upcoming-uuid-0001"
+  session_type: 2
+  title: "Open Water Dive 3 & 4"
+  scheduled_date: <%= Date.current + 11.days %>
+  start_time: "07:30"
+  end_time: "13:00"
+  dive_site_id: "site-coral-garden-uuid-0001"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

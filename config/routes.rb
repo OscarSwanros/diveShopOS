@@ -13,8 +13,12 @@ Rails.application.routes.draw do
   # Instructor ratings
   resources :instructor_ratings, only: [ :index, :new, :create, :edit, :update, :destroy ]
 
-  # Courses
-  resources :courses
+  # Courses with nested offerings and sessions
+  resources :courses do
+    resources :course_offerings, except: [ :index ] do
+      resources :class_sessions, except: [ :index ]
+    end
+  end
 
   # Dive sites
   resources :dive_sites

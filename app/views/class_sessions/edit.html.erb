@@ -1,0 +1,5 @@
+<div class="max-w-2xl">
+  <h1 class="text-2xl font-bold mb-6"><%= t("class_sessions.edit.title") %></h1>
+  <p class="text-sm text-gray-500 mb-4"><%= @course.name %></p>
+  <%= render "form", class_session: @class_session, course: @course, course_offering: @course_offering %>
+</div>

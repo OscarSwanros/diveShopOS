@@ -103,7 +103,7 @@
                   <% end %>
                 </td>
                 <td class="px-4 py-2 text-sm text-gray-900"><%= offering.instructor.name %></td>
-                <td class="px-4 py-2 text-sm text-gray-900"><%= offering.enrollments.countable.count %> / <%= offering.max_students %></td>
+                <td class="px-4 py-2 text-sm text-gray-900"><%= offering.max_students - offering.spots_remaining %> / <%= offering.max_students %></td>
                 <td class="px-4 py-2 text-sm">
                   <% badge_class = case offering.status
                     when "draft" then "bg-gray-100 text-gray-800"
