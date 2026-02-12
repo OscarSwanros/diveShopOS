@@ -1,0 +1,47 @@
+jane_classroom_1:
+  id: "sa-jane-classroom1-uuid-0001"
+  class_session_id: "cs-ow-classroom-1-uuid-0001"
+  enrollment_id: "enr-jane-ow-uuid-0001"
+  attended: true
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+jane_confined_1:
+  id: "sa-jane-confined1-uuid-0002"
+  class_session_id: "cs-ow-confined-1-uuid-0002"
+  enrollment_id: "enr-jane-ow-uuid-0001"
+  attended: true
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+jane_open_water_1:
+  id: "sa-jane-ow1-uuid-0003"
+  class_session_id: "cs-ow-open-water-1-uuid-0003"
+  enrollment_id: "enr-jane-ow-uuid-0001"
+  attended: true
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+jane_open_water_2:
+  id: "sa-jane-ow2-uuid-0004"
+  class_session_id: "cs-ow-open-water-2-uuid-0004"
+  enrollment_id: "enr-jane-ow-uuid-0001"
+  attended: true
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+bob_classroom_1:
+  id: "sa-bob-classroom1-uuid-0005"
+  class_session_id: "cs-ow-classroom-1-uuid-0001"
+  enrollment_id: "enr-bob-ow-uuid-0002"
+  attended: true
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+bob_confined_1:
+  id: "sa-bob-confined1-uuid-0006"
+  class_session_id: "cs-ow-confined-1-uuid-0002"
+  enrollment_id: "enr-bob-ow-uuid-0002"
+  attended: false
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

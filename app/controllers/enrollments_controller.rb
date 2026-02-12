@@ -2,7 +2,7 @@
 
 class EnrollmentsController < ApplicationController
   before_action :set_course_and_offering
-  before_action :set_enrollment, only: [ :edit, :update, :destroy ]
+  before_action :set_enrollment, only: [ :edit, :update, :destroy, :complete ]
 
   def new
     @enrollment = @course_offering.enrollments.build
@@ -58,6 +58,21 @@ class EnrollmentsController < ApplicationController
     else
       @customers = current_organization.customers.active.by_name
       render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def complete
+    result = Courses::CompleteEnrollment.new(
+      enrollment: @enrollment,
+      organization: current_organization
+    ).call
+
+    if result.success
+      redirect_to course_course_offering_path(@course, @course_offering),
+        notice: I18n.t("enrollments.completed")
+    else
+      redirect_to course_course_offering_path(@course, @course_offering),
+        alert: result.reason
     end
   end
 

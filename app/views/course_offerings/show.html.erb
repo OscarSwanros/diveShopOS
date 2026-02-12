@@ -173,6 +173,12 @@
                 </td>
                 <td class="px-4 py-2 text-sm text-gray-900"><%= enrollment.enrolled_at ? l(enrollment.enrolled_at, format: :long) : "---" %></td>
                 <td class="px-4 py-2 text-sm text-right space-x-2">
+                  <% if policy(enrollment).complete? && !enrollment.completed? && !enrollment.withdrawn? && !enrollment.failed? %>
+                    <%= button_to t("enrollments.complete_action"), complete_course_course_offering_enrollment_path(@course, @course_offering, enrollment),
+                      method: :post,
+                      class: "text-green-600 hover:text-green-800",
+                      form: { data: { turbo_confirm: t("enrollments.confirm_complete") } } %>
+                  <% end %>
                   <%= link_to t("common.edit"), edit_course_course_offering_enrollment_path(@course, @course_offering, enrollment), class: "text-blue-600 hover:text-blue-800" %>
                 </td>
               </tr>

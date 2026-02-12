@@ -5,6 +5,11 @@ class ClassSessionsController < ApplicationController
   before_action :set_class_session, only: [ :show, :edit, :update, :destroy ]
 
   def show
+    ensure_attendance_records
+    @attendances = @class_session.session_attendances
+      .includes(enrollment: :customer)
+      .order("customers.last_name, customers.first_name")
+      .references(:customers)
   end
 
   def new
@@ -61,5 +66,15 @@ class ClassSessionsController < ApplicationController
       :session_type, :title, :scheduled_date, :start_time, :end_time,
       :location_description, :dive_site_id, :notes
     )
+  end
+
+  def ensure_attendance_records
+    active_enrollments = @course_offering.enrollments.active_enrollments
+    existing_enrollment_ids = @class_session.session_attendances.pluck(:enrollment_id)
+
+    active_enrollments.each do |enrollment|
+      next if existing_enrollment_ids.include?(enrollment.id)
+      @class_session.session_attendances.create!(enrollment: enrollment)
+    end
   end
 end

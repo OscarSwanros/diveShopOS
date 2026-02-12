@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_13_000008) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_13_000009) do
   create_table "certifications", id: :string, force: :cascade do |t|
     t.string "agency", null: false
     t.string "certification_level", null: false
@@ -207,6 +207,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_000008) do
     t.index ["subdomain"], name: "index_organizations_on_subdomain", unique: true
   end
 
+  create_table "session_attendances", id: :string, force: :cascade do |t|
+    t.boolean "attended", default: false, null: false
+    t.string "class_session_id", null: false
+    t.datetime "created_at", null: false
+    t.string "enrollment_id", null: false
+    t.text "notes"
+    t.datetime "updated_at", null: false
+    t.index ["class_session_id", "enrollment_id"], name: "idx_on_class_session_id_enrollment_id_315dc234ff", unique: true
+    t.index ["class_session_id"], name: "index_session_attendances_on_class_session_id"
+    t.index ["enrollment_id"], name: "index_session_attendances_on_enrollment_id"
+  end
+
   create_table "trip_dives", id: :string, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "dive_number", null: false
@@ -265,6 +277,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_000008) do
   add_foreign_key "excursions", "organizations"
   add_foreign_key "instructor_ratings", "users"
   add_foreign_key "medical_records", "customers"
+  add_foreign_key "session_attendances", "class_sessions"
+  add_foreign_key "session_attendances", "enrollments"
   add_foreign_key "trip_dives", "dive_sites"
   add_foreign_key "trip_dives", "excursions"
   add_foreign_key "trip_participants", "excursions"

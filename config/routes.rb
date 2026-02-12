@@ -16,8 +16,14 @@ Rails.application.routes.draw do
   # Courses with nested offerings and sessions
   resources :courses do
     resources :course_offerings, except: [ :index ] do
-      resources :class_sessions, except: [ :index ]
-      resources :enrollments, only: [ :new, :create, :edit, :update, :destroy ]
+      resources :class_sessions, except: [ :index ] do
+        resource :session_attendances, only: [] do
+          patch :batch_update, on: :collection
+        end
+      end
+      resources :enrollments, only: [ :new, :create, :edit, :update, :destroy ] do
+        member { post :complete }
+      end
     end
   end
 

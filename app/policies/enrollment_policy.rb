@@ -9,6 +9,10 @@ class EnrollmentPolicy < ApplicationPolicy
     true
   end
 
+  def complete?
+    true
+  end
+
   def destroy?
     user.manager? || user.owner?
   end

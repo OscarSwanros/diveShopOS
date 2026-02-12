@@ -5,6 +5,8 @@ class Enrollment < ApplicationRecord
   belongs_to :customer
   belongs_to :certification, optional: true
 
+  has_many :session_attendances, dependent: :destroy
+
   enum :status, { pending: 0, confirmed: 1, active: 2, completed: 3, withdrawn: 4, failed: 5 }
 
   validates :customer_id, uniqueness: { scope: :course_offering_id }

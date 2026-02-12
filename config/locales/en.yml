@@ -433,10 +433,21 @@ en:
       confined_water: "Confined Water"
       open_water: "Open Water"
 
+  session_attendances:
+    title: "Attendance"
+    updated: "Attendance updated."
+    table:
+      student: "Student"
+      attended: "Attended"
+    save: "Save Attendance"
+
   enrollments:
     created: "Student enrolled."
     updated: "Enrollment updated."
+    completed: "Student marked as completed."
     withdrawn: "Student withdrawn from course."
+    complete_action: "Complete"
+    confirm_complete: "Mark this student as completed? This will validate attendance and issue a certification if applicable."
     empty: "No students enrolled yet."
     new:
       title: "Enroll Student"
