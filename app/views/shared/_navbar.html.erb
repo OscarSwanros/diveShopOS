@@ -1,0 +1,76 @@
+<nav class="fixed top-0 inset-x-0 z-50 bg-white border-b border-gray-200" data-controller="navbar">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-14">
+      <%# Left: Org name %>
+      <div class="flex items-center">
+        <%= link_to current_organization.name, root_path,
+              class: "text-lg font-semibold text-gray-900 whitespace-nowrap" %>
+      </div>
+
+      <%# Center: Nav links (desktop) %>
+      <div class="hidden md:flex md:items-center md:space-x-1">
+        <%= nav_link t("navigation.excursions"), excursions_path,
+              active: controller_name.in?(%w[excursions trip_dives trip_participants]) %>
+        <%= nav_link t("navigation.courses"), courses_path,
+              active: controller_name.in?(%w[courses course_offerings class_sessions enrollments session_attendances]) %>
+        <%= nav_link t("navigation.customers"), customers_path,
+              active: controller_name.in?(%w[customers certifications medical_records]) %>
+        <%= nav_link t("navigation.dive_sites"), dive_sites_path,
+              active: controller_name.in?(%w[dive_sites]) %>
+        <%= nav_link t("navigation.instructor_ratings"), instructor_ratings_path,
+              active: controller_name.in?(%w[instructor_ratings]) %>
+      </div>
+
+      <%# Right: User info + sign out (desktop) %>
+      <div class="hidden md:flex md:items-center md:space-x-3">
+        <span class="text-sm text-gray-700"><%= current_user.name %></span>
+        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+          <%= current_user.role.capitalize %>
+        </span>
+        <%= button_to t("navigation.sign_out"), session_path, method: :delete,
+              class: "text-sm text-gray-500 hover:text-gray-700" %>
+      </div>
+
+      <%# Mobile hamburger %>
+      <div class="flex items-center md:hidden">
+        <button type="button" data-action="navbar#toggle" aria-label="<%= t("navigation.menu") %>"
+                class="inline-flex items-center justify-center p-2 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <%# Mobile menu %>
+  <div class="hidden md:hidden border-t border-gray-200" data-navbar-target="mobileMenu">
+    <div class="px-2 pt-2 pb-3 space-y-1">
+      <%= nav_link t("navigation.excursions"), excursions_path,
+            active: controller_name.in?(%w[excursions trip_dives trip_participants]),
+            mobile: true %>
+      <%= nav_link t("navigation.courses"), courses_path,
+            active: controller_name.in?(%w[courses course_offerings class_sessions enrollments session_attendances]),
+            mobile: true %>
+      <%= nav_link t("navigation.customers"), customers_path,
+            active: controller_name.in?(%w[customers certifications medical_records]),
+            mobile: true %>
+      <%= nav_link t("navigation.dive_sites"), dive_sites_path,
+            active: controller_name.in?(%w[dive_sites]),
+            mobile: true %>
+      <%= nav_link t("navigation.instructor_ratings"), instructor_ratings_path,
+            active: controller_name.in?(%w[instructor_ratings]),
+            mobile: true %>
+    </div>
+    <div class="border-t border-gray-200 px-4 py-3 flex items-center justify-between">
+      <div>
+        <span class="text-sm font-medium text-gray-700"><%= current_user.name %></span>
+        <span class="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+          <%= current_user.role.capitalize %>
+        </span>
+      </div>
+      <%= button_to t("navigation.sign_out"), session_path, method: :delete,
+            class: "text-sm text-gray-500 hover:text-gray-700" %>
+    </div>
+  </div>
+</nav>

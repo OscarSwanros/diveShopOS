@@ -1,4 +1,13 @@
 en:
+  navigation:
+    excursions: "Excursions"
+    courses: "Courses"
+    customers: "Customers"
+    dive_sites: "Dive Sites"
+    instructor_ratings: "Ratings"
+    sign_out: "Sign Out"
+    menu: "Menu"
+
   common:
     edit: "Edit"
     back: "Back"
