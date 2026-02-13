@@ -14,6 +14,8 @@ class InstructorRating < ApplicationRecord
   scope :active, -> { where(active: true) }
   scope :current, -> { active.where("expiration_date IS NULL OR expiration_date >= ?", Date.current) }
   scope :for_agency, ->(agency) { where(agency: agency) }
+  scope :expiring_soon, -> { active.where(expiration_date: Date.current..30.days.from_now.to_date) }
+  scope :expired_only, -> { where("expiration_date < ?", Date.current) }
 
   def expired?
     expiration_date.present? && expiration_date < Date.current

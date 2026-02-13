@@ -7,14 +7,11 @@
     <% end %>
   </div>
 
-  <div class="flex space-x-2">
-    <%= link_to t("excursions.filters.all"), excursions_path,
-      class: "px-3 py-1 text-sm rounded-md #{params[:status].blank? ? 'bg-blue-100 text-blue-800 font-medium' : 'text-gray-600 hover:bg-gray-100'}" %>
-    <% Excursion.statuses.each_key do |status| %>
-      <%= link_to t("excursions.statuses.#{status}"), excursions_path(status: status),
-        class: "px-3 py-1 text-sm rounded-md #{params[:status] == status ? 'bg-blue-100 text-blue-800 font-medium' : 'text-gray-600 hover:bg-gray-100'}" %>
-    <% end %>
-  </div>
+  <%= render "shared/filter_bar", filters: [
+    { label: t("excursions.filters.all"), url: excursions_path, active: params[:status].blank? }
+  ] + Excursion.statuses.keys.map { |s|
+    { label: t("excursions.statuses.#{s}"), url: excursions_path(status: s), active: params[:status] == s }
+  } %>
 
   <% if @excursions.any? %>
     <div class="overflow-x-auto">

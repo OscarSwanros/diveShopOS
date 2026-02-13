@@ -63,6 +63,13 @@ en:
     settings: "Settings"
     sign_out: "Sign Out"
     menu: "Menu"
+    operations: "Operations"
+    account: "Account"
+    medical_records: "Medical Records"
+    customer_tanks: "Customer Tanks"
+    pending_reviews_count:
+      one: "%{count} pending review"
+      other: "%{count} pending reviews"
 
   users:
     created: "Staff member created."
@@ -484,6 +491,11 @@ en:
     empty: "No customer tanks on file."
     index:
       title: "Customer Tanks"
+    org_index:
+      title: "Customer Tanks"
+      empty: "No customer tanks found."
+      compliant: "Compliant"
+      noncompliant: "Non-Compliant"
     new:
       title: "Add Tank"
     edit:
@@ -562,6 +574,9 @@ en:
     updated: "Medical record updated."
     deleted: "Medical record removed."
     empty: "No medical records on file."
+    org_index:
+      title: "Medical Records"
+      empty: "No medical records found."
     new:
       title: "Add Medical Record"
     edit:
@@ -677,6 +692,7 @@ en:
       active: "Active"
     status:
       current: "Current"
+      expiring: "Expiring"
       expired: "Expired"
       inactive: "Inactive"
 

@@ -1,8 +1,27 @@
 # frozen_string_literal: true
 
 class MedicalRecordsController < ApplicationController
-  before_action :set_customer
+  before_action :set_customer, except: [ :index ]
   before_action :set_medical_record, only: [ :show, :edit, :update, :destroy ]
+
+  def index
+    authorize MedicalRecord
+
+    @medical_records = policy_scope(MedicalRecord).kept.includes(:customer)
+
+    case params[:status]
+    when "pending_review"
+      @medical_records = @medical_records.pending_review
+    when "cleared"
+      @medical_records = @medical_records.cleared
+    when "not_cleared"
+      @medical_records = @medical_records.not_cleared
+    when "expired"
+      @medical_records = @medical_records.expired
+    end
+
+    @medical_records = @medical_records.order(created_at: :desc)
+  end
 
   def show
   end

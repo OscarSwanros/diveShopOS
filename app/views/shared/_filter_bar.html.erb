@@ -1,0 +1,21 @@
+<%# Shared filter bar partial
+  locals:
+    filters: Array of hashes with :label, :url, :active (boolean)
+    semantic: :default (blue), :success (green), :warning (amber), :danger (red) — applied to active pill
+    extra_filters: (optional) Array of additional filter rows (each an array of filter hashes)
+%>
+<% semantic ||= :default %>
+<% active_classes = case semantic
+  when :success then "bg-green-100 text-green-800 font-medium"
+  when :warning then "bg-amber-100 text-amber-800 font-medium"
+  when :danger  then "bg-red-100 text-red-800 font-medium"
+  else "bg-blue-100 text-blue-800 font-medium"
+  end %>
+<div class="flex flex-wrap gap-2" role="tablist" aria-label="<%= t("filters.label", default: "Filters") %>">
+  <% filters.each do |filter| %>
+    <%= link_to filter[:label], filter[:url],
+      class: "px-3 py-1 text-sm rounded-md #{filter[:active] ? active_classes : 'text-gray-600 hover:bg-gray-100'}",
+      role: "tab",
+      "aria-selected": filter[:active] ? "true" : "false" %>
+  <% end %>
+</div>

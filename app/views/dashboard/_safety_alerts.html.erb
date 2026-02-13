@@ -4,7 +4,7 @@
   <div class="space-y-3">
     <% if @equipment_overdue_count > 0 %>
       <div class="flex items-center justify-between">
-        <%= link_to equipment_items_path, class: "text-sm text-red-700 hover:text-red-900" do %>
+        <%= link_to equipment_items_path(safety: "service_overdue"), class: "text-sm text-red-700 hover:text-red-900" do %>
           <%= t("dashboard.safety_alerts.equipment_overdue", count: @equipment_overdue_count) %>
         <% end %>
         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
@@ -15,7 +15,7 @@
 
     <% if @medical_pending_count > 0 %>
       <div class="flex items-center justify-between">
-        <%= link_to customers_path, class: "text-sm text-red-700 hover:text-red-900" do %>
+        <%= link_to medical_records_path(status: "pending_review"), class: "text-sm text-red-700 hover:text-red-900" do %>
           <%= t("dashboard.safety_alerts.medical_pending", count: @medical_pending_count) %>
         <% end %>
         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
@@ -26,7 +26,7 @@
 
     <% if @ratings_expiring_count > 0 %>
       <div class="flex items-center justify-between">
-        <%= link_to instructor_ratings_path, class: "text-sm text-red-700 hover:text-red-900" do %>
+        <%= link_to instructor_ratings_path(status: "expiring"), class: "text-sm text-red-700 hover:text-red-900" do %>
           <%= t("dashboard.safety_alerts.ratings_expiring", count: @ratings_expiring_count) %>
         <% end %>
         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
@@ -37,7 +37,7 @@
 
     <% if @tanks_noncompliant_count > 0 %>
       <div class="flex items-center justify-between">
-        <%= link_to customers_path, class: "text-sm text-red-700 hover:text-red-900" do %>
+        <%= link_to all_customer_tanks_path(compliance: "noncompliant"), class: "text-sm text-red-700 hover:text-red-900" do %>
           <%= t("dashboard.safety_alerts.tanks_noncompliant", count: @tanks_noncompliant_count) %>
         <% end %>
         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">

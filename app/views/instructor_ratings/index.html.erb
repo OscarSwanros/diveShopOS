@@ -7,6 +7,19 @@
     <% end %>
   </div>
 
+  <%= render "shared/filter_bar", filters: [
+    { label: t("excursions.filters.all"), url: instructor_ratings_path, active: params[:status].blank? },
+    { label: t("instructor_ratings.status.current"), url: instructor_ratings_path(status: "current"), active: params[:status] == "current" },
+    { label: t("instructor_ratings.status.expiring", default: "Expiring"), url: instructor_ratings_path(status: "expiring"), active: params[:status] == "expiring" },
+    { label: t("instructor_ratings.status.expired"), url: instructor_ratings_path(status: "expired"), active: params[:status] == "expired" },
+    { label: t("instructor_ratings.status.inactive"), url: instructor_ratings_path(status: "inactive"), active: params[:status] == "inactive" }
+  ], semantic: case params[:status]
+    when "current" then :success
+    when "expiring" then :warning
+    when "expired" then :danger
+    else :default
+    end %>
+
   <% if @instructor_ratings.any? %>
     <div class="overflow-x-auto">
       <table class="min-w-full divide-y divide-gray-200">

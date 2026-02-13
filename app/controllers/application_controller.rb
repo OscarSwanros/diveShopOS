@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   include Pundit::Authorization
 
   before_action :require_authentication
+  before_action :load_review_queue_count
 
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
@@ -39,5 +40,23 @@ class ApplicationController < ActionController::Base
 
   def pundit_user
     current_user
+  end
+
+  def load_review_queue_count
+    return unless current_user && current_organization
+
+    enrollment_count = Enrollment
+      .joins(:course_offering)
+      .where(course_offerings: { organization_id: current_organization.id })
+      .review_queue
+      .count
+
+    participant_count = TripParticipant
+      .joins(:excursion)
+      .where(excursions: { organization_id: current_organization.id })
+      .review_queue
+      .count
+
+    @review_queue_count = enrollment_count + participant_count
   end
 end

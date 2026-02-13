@@ -14,33 +14,81 @@
         <%= nav_link t("navigation.courses"), courses_path,
               active: controller_name.in?(%w[courses course_offerings class_sessions enrollments session_attendances]) %>
         <%= nav_link t("navigation.customers"), customers_path,
-              active: controller_name.in?(%w[customers certifications medical_records equipment_profiles customer_tanks]) %>
-        <%= nav_link t("navigation.equipment"), equipment_items_path,
-              active: controller_name.in?(%w[equipment_items service_records]) %>
-        <%= nav_link t("navigation.checklists"), checklist_templates_path,
-              active: controller_name.in?(%w[checklist_templates checklist_items checklist_runs checklist_responses excursion_checklist_runs]) %>
-        <%= nav_link t("navigation.dive_sites"), dive_sites_path,
-              active: controller_name.in?(%w[dive_sites]) %>
-        <%= nav_link t("navigation.instructor_ratings"), instructor_ratings_path,
-              active: controller_name.in?(%w[instructor_ratings]) %>
-        <%= nav_link t("navigation.staff"), users_path,
-              active: controller_name.in?(%w[users]) %>
+              active: controller_name.in?(%w[customers certifications equipment_profiles customer_tanks]) %>
+
+        <%# Operations dropdown %>
+        <div class="relative" data-controller="dropdown">
+          <button type="button"
+                  data-dropdown-target="button"
+                  data-action="click->dropdown#toggle keydown->dropdown#keydown"
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                  class="inline-flex items-center px-3 py-2 text-sm font-medium border-b-2 <%= operations_nav_active? ? 'text-blue-600 border-blue-600' : 'text-gray-600 hover:text-gray-900 border-transparent' %>">
+            <%= t("navigation.operations") %>
+            <svg class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            </svg>
+          </button>
+          <div data-dropdown-target="menu"
+               data-action="keydown->dropdown#keydown"
+               class="hidden absolute left-0 mt-1 w-48 bg-white rounded-md shadow-lg border border-gray-200 py-1 z-50"
+               role="menu">
+            <%= nav_dropdown_link t("navigation.equipment"), equipment_items_path,
+                  active: controller_name.in?(%w[equipment_items service_records]) %>
+            <%= nav_dropdown_link t("navigation.checklists"), checklist_templates_path,
+                  active: controller_name.in?(%w[checklist_templates checklist_items checklist_runs checklist_responses excursion_checklist_runs]) %>
+            <%= nav_dropdown_link t("navigation.dive_sites"), dive_sites_path,
+                  active: controller_name.in?(%w[dive_sites]) %>
+            <%= nav_dropdown_link t("navigation.medical_records"), medical_records_path,
+                  active: controller_name == "medical_records" && params[:customer_id].blank? %>
+            <%= nav_dropdown_link t("navigation.customer_tanks"), all_customer_tanks_path,
+                  active: controller_name == "all_customer_tanks" %>
+          </div>
+        </div>
+
         <%= nav_link t("navigation.review_queue"), review_queue_path,
-              active: controller_name.in?(%w[review_queue enrollment_reviews join_request_reviews]) %>
-        <% if current_user.owner? %>
-          <%= nav_link t("navigation.settings"), settings_domain_path,
-                active: controller_path.start_with?("settings") %>
-        <% end %>
+              active: controller_name.in?(%w[review_queue enrollment_reviews join_request_reviews]),
+              badge_count: @review_queue_count %>
       </div>
 
-      <%# Right: User info + sign out (desktop) %>
+      <%# Right: User menu (desktop) %>
       <div class="hidden md:flex md:items-center md:space-x-3">
-        <span class="text-sm text-gray-700"><%= current_user.name %></span>
-        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
-          <%= current_user.role.capitalize %>
-        </span>
-        <%= button_to t("navigation.sign_out"), session_path, method: :delete,
-              class: "text-sm text-gray-500 hover:text-gray-700" %>
+        <div class="relative" data-controller="dropdown">
+          <button type="button"
+                  data-dropdown-target="button"
+                  data-action="click->dropdown#toggle keydown->dropdown#keydown"
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                  class="inline-flex items-center text-sm font-medium <%= user_menu_nav_active? ? 'text-blue-600' : 'text-gray-700 hover:text-gray-900' %>">
+            <%= current_user.name %>
+            <span class="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+              <%= current_user.role.capitalize %>
+            </span>
+            <svg class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            </svg>
+          </button>
+          <div data-dropdown-target="menu"
+               data-action="keydown->dropdown#keydown"
+               class="hidden absolute right-0 mt-1 w-48 bg-white rounded-md shadow-lg border border-gray-200 py-1 z-50"
+               role="menu">
+            <%= nav_dropdown_link t("navigation.staff"), users_path,
+                  active: controller_name == "users" %>
+            <% if current_user.manager? || current_user.owner? %>
+              <%= nav_dropdown_link t("navigation.instructor_ratings"), instructor_ratings_path,
+                    active: controller_name == "instructor_ratings" %>
+            <% end %>
+            <% if current_user.owner? %>
+              <%= nav_dropdown_link t("navigation.settings"), settings_domain_path,
+                    active: controller_path.start_with?("settings") %>
+            <% end %>
+            <div class="border-t border-gray-200 my-1"></div>
+            <div class="px-4 py-2">
+              <%= button_to t("navigation.sign_out"), session_path, method: :delete,
+                    class: "text-sm text-gray-700 hover:text-gray-900 w-full text-left" %>
+            </div>
+          </div>
+        </div>
       </div>
 
       <%# Mobile hamburger %>
@@ -65,8 +113,15 @@
             active: controller_name.in?(%w[courses course_offerings class_sessions enrollments session_attendances]),
             mobile: true %>
       <%= nav_link t("navigation.customers"), customers_path,
-            active: controller_name.in?(%w[customers certifications medical_records equipment_profiles customer_tanks]),
+            active: controller_name.in?(%w[customers certifications equipment_profiles customer_tanks]),
             mobile: true %>
+      <%= nav_link t("navigation.review_queue"), review_queue_path,
+            active: controller_name.in?(%w[review_queue enrollment_reviews join_request_reviews]),
+            mobile: true,
+            badge_count: @review_queue_count %>
+
+      <%# Operations section %>
+      <%= nav_section_header t("navigation.operations") %>
       <%= nav_link t("navigation.equipment"), equipment_items_path,
             active: controller_name.in?(%w[equipment_items service_records]),
             mobile: true %>
@@ -76,15 +131,23 @@
       <%= nav_link t("navigation.dive_sites"), dive_sites_path,
             active: controller_name.in?(%w[dive_sites]),
             mobile: true %>
-      <%= nav_link t("navigation.instructor_ratings"), instructor_ratings_path,
-            active: controller_name.in?(%w[instructor_ratings]),
+      <%= nav_link t("navigation.medical_records"), medical_records_path,
+            active: controller_name == "medical_records" && params[:customer_id].blank?,
             mobile: true %>
+      <%= nav_link t("navigation.customer_tanks"), all_customer_tanks_path,
+            active: controller_name == "all_customer_tanks",
+            mobile: true %>
+
+      <%# Account section %>
+      <%= nav_section_header t("navigation.account") %>
       <%= nav_link t("navigation.staff"), users_path,
-            active: controller_name.in?(%w[users]),
+            active: controller_name == "users",
             mobile: true %>
-      <%= nav_link t("navigation.review_queue"), review_queue_path,
-            active: controller_name.in?(%w[review_queue enrollment_reviews join_request_reviews]),
-            mobile: true %>
+      <% if current_user.manager? || current_user.owner? %>
+        <%= nav_link t("navigation.instructor_ratings"), instructor_ratings_path,
+              active: controller_name == "instructor_ratings",
+              mobile: true %>
+      <% end %>
       <% if current_user.owner? %>
         <%= nav_link t("navigation.settings"), settings_domain_path,
               active: controller_path.start_with?("settings"),

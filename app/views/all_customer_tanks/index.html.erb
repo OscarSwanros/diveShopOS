@@ -1,0 +1,66 @@
+<div class="space-y-6">
+  <div class="flex items-center justify-between">
+    <h1 class="text-2xl font-bold"><%= t("customer_tanks.org_index.title") %></h1>
+  </div>
+
+  <%= render "shared/filter_bar", filters: [
+    { label: t("excursions.filters.all"), url: all_customer_tanks_path, active: params[:compliance].blank? },
+    { label: t("customer_tanks.org_index.compliant"), url: all_customer_tanks_path(compliance: "compliant"), active: params[:compliance] == "compliant" },
+    { label: t("customer_tanks.org_index.noncompliant"), url: all_customer_tanks_path(compliance: "noncompliant"), active: params[:compliance] == "noncompliant" }
+  ], semantic: case params[:compliance]
+    when "compliant" then :success
+    when "noncompliant" then :danger
+    else :default
+    end %>
+
+  <% if @customer_tanks.any? %>
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t("customer_tanks.table.serial") %></th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t("customers.table.name") %></th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t("customer_tanks.table.size") %></th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t("customer_tanks.table.vip") %></th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t("customer_tanks.table.hydro") %></th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t("customer_tanks.table.fill_ok") %></th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <% @customer_tanks.each do |tank| %>
+            <tr>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><%= tank.serial_number %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm">
+                <%= link_to tank.customer.full_name, customer_path(tank.customer), class: "text-blue-600 hover:text-blue-800" %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= tank.size.presence || "---" %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm">
+                <% if tank.vip_current? %>
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800"><%= t("customer_tanks.compliance.current") %></span>
+                <% else %>
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800"><%= t("customer_tanks.compliance.expired") %></span>
+                <% end %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm">
+                <% if tank.hydro_current? %>
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800"><%= t("customer_tanks.compliance.current") %></span>
+                <% else %>
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800"><%= t("customer_tanks.compliance.expired") %></span>
+                <% end %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm">
+                <% if tank.fill_compliant? %>
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800"><%= t("customer_tanks.compliance.fill_ok") %></span>
+                <% else %>
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800"><%= t("customer_tanks.compliance.fill_blocked") %></span>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p class="text-sm text-gray-500"><%= t("customer_tanks.org_index.empty") %></p>
+  <% end %>
+</div>

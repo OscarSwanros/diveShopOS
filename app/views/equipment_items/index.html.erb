@@ -7,21 +7,32 @@
     <% end %>
   </div>
 
-  <div class="flex flex-wrap gap-2">
-    <%= link_to t("excursions.filters.all"), equipment_items_path,
-      class: "px-3 py-1 text-sm rounded-md #{params[:category].blank? ? 'bg-blue-100 text-blue-800 font-medium' : 'text-gray-600 hover:bg-gray-100'}" %>
-    <% EquipmentItem.categories.each_key do |cat| %>
-      <%= link_to t("equipment_items.categories.#{cat}"), equipment_items_path(category: cat, status: params[:status]),
-        class: "px-3 py-1 text-sm rounded-md #{params[:category] == cat ? 'bg-blue-100 text-blue-800 font-medium' : 'text-gray-600 hover:bg-gray-100'}" %>
-    <% end %>
-  </div>
+  <%= render "shared/filter_bar", filters: [
+    { label: t("excursions.filters.all"), url: equipment_items_path, active: @safety_filter.blank? && params[:category].blank? },
+    { label: t("equipment_items.filters.service_overdue", default: "Service Overdue"), url: equipment_items_path(safety: "service_overdue"), active: @safety_filter == "service_overdue" }
+  ], semantic: @safety_filter == "service_overdue" ? :danger : :default %>
 
-  <div class="flex flex-wrap gap-2">
-    <% EquipmentItem.statuses.each_key do |st| %>
-      <%= link_to t("equipment_items.statuses.#{st}"), equipment_items_path(category: params[:category], status: st),
-        class: "px-3 py-1 text-sm rounded-md #{params[:status] == st ? 'bg-blue-100 text-blue-800 font-medium' : 'text-gray-600 hover:bg-gray-100'}" %>
-    <% end %>
-  </div>
+  <% if @safety_filter == "service_overdue" %>
+    <div class="bg-red-50 border border-red-200 rounded-md p-3" role="alert">
+      <p class="text-sm text-red-800"><%= t("equipment_items.filters.service_overdue_banner", default: "Showing life-support equipment overdue for service. These items must not be assigned until serviced.") %></p>
+    </div>
+  <% else %>
+    <div class="flex flex-wrap gap-2">
+      <%= link_to t("excursions.filters.all"), equipment_items_path,
+        class: "px-3 py-1 text-sm rounded-md #{params[:category].blank? ? 'bg-blue-100 text-blue-800 font-medium' : 'text-gray-600 hover:bg-gray-100'}" %>
+      <% EquipmentItem.categories.each_key do |cat| %>
+        <%= link_to t("equipment_items.categories.#{cat}"), equipment_items_path(category: cat, status: params[:status]),
+          class: "px-3 py-1 text-sm rounded-md #{params[:category] == cat ? 'bg-blue-100 text-blue-800 font-medium' : 'text-gray-600 hover:bg-gray-100'}" %>
+      <% end %>
+    </div>
+
+    <div class="flex flex-wrap gap-2">
+      <% EquipmentItem.statuses.each_key do |st| %>
+        <%= link_to t("equipment_items.statuses.#{st}"), equipment_items_path(category: params[:category], status: st),
+          class: "px-3 py-1 text-sm rounded-md #{params[:status] == st ? 'bg-blue-100 text-blue-800 font-medium' : 'text-gray-600 hover:bg-gray-100'}" %>
+      <% end %>
+    </div>
+  <% end %>
 
   <% if @equipment_items.any? %>
     <div class="overflow-x-auto">

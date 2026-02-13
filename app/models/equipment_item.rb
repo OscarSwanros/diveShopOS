@@ -25,6 +25,11 @@ class EquipmentItem < ApplicationRecord
   scope :active, -> { where.not(status: :retired) }
   scope :by_category, ->(cat) { where(category: cat) }
   scope :by_size, ->(size) { where(size: size) }
+  scope :life_support_service_overdue, -> {
+    where(life_support: true)
+      .where("next_service_due < ? OR next_service_due IS NULL", Date.current)
+      .where.not(status: :retired)
+  }
 
   def service_current?
     return true unless life_support?

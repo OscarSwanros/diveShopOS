@@ -4,7 +4,20 @@ class InstructorRatingsController < ApplicationController
   before_action :set_instructor_rating, only: [ :edit, :update, :destroy ]
 
   def index
-    @instructor_ratings = policy_scope(InstructorRating).includes(:user).order("users.name")
+    @instructor_ratings = policy_scope(InstructorRating).includes(:user)
+
+    case params[:status]
+    when "current"
+      @instructor_ratings = @instructor_ratings.current
+    when "expiring"
+      @instructor_ratings = @instructor_ratings.expiring_soon
+    when "expired"
+      @instructor_ratings = @instructor_ratings.expired_only
+    when "inactive"
+      @instructor_ratings = @instructor_ratings.where(active: false)
+    end
+
+    @instructor_ratings = @instructor_ratings.order("users.name")
   end
 
   def new

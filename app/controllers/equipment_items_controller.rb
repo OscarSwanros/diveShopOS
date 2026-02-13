@@ -5,10 +5,16 @@ class EquipmentItemsController < ApplicationController
 
   def index
     @equipment_items = policy_scope(current_organization.equipment_items)
+    @safety_filter = params[:safety]
 
-    @equipment_items = @equipment_items.by_category(params[:category]) if params[:category].present?
-    @equipment_items = @equipment_items.where(status: params[:status]) if params[:status].present?
-    @equipment_items = @equipment_items.by_size(params[:size]) if params[:size].present?
+    if @safety_filter == "service_overdue"
+      @equipment_items = @equipment_items.life_support_service_overdue
+    else
+      @equipment_items = @equipment_items.by_category(params[:category]) if params[:category].present?
+      @equipment_items = @equipment_items.where(status: params[:status]) if params[:status].present?
+      @equipment_items = @equipment_items.by_size(params[:size]) if params[:size].present?
+    end
+
     @equipment_items = @equipment_items.order(:category, :name)
   end
 

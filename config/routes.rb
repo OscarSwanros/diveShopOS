@@ -12,6 +12,10 @@ Rails.application.routes.draw do
     resources :customer_tanks
   end
 
+  # Org-wide indexes
+  resources :medical_records, only: [ :index ]
+  resources :customer_tanks, only: [ :index ], controller: "all_customer_tanks", as: :all_customer_tanks
+
   # Staff users
   resources :users
 
