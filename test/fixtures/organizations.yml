@@ -2,6 +2,7 @@ reef_divers:
   id: "org-reef-divers-uuid-0001"
   name: "Reef Divers"
   slug: "reef-divers"
+  custom_domain: "www.example.com"
   locale: "en"
   time_zone: "America/Cancun"
   created_at: <%= Time.current %>

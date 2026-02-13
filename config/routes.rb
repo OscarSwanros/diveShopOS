@@ -10,6 +10,9 @@ Rails.application.routes.draw do
     resources :medical_records, except: [ :index ]
   end
 
+  # Staff users
+  resources :users
+
   # Instructor ratings
   resources :instructor_ratings, only: [ :index, :new, :create, :edit, :update, :destroy ]
 

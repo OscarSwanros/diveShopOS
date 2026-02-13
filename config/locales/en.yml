@@ -5,8 +5,43 @@ en:
     customers: "Customers"
     dive_sites: "Dive Sites"
     instructor_ratings: "Ratings"
+    staff: "Staff"
     sign_out: "Sign Out"
     menu: "Menu"
+
+  users:
+    created: "Staff member created."
+    updated: "Staff member updated."
+    deleted: "Staff member removed."
+    index:
+      title: "Staff"
+      new: "New Staff Member"
+      empty: "No staff members yet."
+    new:
+      title: "New Staff Member"
+    edit:
+      title: "Edit Staff Member"
+    show:
+      email: "Email"
+      role: "Role"
+      instructor_ratings: "Instructor Ratings"
+      no_ratings: "No instructor ratings on file."
+    table:
+      name: "Name"
+      email: "Email"
+      role: "Role"
+      ratings: "Ratings"
+    form:
+      name: "Name"
+      email: "Email"
+      role: "Role"
+      password: "Password"
+      password_confirmation: "Confirm Password"
+      password_hint: "Leave blank to keep current password."
+    roles:
+      staff: "Staff"
+      manager: "Manager"
+      owner: "Owner"
 
   common:
     edit: "Edit"
