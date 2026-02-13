@@ -904,4 +904,143 @@ end
 
 puts "  Customer tanks: #{org.customer_tanks.count}"
 
+# --- Checklist Templates ---
+pre_departure = ChecklistTemplate.find_or_create_by!(organization: org, title: "Pre-Departure Safety Check") do |t|
+  t.description = "Safety items to verify before any boat departure. Required for all excursions."
+  t.category = :safety
+end
+
+post_trip = ChecklistTemplate.find_or_create_by!(organization: org, title: "Post-Trip Equipment Accounting") do |t|
+  t.description = "Account for all equipment and rinse after every trip."
+  t.category = :safety
+end
+
+shop_open = ChecklistTemplate.find_or_create_by!(organization: org, title: "Shop Opening Procedures") do |t|
+  t.description = "Daily shop opening checklist."
+  t.category = :operational
+end
+
+shop_close = ChecklistTemplate.find_or_create_by!(organization: org, title: "Shop Closing Procedures") do |t|
+  t.description = "Daily shop closing checklist."
+  t.category = :operational
+end
+
+weekly_inspection = ChecklistTemplate.find_or_create_by!(organization: org, title: "Weekly Equipment Visual Inspection") do |t|
+  t.description = "Weekly visual check of all rental life-support equipment."
+  t.category = :compliance
+end
+
+puts "  Checklist templates: #{org.checklist_templates.count}"
+
+# --- Checklist Items ---
+# Pre-Departure Safety Check items
+[
+  { title: "O2 kit onboard and pressure > 500 PSI", position: 0, required: true },
+  { title: "First aid kit stocked and sealed", position: 1, required: true },
+  { title: "VHF radio charged and tested (Ch 16 check)", position: 2, required: true },
+  { title: "Dive flag and alpha flag onboard", position: 3, required: true },
+  { title: "Emergency action plan posted and current", position: 4, required: true },
+  { title: "DAN emergency number posted", position: 5, required: true },
+  { title: "Float/rescue tube accessible", position: 6, required: true },
+  { title: "Headcount matches manifest", position: 7, required: true },
+  { title: "All participants have signed waivers", position: 8, required: true },
+  { title: "Weather and sea conditions reviewed", position: 9, required: true },
+  { title: "Reef-safe sunscreen available for guests", position: 10, required: false },
+  { title: "Water and snacks stocked", position: 11, required: false }
+].each do |attrs|
+  ChecklistItem.find_or_create_by!(checklist_template: pre_departure, title: attrs[:title]) do |i|
+    i.position = attrs[:position]
+    i.required = attrs[:required]
+  end
+end
+
+# Post-Trip Equipment items
+[
+  { title: "All tanks accounted for and secured", position: 0, required: true },
+  { title: "All rental gear returned and counted", position: 1, required: true },
+  { title: "Rinse all equipment with fresh water", position: 2, required: true },
+  { title: "Hang BCDs and wetsuits to dry", position: 3, required: true },
+  { title: "Inspect regulators for damage or salt buildup", position: 4, required: true },
+  { title: "Log any equipment issues for service", position: 5, required: true },
+  { title: "Boat rinsed and fuel level noted", position: 6, required: false }
+].each do |attrs|
+  ChecklistItem.find_or_create_by!(checklist_template: post_trip, title: attrs[:title]) do |i|
+    i.position = attrs[:position]
+    i.required = attrs[:required]
+  end
+end
+
+# Shop Opening items
+[
+  { title: "Turn on lights and AC", position: 0, required: true },
+  { title: "Open cash register and count float", position: 1, required: true },
+  { title: "Check phone and email for reservations", position: 2, required: true },
+  { title: "Review today's schedule (excursions + classes)", position: 3, required: true },
+  { title: "Unlock gear room and check rental inventory", position: 4, required: true }
+].each do |attrs|
+  ChecklistItem.find_or_create_by!(checklist_template: shop_open, title: attrs[:title]) do |i|
+    i.position = attrs[:position]
+    i.required = attrs[:required]
+  end
+end
+
+# Shop Closing items
+[
+  { title: "Close and count cash register", position: 0, required: true },
+  { title: "Lock gear room", position: 1, required: true },
+  { title: "Confirm all rental gear returned", position: 2, required: true },
+  { title: "Turn off AC and lights", position: 3, required: true },
+  { title: "Set alarm and lock up", position: 4, required: true }
+].each do |attrs|
+  ChecklistItem.find_or_create_by!(checklist_template: shop_close, title: attrs[:title]) do |i|
+    i.position = attrs[:position]
+    i.required = attrs[:required]
+  end
+end
+
+# Weekly Inspection items
+[
+  { title: "Inspect all BCD inflator mechanisms", position: 0, required: true },
+  { title: "Check regulator second stages for free-flow", position: 1, required: true },
+  { title: "Inspect tank valve O-rings", position: 2, required: true },
+  { title: "Check dive computer batteries", position: 3, required: true },
+  { title: "Inspect wetsuit zippers and seams", position: 4, required: false }
+].each do |attrs|
+  ChecklistItem.find_or_create_by!(checklist_template: weekly_inspection, title: attrs[:title]) do |i|
+    i.position = attrs[:position]
+    i.required = attrs[:required]
+  end
+end
+
+puts "  Checklist items: #{ChecklistItem.count}"
+
+# --- Checklist Runs (sample completed run for morning trip) ---
+run = ChecklistRun.find_or_create_by!(
+  organization: org,
+  checklist_template: pre_departure,
+  checkable: morning,
+  slug: "pre-departure-safety-check-seed"
+) do |r|
+  r.started_by = owner
+  r.status = :completed
+  r.completed_at = Time.current - 30.minutes
+  r.template_snapshot = {
+    template: { id: pre_departure.id, title: pre_departure.title, category: pre_departure.category },
+    items: pre_departure.checklist_items.order(:position).map { |i|
+      { id: i.id, title: i.title, position: i.position, required: i.required }
+    }
+  }
+end
+
+# Create responses for the completed run
+pre_departure.checklist_items.order(:position).each do |item|
+  ChecklistResponse.find_or_create_by!(checklist_run: run, checklist_item: item) do |r|
+    r.checked = true
+    r.checked_at = Time.current - 35.minutes
+    r.completed_by = owner
+  end
+end
+
+puts "  Checklist runs: #{org.checklist_runs.count}"
+
 puts "Done! Login with: oscar@abucear.mx / password"

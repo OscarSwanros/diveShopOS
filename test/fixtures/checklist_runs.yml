@@ -1,0 +1,36 @@
+morning_reef_safety:
+  id: "clr-morning-safety-uuid-0001"
+  slug: "pre-departure-safety-check-feb-13-2026-0800"
+  organization_id: "org-reef-divers-uuid-0001"
+  checklist_template_id: "clt-pre-departure-uuid-0001"
+  started_by_id: "user-maria-uuid-0001"
+  checkable_type: "Excursion"
+  checkable_id: "exc-morning-reef-uuid-0001"
+  status: 0
+  template_snapshot: '{"template":{"id":"clt-pre-departure-uuid-0001","title":"Pre-Departure Safety Check"},"items":[]}'
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+completed_run:
+  id: "clr-completed-uuid-0002"
+  slug: "pre-departure-safety-check-completed"
+  organization_id: "org-reef-divers-uuid-0001"
+  checklist_template_id: "clt-pre-departure-uuid-0001"
+  started_by_id: "user-carlos-uuid-0002"
+  status: 1
+  completed_at: <%= Time.current - 1.hour %>
+  template_snapshot: '{"template":{"id":"clt-pre-departure-uuid-0001","title":"Pre-Departure Safety Check"},"items":[]}'
+  created_at: <%= Time.current - 2.hours %>
+  updated_at: <%= Time.current - 1.hour %>
+
+abandoned_run:
+  id: "clr-abandoned-uuid-0003"
+  slug: "shop-opening-abandoned"
+  organization_id: "org-reef-divers-uuid-0001"
+  checklist_template_id: "clt-shop-open-uuid-0002"
+  started_by_id: "user-carlos-uuid-0002"
+  status: 3
+  notes: "Trip cancelled due to weather"
+  template_snapshot: '{"template":{"id":"clt-shop-open-uuid-0002","title":"Shop Opening Procedures"},"items":[]}'
+  created_at: <%= Time.current - 1.day %>
+  updated_at: <%= Time.current - 1.day %>

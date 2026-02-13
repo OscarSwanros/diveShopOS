@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_13_000016) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_13_100004) do
   create_table "api_tokens", id: :string, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "expires_at"
@@ -42,6 +42,76 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_000016) do
     t.index ["customer_id"], name: "index_certifications_on_customer_id"
     t.index ["discarded_at"], name: "index_certifications_on_discarded_at"
     t.index ["issuing_organization_id"], name: "index_certifications_on_issuing_organization_id"
+  end
+
+  create_table "checklist_items", id: :string, force: :cascade do |t|
+    t.string "auto_check_key"
+    t.string "checklist_template_id", null: false
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.integer "position", null: false
+    t.boolean "required", default: true, null: false
+    t.string "slug", null: false
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.index ["checklist_template_id", "position"], name: "index_checklist_items_on_checklist_template_id_and_position"
+    t.index ["checklist_template_id", "slug"], name: "index_checklist_items_on_checklist_template_id_and_slug", unique: true
+    t.index ["checklist_template_id"], name: "index_checklist_items_on_checklist_template_id"
+  end
+
+  create_table "checklist_responses", id: :string, force: :cascade do |t|
+    t.boolean "auto_verified", default: false, null: false
+    t.boolean "checked", default: false, null: false
+    t.datetime "checked_at"
+    t.string "checklist_item_id", null: false
+    t.string "checklist_run_id", null: false
+    t.string "completed_by_id"
+    t.datetime "created_at", null: false
+    t.text "notes"
+    t.datetime "updated_at", null: false
+    t.index ["checklist_item_id"], name: "index_checklist_responses_on_checklist_item_id"
+    t.index ["checklist_run_id", "checked"], name: "index_checklist_responses_on_checklist_run_id_and_checked"
+    t.index ["checklist_run_id", "checklist_item_id"], name: "index_checklist_responses_on_run_and_item", unique: true
+    t.index ["checklist_run_id"], name: "index_checklist_responses_on_checklist_run_id"
+    t.index ["completed_by_id"], name: "index_checklist_responses_on_completed_by_id"
+  end
+
+  create_table "checklist_runs", id: :string, force: :cascade do |t|
+    t.string "checkable_id"
+    t.string "checkable_type"
+    t.string "checklist_template_id", null: false
+    t.datetime "completed_at"
+    t.datetime "created_at", null: false
+    t.text "notes"
+    t.string "organization_id", null: false
+    t.string "slug", null: false
+    t.string "started_by_id", null: false
+    t.integer "status", default: 0, null: false
+    t.json "template_snapshot"
+    t.datetime "updated_at", null: false
+    t.index ["checkable_type", "checkable_id"], name: "index_checklist_runs_on_checkable_type_and_checkable_id"
+    t.index ["checklist_template_id"], name: "index_checklist_runs_on_checklist_template_id"
+    t.index ["organization_id", "checklist_template_id"], name: "index_checklist_runs_on_org_and_template"
+    t.index ["organization_id", "slug"], name: "index_checklist_runs_on_organization_id_and_slug", unique: true
+    t.index ["organization_id", "status"], name: "index_checklist_runs_on_organization_id_and_status"
+    t.index ["organization_id"], name: "index_checklist_runs_on_organization_id"
+    t.index ["started_by_id"], name: "index_checklist_runs_on_started_by_id"
+  end
+
+  create_table "checklist_templates", id: :string, force: :cascade do |t|
+    t.boolean "active", default: true, null: false
+    t.integer "category", null: false
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.string "organization_id", null: false
+    t.string "slug", null: false
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id", "active"], name: "index_checklist_templates_on_organization_id_and_active"
+    t.index ["organization_id", "category"], name: "index_checklist_templates_on_organization_id_and_category"
+    t.index ["organization_id", "slug"], name: "index_checklist_templates_on_organization_id_and_slug", unique: true
+    t.index ["organization_id", "title"], name: "index_checklist_templates_on_organization_id_and_title", unique: true
+    t.index ["organization_id"], name: "index_checklist_templates_on_organization_id"
   end
 
   create_table "class_sessions", id: :string, force: :cascade do |t|
@@ -389,6 +459,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_000016) do
   add_foreign_key "api_tokens", "users"
   add_foreign_key "certifications", "customers"
   add_foreign_key "certifications", "organizations", column: "issuing_organization_id"
+  add_foreign_key "checklist_items", "checklist_templates"
+  add_foreign_key "checklist_responses", "checklist_items"
+  add_foreign_key "checklist_responses", "checklist_runs"
+  add_foreign_key "checklist_responses", "users", column: "completed_by_id"
+  add_foreign_key "checklist_runs", "checklist_templates"
+  add_foreign_key "checklist_runs", "organizations"
+  add_foreign_key "checklist_runs", "users", column: "started_by_id"
+  add_foreign_key "checklist_templates", "organizations"
   add_foreign_key "class_sessions", "course_offerings"
   add_foreign_key "class_sessions", "dive_sites"
   add_foreign_key "course_offerings", "courses"

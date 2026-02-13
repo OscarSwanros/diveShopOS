@@ -17,6 +17,8 @@
               active: controller_name.in?(%w[customers certifications medical_records equipment_profiles customer_tanks]) %>
         <%= nav_link t("navigation.equipment"), equipment_items_path,
               active: controller_name.in?(%w[equipment_items service_records]) %>
+        <%= nav_link t("navigation.checklists"), checklist_templates_path,
+              active: controller_name.in?(%w[checklist_templates checklist_items checklist_runs checklist_responses excursion_checklist_runs]) %>
         <%= nav_link t("navigation.dive_sites"), dive_sites_path,
               active: controller_name.in?(%w[dive_sites]) %>
         <%= nav_link t("navigation.instructor_ratings"), instructor_ratings_path,
@@ -61,6 +63,9 @@
             mobile: true %>
       <%= nav_link t("navigation.equipment"), equipment_items_path,
             active: controller_name.in?(%w[equipment_items service_records]),
+            mobile: true %>
+      <%= nav_link t("navigation.checklists"), checklist_templates_path,
+            active: controller_name.in?(%w[checklist_templates checklist_items checklist_runs checklist_responses excursion_checklist_runs]),
             mobile: true %>
       <%= nav_link t("navigation.dive_sites"), dive_sites_path,
             active: controller_name.in?(%w[dive_sites]),

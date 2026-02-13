@@ -8,6 +8,7 @@ class EquipmentItem < ApplicationRecord
   slugged_by :name, scope: :organization_id
 
   has_many :service_records, dependent: :destroy
+  has_many :checklist_runs, as: :checkable, dependent: :nullify
 
   enum :category, {
     fins: 0, bcd: 1, regulator: 2, mask: 3, wetsuit: 4,

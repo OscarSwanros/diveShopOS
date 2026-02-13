@@ -109,6 +109,53 @@
     <% end %>
   </div>
 
+  <%# Checklists section %>
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-xl font-semibold"><%= t("navigation.checklists") %></h2>
+      <%= link_to t("checklist_runs.actions.start"), new_excursion_checklist_run_path(@excursion),
+        class: "inline-flex items-center px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+    </div>
+
+    <% runs = @excursion.checklist_runs.includes(:checklist_template, :started_by).order(created_at: :desc) %>
+    <% if runs.any? %>
+      <%# Readiness warning %>
+      <% readiness = Checklists::CheckExcursionReadiness.new(excursion: @excursion).call %>
+      <% unless readiness.success %>
+        <div class="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-md">
+          <p class="text-sm text-amber-800 font-medium"><%= readiness.reason %></p>
+        </div>
+      <% end %>
+
+      <div class="space-y-2">
+        <% runs.each do |run| %>
+          <% progress = run.progress %>
+          <div class="flex items-center justify-between p-3 rounded-md border border-gray-200">
+            <div class="flex items-center space-x-3">
+              <%= render partial: "checklist_runs/status_badge", locals: { run: run } %>
+              <div>
+                <p class="text-sm font-medium text-gray-900">
+                  <%= link_to run.checklist_template.title, checklist_run_path(run), class: "text-blue-600 hover:text-blue-800" %>
+                </p>
+                <p class="text-xs text-gray-500">
+                  <%= run.started_by.name %> &middot; <%= l(run.created_at, format: :short) %>
+                </p>
+              </div>
+            </div>
+            <div class="text-sm text-gray-700">
+              <%= progress[:checked] %>/<%= progress[:total] %>
+              <% if run.in_progress? %>
+                <span class="text-xs text-gray-500">(<%= progress[:percentage] %>%)</span>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-sm text-gray-500"><%= t("checklist_runs.index.empty") %></p>
+    <% end %>
+  </div>
+
   <%# Trip Manifest (Participants) section %>
   <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
     <div class="flex items-center justify-between mb-4">

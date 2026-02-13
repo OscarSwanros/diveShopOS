@@ -1,0 +1,70 @@
+o2_kit:
+  id: "cli-o2-kit-uuid-0001"
+  slug: "o2-kit-onboard"
+  checklist_template_id: "clt-pre-departure-uuid-0001"
+  title: "O2 kit onboard and pressure > 500 PSI"
+  position: 0
+  required: true
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+first_aid:
+  id: "cli-first-aid-uuid-0002"
+  slug: "first-aid-kit-stocked"
+  checklist_template_id: "clt-pre-departure-uuid-0001"
+  title: "First aid kit stocked"
+  position: 1
+  required: true
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+vhf_radio:
+  id: "cli-vhf-uuid-0003"
+  slug: "vhf-radio-charged"
+  checklist_template_id: "clt-pre-departure-uuid-0001"
+  title: "VHF radio charged and tested"
+  position: 2
+  required: true
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+dive_flag:
+  id: "cli-dive-flag-uuid-0004"
+  slug: "dive-flag-onboard"
+  checklist_template_id: "clt-pre-departure-uuid-0001"
+  title: "Dive flag onboard"
+  description: "Ensure both alpha flag and diver-down flag are available"
+  position: 3
+  required: true
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+sunscreen_optional:
+  id: "cli-sunscreen-uuid-0005"
+  slug: "reef-safe-sunscreen"
+  checklist_template_id: "clt-pre-departure-uuid-0001"
+  title: "Reef-safe sunscreen available"
+  position: 4
+  required: false
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+shop_lights:
+  id: "cli-shop-lights-uuid-0006"
+  slug: "turn-on-lights"
+  checklist_template_id: "clt-shop-open-uuid-0002"
+  title: "Turn on lights and AC"
+  position: 0
+  required: true
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+shop_register:
+  id: "cli-shop-register-uuid-0007"
+  slug: "open-register"
+  checklist_template_id: "clt-shop-open-uuid-0002"
+  title: "Open cash register"
+  position: 1
+  required: true
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

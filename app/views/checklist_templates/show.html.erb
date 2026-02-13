@@ -1,0 +1,119 @@
+<div class="space-y-6">
+  <div class="flex items-center justify-between">
+    <div>
+      <h1 class="text-2xl font-bold"><%= @template.title %></h1>
+      <p class="text-sm text-gray-500 mt-1">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+          <%= t("checklist_templates.categories.#{@template.category}") %>
+        </span>
+        <% if @template.active? %>
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 ml-1">
+            <%= t("checklist_templates.status.active") %>
+          </span>
+        <% else %>
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 ml-1">
+            <%= t("checklist_templates.status.inactive") %>
+          </span>
+        <% end %>
+      </p>
+    </div>
+    <div class="space-x-2">
+      <% if policy(@template).update? %>
+        <%= link_to t("common.edit"), edit_checklist_template_path(@template),
+          class: "inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-md border border-gray-300 hover:bg-gray-50" %>
+      <% end %>
+      <%= link_to t("common.back"), checklist_templates_path,
+        class: "inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-md border border-gray-300 hover:bg-gray-50" %>
+    </div>
+  </div>
+
+  <% if @template.description.present? %>
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <p class="text-sm text-gray-900"><%= @template.description %></p>
+    </div>
+  <% end %>
+
+  <%# Checklist Items %>
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-xl font-semibold"><%= t("checklist_templates.show.items") %></h2>
+      <% if policy(@template).update? %>
+        <%= link_to t("checklist_items.new.title"), new_checklist_template_checklist_item_path(@template),
+          class: "inline-flex items-center px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+      <% end %>
+    </div>
+
+    <% if @items.any? %>
+      <div class="space-y-2">
+        <% @items.each do |item| %>
+          <div class="flex items-start justify-between p-3 rounded-md border border-gray-200">
+            <div class="flex items-start space-x-3">
+              <span class="flex-shrink-0 inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-xs font-medium text-gray-600">
+                <%= item.position + 1 %>
+              </span>
+              <div>
+                <p class="text-sm font-medium text-gray-900">
+                  <%= item.title %>
+                  <% unless item.required? %>
+                    <span class="text-xs text-gray-500 ml-1">(optional)</span>
+                  <% end %>
+                </p>
+                <% if item.description.present? %>
+                  <p class="text-xs text-gray-500 mt-0.5"><%= item.description %></p>
+                <% end %>
+              </div>
+            </div>
+            <% if policy(@template).update? %>
+              <div class="flex space-x-2 flex-shrink-0 ml-4">
+                <%= link_to t("common.edit"), edit_checklist_template_checklist_item_path(@template, item),
+                  class: "text-sm text-blue-600 hover:text-blue-800" %>
+                <%= button_to t("common.delete"), checklist_template_checklist_item_path(@template, item),
+                  method: :delete,
+                  class: "text-sm text-red-600 hover:text-red-800",
+                  form: { data: { turbo_confirm: t("common.confirm_delete") } } %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-sm text-gray-500"><%= t("checklist_templates.index.empty") %></p>
+    <% end %>
+  </div>
+
+  <%# Recent Runs %>
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <h2 class="text-xl font-semibold mb-4"><%= t("checklist_templates.show.runs") %></h2>
+
+    <% if @runs.any? %>
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase"><%= t("checklist_runs.show.started_by") %></th>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase"><%= t("checklist_runs.show.started_at") %></th>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase"><%= t("checklist_runs.show.status") %></th>
+              <th class="px-4 py-2 text-right text-xs font-medium text-gray-500 uppercase"><%= t("common.actions") %></th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <% @runs.each do |run| %>
+              <tr>
+                <td class="px-4 py-2 text-sm text-gray-900"><%= run.started_by.name %></td>
+                <td class="px-4 py-2 text-sm text-gray-900"><%= l(run.created_at, format: :short) %></td>
+                <td class="px-4 py-2 text-sm">
+                  <%= render partial: "checklist_runs/status_badge", locals: { run: run } %>
+                </td>
+                <td class="px-4 py-2 text-sm text-right">
+                  <%= link_to t("common.actions"), checklist_run_path(run), class: "text-blue-600 hover:text-blue-800" %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% else %>
+      <p class="text-sm text-gray-500"><%= t("checklist_templates.show.no_runs") %></p>
+    <% end %>
+  </div>
+</div>

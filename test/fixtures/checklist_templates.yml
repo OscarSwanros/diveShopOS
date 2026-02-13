@@ -1,0 +1,52 @@
+pre_departure_safety:
+  id: "clt-pre-departure-uuid-0001"
+  slug: "pre-departure-safety-check"
+  organization_id: "org-reef-divers-uuid-0001"
+  title: "Pre-Departure Safety Check"
+  description: "Safety items to verify before any boat departure"
+  category: 1
+  active: true
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+shop_open:
+  id: "clt-shop-open-uuid-0002"
+  slug: "shop-opening-procedures"
+  organization_id: "org-reef-divers-uuid-0001"
+  title: "Shop Opening Procedures"
+  description: "Daily shop opening checklist"
+  category: 0
+  active: true
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+annual_inspection:
+  id: "clt-annual-insp-uuid-0003"
+  slug: "annual-equipment-inspection"
+  organization_id: "org-reef-divers-uuid-0001"
+  title: "Annual Equipment Inspection"
+  description: "Annual compliance inspection checklist"
+  category: 2
+  active: true
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+inactive_template:
+  id: "clt-inactive-uuid-0004"
+  slug: "old-checklist"
+  organization_id: "org-reef-divers-uuid-0001"
+  title: "Old Checklist"
+  category: 0
+  active: false
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+other_org_template:
+  id: "clt-other-org-uuid-0005"
+  slug: "other-org-safety"
+  organization_id: "org-blue-water-uuid-0002"
+  title: "Blue Water Safety Check"
+  category: 1
+  active: true
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

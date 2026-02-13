@@ -55,6 +55,7 @@ en:
     courses: "Courses"
     customers: "Customers"
     equipment: "Equipment"
+    checklists: "Checklists"
     dive_sites: "Dive Sites"
     instructor_ratings: "Ratings"
     staff: "Staff"
@@ -797,7 +798,116 @@ en:
       time_label: "New Time:"
       closing: "If you have any questions, please contact us."
 
+  checklist_templates:
+    created: "Checklist template created."
+    updated: "Checklist template updated."
+    deleted: "Checklist template deleted."
+    index:
+      title: "Checklist Templates"
+      new: "New Template"
+      empty: "No checklist templates yet. Create your first template to get started."
+    new:
+      title: "New Checklist Template"
+    edit:
+      title: "Edit Checklist Template"
+    show:
+      category: "Category"
+      status: "Status"
+      items: "Checklist Items"
+      runs: "Recent Runs"
+      no_runs: "No runs recorded yet."
+    table:
+      title: "Template"
+      category: "Category"
+      items: "Items"
+      status: "Status"
+    form:
+      title: "Title"
+      description: "Description"
+      category: "Category"
+      select_category: "Select a category..."
+      active: "Active"
+    categories:
+      operational: "Operational"
+      safety: "Safety"
+      compliance: "Compliance"
+    status:
+      active: "Active"
+      inactive: "Inactive"
+
+  checklist_items:
+    created: "Checklist item added."
+    updated: "Checklist item updated."
+    deleted: "Checklist item removed."
+    new:
+      title: "Add Item"
+    edit:
+      title: "Edit Item"
+    form:
+      title: "Title"
+      description: "Description"
+      description_hint: "Optional detailed instructions for this check."
+      position: "Position"
+      required: "Required"
+      required_hint: "Required items must be checked to complete the checklist."
+
+  checklist_runs:
+    created: "Checklist started."
+    completed: "Checklist completed."
+    completed_with_exceptions: "Checklist completed with exceptions."
+    abandoned: "Checklist abandoned."
+    index:
+      title: "Checklist Runs"
+      empty: "No checklist runs yet."
+    show:
+      template: "Template"
+      started_by: "Started By"
+      started_at: "Started At"
+      completed_at: "Completed At"
+      status: "Status"
+      linked_to: "Linked To"
+      progress: "Progress"
+      items: "Items"
+      notes: "Notes"
+      notes_placeholder: "Reason for completing with exceptions or abandoning..."
+    statuses:
+      in_progress: "In Progress"
+      completed: "Completed"
+      completed_with_exceptions: "Completed with Exceptions"
+      abandoned: "Abandoned"
+    actions:
+      complete: "Complete Checklist"
+      abandon: "Abandon Checklist"
+      start: "Start Checklist"
+      select_template: "Select a template..."
+
+  checklist_responses:
+    checked: "Checked"
+    unchecked: "Unchecked"
+    auto_verified: "Auto-verified"
+
+  excursion_checklist_runs:
+    new:
+      title: "Start Checklist for Excursion"
+      select_template: "Select a checklist template"
+      no_templates: "No safety checklist templates available. Create one first."
+    readiness_warning: "Safety checklists in progress: %{checklists}"
+
   services:
+    checklists:
+      start_run:
+        template_inactive: "This checklist template is inactive."
+        no_items: "This checklist template has no items."
+      complete_item:
+        run_not_in_progress: "This checklist run is not in progress."
+      complete_run:
+        not_in_progress: "This checklist run is not in progress."
+        notes_required: "Notes are required when completing a checklist with unchecked required items."
+      abandon_run:
+        not_in_progress: "This checklist run is not in progress."
+        notes_required: "Notes are required when abandoning a checklist."
+      check_excursion_readiness:
+        incomplete: "Incomplete safety checklists: %{checklists}"
     excursions:
       check_capacity:
         at_capacity: "This excursion is at capacity (%{count}/%{capacity}). Cannot add more participants."

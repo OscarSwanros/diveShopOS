@@ -1,0 +1,33 @@
+<div class="space-y-6">
+  <div class="flex items-center justify-between">
+    <h1 class="text-2xl font-bold"><%= t("excursion_checklist_runs.new.title") %></h1>
+    <%= link_to t("common.back"), excursion_path(@excursion),
+      class: "inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-md border border-gray-300 hover:bg-gray-50" %>
+  </div>
+
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <h2 class="text-lg font-medium mb-4"><%= t("excursion_checklist_runs.new.select_template") %></h2>
+
+    <% if @templates.any? %>
+      <div class="space-y-3">
+        <% @templates.each do |template| %>
+          <div class="flex items-center justify-between p-4 rounded-md border border-gray-200 hover:border-blue-300 hover:bg-blue-50">
+            <div>
+              <p class="text-sm font-medium text-gray-900"><%= template.title %></p>
+              <% if template.description.present? %>
+                <p class="text-xs text-gray-500 mt-0.5"><%= template.description %></p>
+              <% end %>
+              <p class="text-xs text-gray-400 mt-0.5"><%= template.checklist_items.count %> items</p>
+            </div>
+            <%= button_to t("checklist_runs.actions.start"),
+              excursion_checklist_runs_path(@excursion, checklist_template_id: template.slug),
+              method: :post,
+              class: "inline-flex items-center px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-sm text-gray-500"><%= t("excursion_checklist_runs.new.no_templates") %></p>
+    <% end %>
+  </div>
+</div>

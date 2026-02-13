@@ -1,0 +1,39 @@
+<div class="space-y-6">
+  <div class="flex items-center justify-between">
+    <h1 class="text-2xl font-bold"><%= t("checklist_runs.index.title") %></h1>
+  </div>
+
+  <% if @runs.any? %>
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t("checklist_runs.show.template") %></th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t("checklist_runs.show.started_by") %></th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t("checklist_runs.show.started_at") %></th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t("checklist_runs.show.progress") %></th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t("checklist_runs.show.status") %></th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <% @runs.each do |run| %>
+            <% progress = run.progress %>
+            <tr>
+              <td class="px-6 py-4 whitespace-nowrap text-sm">
+                <%= link_to run.checklist_template.title, checklist_run_path(run), class: "text-blue-600 hover:text-blue-800 font-medium" %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= run.started_by.name %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= l(run.created_at, format: :short) %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= progress[:checked] %>/<%= progress[:total] %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm">
+                <%= render partial: "checklist_runs/status_badge", locals: { run: run } %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p class="text-sm text-gray-500"><%= t("checklist_runs.index.empty") %></p>
+  <% end %>
+</div>

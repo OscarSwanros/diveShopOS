@@ -1,0 +1,139 @@
+<% progress = @run.progress %>
+
+<div class="space-y-6">
+  <div class="flex items-center justify-between">
+    <div>
+      <h1 class="text-2xl font-bold"><%= @run.checklist_template.title %></h1>
+      <p class="text-sm text-gray-500 mt-1">
+        <%= t("checklist_runs.show.started_by") %>: <%= @run.started_by.name %>
+        &middot; <%= l(@run.created_at, format: :short) %>
+        <% if @run.checkable.present? %>
+          &middot; <%= t("checklist_runs.show.linked_to") %>: <%= @run.checkable.try(:title) || @run.checkable.try(:name) %>
+        <% end %>
+      </p>
+    </div>
+    <div class="space-x-2">
+      <%= render partial: "checklist_runs/status_badge", locals: { run: @run } %>
+      <%= link_to t("common.back"), checklist_runs_path,
+        class: "inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-md border border-gray-300 hover:bg-gray-50" %>
+    </div>
+  </div>
+
+  <%# Progress bar %>
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-sm font-medium text-gray-700"><%= t("checklist_runs.show.progress") %></span>
+      <span class="text-sm font-medium text-gray-900"><%= progress[:checked] %>/<%= progress[:total] %> (<%= progress[:percentage] %>%)</span>
+    </div>
+    <div class="w-full bg-gray-200 rounded-full h-2.5">
+      <div class="bg-blue-600 h-2.5 rounded-full" style="width: <%= progress[:percentage] %>%"></div>
+    </div>
+  </div>
+
+  <%# Checklist Items %>
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <h2 class="text-xl font-semibold mb-4"><%= t("checklist_runs.show.items") %></h2>
+
+    <div class="space-y-3">
+      <% @responses.each do |response| %>
+        <div class="flex items-start justify-between p-3 rounded-md border <%= response.checked? ? 'border-green-200 bg-green-50' : 'border-gray-200' %>">
+          <div class="flex items-start space-x-3 flex-1">
+            <% if @run.in_progress? %>
+              <%= form_with model: [@run, response], url: checklist_run_checklist_response_path(@run, response), method: :patch, class: "flex items-start space-x-3 flex-1" do |f| %>
+                <div class="pt-0.5">
+                  <%= f.check_box :checked,
+                    checked: response.checked?,
+                    onchange: "this.form.requestSubmit()",
+                    class: "h-6 w-6 text-green-600 border-gray-300 rounded focus:ring-green-500",
+                    style: "min-width: 1.5rem; min-height: 1.5rem;" %>
+                </div>
+                <div class="flex-1">
+                  <p class="text-sm font-medium text-gray-900">
+                    <%= response.checklist_item.title %>
+                    <% unless response.checklist_item.required? %>
+                      <span class="text-xs text-gray-500 ml-1">(optional)</span>
+                    <% end %>
+                  </p>
+                  <% if response.checklist_item.description.present? %>
+                    <p class="text-xs text-gray-500 mt-0.5"><%= response.checklist_item.description %></p>
+                  <% end %>
+                  <% if response.checked? && response.completed_by.present? %>
+                    <p class="text-xs text-green-700 mt-1">
+                      <%= response.completed_by.name %> &middot; <%= l(response.checked_at, format: :short) %>
+                    </p>
+                  <% end %>
+                </div>
+              <% end %>
+            <% else %>
+              <div class="pt-0.5">
+                <% if response.checked? %>
+                  <svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                <% else %>
+                  <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                <% end %>
+              </div>
+              <div class="flex-1">
+                <p class="text-sm font-medium text-gray-900">
+                  <%= response.checklist_item.title %>
+                  <% unless response.checklist_item.required? %>
+                    <span class="text-xs text-gray-500 ml-1">(optional)</span>
+                  <% end %>
+                </p>
+                <% if response.checklist_item.description.present? %>
+                  <p class="text-xs text-gray-500 mt-0.5"><%= response.checklist_item.description %></p>
+                <% end %>
+                <% if response.checked? && response.completed_by.present? %>
+                  <p class="text-xs text-green-700 mt-1">
+                    <%= response.completed_by.name %> &middot; <%= l(response.checked_at, format: :short) %>
+                  </p>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <%# Notes and actions for in-progress runs %>
+  <% if @run.in_progress? %>
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 space-y-4">
+      <%= form_with url: complete_checklist_run_path(@run), method: :post, class: "space-y-3" do |f| %>
+        <div>
+          <%= f.label :notes, t("checklist_runs.show.notes"), class: "block text-sm font-medium text-gray-700" %>
+          <%= f.text_area :notes, rows: 2,
+            placeholder: t("checklist_runs.show.notes_placeholder"),
+            class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+        </div>
+        <%= f.submit t("checklist_runs.actions.complete"),
+          class: "inline-flex items-center px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 cursor-pointer" %>
+      <% end %>
+
+      <%= form_with url: abandon_checklist_run_path(@run), method: :post, class: "space-y-3 border-t border-gray-200 pt-4" do |f| %>
+        <div>
+          <%= f.text_area :notes, rows: 2,
+            placeholder: t("checklist_runs.show.notes_placeholder"),
+            class: "block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+        </div>
+        <%= f.submit t("checklist_runs.actions.abandon"),
+          class: "inline-flex items-center px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 cursor-pointer",
+          data: { turbo_confirm: t("common.confirm_delete") } %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%# Notes for completed/abandoned runs %>
+  <% if @run.notes.present? && !@run.in_progress? %>
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <h3 class="text-lg font-medium mb-2"><%= t("checklist_runs.show.notes") %></h3>
+      <p class="text-sm text-gray-900"><%= @run.notes %></p>
+      <% if @run.completed_at.present? %>
+        <p class="text-xs text-gray-500 mt-2"><%= t("checklist_runs.show.completed_at") %>: <%= l(@run.completed_at, format: :short) %></p>
+      <% end %>
+    </div>
+  <% end %>
+</div>

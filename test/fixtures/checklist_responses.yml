@@ -1,0 +1,46 @@
+o2_kit_response:
+  id: "clresp-o2-uuid-0001"
+  checklist_run_id: "clr-morning-safety-uuid-0001"
+  checklist_item_id: "cli-o2-kit-uuid-0001"
+  completed_by_id: "user-maria-uuid-0001"
+  checked: true
+  checked_at: <%= Time.current %>
+  auto_verified: false
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+first_aid_response:
+  id: "clresp-first-aid-uuid-0002"
+  checklist_run_id: "clr-morning-safety-uuid-0001"
+  checklist_item_id: "cli-first-aid-uuid-0002"
+  checked: false
+  auto_verified: false
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+vhf_response:
+  id: "clresp-vhf-uuid-0003"
+  checklist_run_id: "clr-morning-safety-uuid-0001"
+  checklist_item_id: "cli-vhf-uuid-0003"
+  checked: false
+  auto_verified: false
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+dive_flag_response:
+  id: "clresp-flag-uuid-0004"
+  checklist_run_id: "clr-morning-safety-uuid-0001"
+  checklist_item_id: "cli-dive-flag-uuid-0004"
+  checked: false
+  auto_verified: false
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+sunscreen_response:
+  id: "clresp-sunscreen-uuid-0005"
+  checklist_run_id: "clr-morning-safety-uuid-0001"
+  checklist_item_id: "cli-sunscreen-uuid-0005"
+  checked: false
+  auto_verified: false
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

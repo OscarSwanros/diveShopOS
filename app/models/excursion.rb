@@ -9,6 +9,7 @@ class Excursion < ApplicationRecord
 
   has_many :trip_dives, dependent: :destroy
   has_many :trip_participants, dependent: :destroy
+  has_many :checklist_runs, as: :checkable, dependent: :nullify
   has_many :dive_sites, through: :trip_dives
 
   enum :status, { draft: 0, published: 1, cancelled: 2, completed: 3 }

@@ -37,13 +37,27 @@ Rails.application.routes.draw do
     resources :service_records, except: [ :index ]
   end
 
+  # Checklists
+  resources :checklist_templates do
+    resources :checklist_items, except: [ :index, :show ]
+  end
+
+  resources :checklist_runs, only: [ :index, :show ] do
+    resources :checklist_responses, only: [ :update ]
+    member do
+      post :complete
+      post :abandon
+    end
+  end
+
   # Dive sites
   resources :dive_sites
 
-  # Excursions with nested trip dives and participants
+  # Excursions with nested trip dives, participants, and checklists
   resources :excursions do
     resources :trip_dives, only: [ :new, :create, :edit, :update, :destroy ]
     resources :trip_participants, only: [ :new, :create, :edit, :update, :destroy ]
+    resources :checklist_runs, only: [ :new, :create ], controller: "excursion_checklist_runs"
   end
 
   # API v1
@@ -81,6 +95,18 @@ Rails.application.routes.draw do
           resources :enrollments, except: [ :new, :edit ] do
             member { post :complete }
           end
+        end
+      end
+
+      resources :checklist_templates, except: [ :new, :edit ] do
+        resources :checklist_items, except: [ :new, :edit ]
+      end
+
+      resources :checklist_runs, only: [ :index, :show, :create, :destroy ] do
+        resources :checklist_responses, only: [ :index, :show, :update ]
+        member do
+          post :complete
+          post :abandon
         end
       end
 
