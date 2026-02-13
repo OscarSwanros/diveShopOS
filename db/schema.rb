@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_13_165134) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_13_170315) do
   create_table "api_tokens", id: :string, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "expires_at"
@@ -491,6 +491,25 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_165134) do
     t.index ["organization_id"], name: "index_users_on_organization_id"
   end
 
+  create_table "waitlist_entries", id: :string, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "customer_id", null: false
+    t.datetime "expires_at"
+    t.datetime "notified_at"
+    t.string "organization_id", null: false
+    t.integer "position", null: false
+    t.string "slug", null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "updated_at", null: false
+    t.string "waitlistable_id", null: false
+    t.string "waitlistable_type", null: false
+    t.index ["customer_id"], name: "index_waitlist_entries_on_customer_id"
+    t.index ["organization_id", "slug"], name: "index_waitlist_entries_on_organization_id_and_slug", unique: true
+    t.index ["organization_id"], name: "index_waitlist_entries_on_organization_id"
+    t.index ["waitlistable_type", "waitlistable_id", "customer_id"], name: "idx_waitlist_entries_on_waitlistable_and_customer", unique: true, where: "status = 0"
+    t.index ["waitlistable_type", "waitlistable_id", "position"], name: "idx_waitlist_entries_on_waitlistable_and_position", unique: true
+  end
+
   add_foreign_key "api_tokens", "users"
   add_foreign_key "certifications", "customers"
   add_foreign_key "certifications", "organizations", column: "issuing_organization_id"
@@ -530,4 +549,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_165134) do
   add_foreign_key "trip_participants", "customers"
   add_foreign_key "trip_participants", "excursions"
   add_foreign_key "users", "organizations"
+  add_foreign_key "waitlist_entries", "customers"
+  add_foreign_key "waitlist_entries", "organizations"
 end

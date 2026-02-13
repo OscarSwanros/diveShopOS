@@ -1093,6 +1093,8 @@ en:
     cancellations:
       enrollment_cancelled: "Your enrollment has been cancelled."
       join_cancelled: "Your trip participation has been cancelled."
+      confirm_enrollment: "Are you sure you want to cancel this enrollment?"
+      confirm_join: "Are you sure you want to cancel this trip participation?"
 
   review_queue:
     title: "Review Queue"

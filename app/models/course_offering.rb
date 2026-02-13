@@ -11,6 +11,7 @@ class CourseOffering < ApplicationRecord
 
   has_many :class_sessions, dependent: :destroy
   has_many :enrollments, dependent: :restrict_with_error
+  has_many :waitlist_entries, as: :waitlistable, dependent: :destroy
 
   enum :status, { draft: 0, published: 1, in_progress: 2, completed: 3, cancelled: 4 }
 
