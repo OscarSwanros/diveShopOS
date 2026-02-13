@@ -48,9 +48,8 @@ class EnrollmentReviewsControllerTest < ActionDispatch::IntegrationTest
 
   test "approve denied for staff role" do
     sign_in_staff(@staff)
-    assert_raises(Pundit::NotAuthorizedError) do
-      post approve_enrollment_review_path(@enrollment)
-    end
+    post approve_enrollment_review_path(@enrollment)
+    assert_response :forbidden
   end
 
   test "decline changes status to declined with reason" do

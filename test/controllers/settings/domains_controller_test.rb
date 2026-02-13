@@ -27,16 +27,14 @@ class Settings::DomainsControllerTest < ActionDispatch::IntegrationTest
 
   test "manager cannot access domain settings" do
     sign_in @manager
-    assert_raises(Pundit::NotAuthorizedError) do
-      get settings_domain_path
-    end
+    get settings_domain_path
+    assert_response :forbidden
   end
 
   test "staff cannot access domain settings" do
     sign_in @staff
-    assert_raises(Pundit::NotAuthorizedError) do
-      get settings_domain_path
-    end
+    get settings_domain_path
+    assert_response :forbidden
   end
 
   # --- Show ---

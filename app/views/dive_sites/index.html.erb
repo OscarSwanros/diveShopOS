@@ -43,6 +43,11 @@
       </table>
     </div>
   <% else %>
-    <p class="text-sm text-gray-500"><%= t("dive_sites.index.empty") %></p>
+    <%= render "shared/empty_state",
+      icon: :dive_sites,
+      title: t("empty_states.dive_sites.title"),
+      description: t("empty_states.dive_sites.description"),
+      action_text: policy(DiveSite).create? ? t("dive_sites.index.new") : nil,
+      action_path: policy(DiveSite).create? ? new_dive_site_path : nil %>
   <% end %>
 </div>

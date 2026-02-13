@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_13_170315) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_13_220636) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -398,6 +398,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_170315) do
     t.string "custom_domain"
     t.string "locale", default: "en", null: false
     t.string "name", null: false
+    t.boolean "onboarding_dismissed", default: false, null: false
     t.string "slug", null: false
     t.string "subdomain"
     t.string "tagline"
@@ -480,6 +481,23 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_170315) do
     t.index ["excursion_id"], name: "index_trip_participants_on_excursion_id"
   end
 
+  create_table "user_invitations", id: :string, force: :cascade do |t|
+    t.datetime "accepted_at"
+    t.datetime "created_at", null: false
+    t.string "email", null: false
+    t.datetime "expires_at", null: false
+    t.string "invited_by_id", null: false
+    t.string "name", null: false
+    t.string "organization_id", null: false
+    t.integer "role", default: 0, null: false
+    t.string "token_digest", null: false
+    t.datetime "updated_at", null: false
+    t.index ["invited_by_id"], name: "index_user_invitations_on_invited_by_id"
+    t.index ["organization_id", "email"], name: "index_user_invitations_on_org_email_pending", unique: true, where: "(accepted_at IS NULL)"
+    t.index ["organization_id"], name: "index_user_invitations_on_organization_id"
+    t.index ["token_digest"], name: "index_user_invitations_on_token_digest", unique: true
+  end
+
   create_table "users", id: :string, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email_address", null: false
@@ -551,6 +569,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_170315) do
   add_foreign_key "trip_dives", "excursions"
   add_foreign_key "trip_participants", "customers"
   add_foreign_key "trip_participants", "excursions"
+  add_foreign_key "user_invitations", "organizations"
+  add_foreign_key "user_invitations", "users", column: "invited_by_id"
   add_foreign_key "users", "organizations"
   add_foreign_key "waitlist_entries", "customers"
   add_foreign_key "waitlist_entries", "organizations"

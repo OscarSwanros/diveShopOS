@@ -50,9 +50,8 @@ class JoinRequestReviewsControllerTest < ActionDispatch::IntegrationTest
 
   test "approve denied for staff role" do
     sign_in_staff(@staff)
-    assert_raises(Pundit::NotAuthorizedError) do
-      post approve_join_request_review_path(@participant)
-    end
+    post approve_join_request_review_path(@participant)
+    assert_response :forbidden
   end
 
   test "decline changes status to tp_cancelled with reason" do

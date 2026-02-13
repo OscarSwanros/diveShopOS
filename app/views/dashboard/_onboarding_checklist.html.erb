@@ -1,0 +1,73 @@
+<div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 space-y-6">
+  <%# Demo data banner %>
+  <% if @has_demo_data %>
+    <div class="bg-blue-50 border border-blue-200 rounded-md p-4">
+      <p class="text-sm text-blue-800 mb-3"><%= t("onboarding.demo_banner.message") %></p>
+      <div class="flex items-center gap-3">
+        <%= link_to t("onboarding.demo_banner.explore"),
+          root_path,
+          class: "inline-flex items-center px-3 py-1.5 bg-white text-blue-700 text-sm font-medium rounded-md border border-blue-300 hover:bg-blue-50" %>
+        <%= button_to t("onboarding.demo_banner.start_fresh"),
+          clear_demo_data_path,
+          method: :delete,
+          class: "inline-flex items-center px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+      </div>
+    </div>
+  <% end %>
+
+  <%# Checklist header %>
+  <div>
+    <h2 class="text-lg font-semibold text-gray-900"><%= t("onboarding.checklist.title") %></h2>
+    <p class="text-sm text-gray-500 mt-1">
+      <%= t("onboarding.checklist.progress", completed: onboarding.completed_count, total: onboarding.total_count) %>
+    </p>
+  </div>
+
+  <%# Progress bar %>
+  <div class="w-full bg-gray-200 rounded-full h-2" role="progressbar"
+    aria-valuenow="<%= onboarding.progress_percentage %>"
+    aria-valuemin="0" aria-valuemax="100"
+    aria-label="<%= t("onboarding.checklist.progress_label") %>">
+    <div class="bg-green-500 h-2 rounded-full transition-all duration-300"
+      style="width: <%= onboarding.progress_percentage %>%"></div>
+  </div>
+
+  <%# Steps %>
+  <ol class="space-y-3">
+    <% onboarding.steps.each_with_index do |step, index| %>
+      <li class="flex items-start gap-3">
+        <% if step.completed %>
+          <span class="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full bg-green-100 text-green-600" aria-label="<%= t("onboarding.checklist.completed") %>">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          </span>
+        <% else %>
+          <span class="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full bg-gray-200 text-gray-600 text-xs font-medium">
+            <%= index + 1 %>
+          </span>
+        <% end %>
+
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center justify-between gap-2">
+            <p class="text-sm font-medium <%= step.completed ? 'text-gray-400 line-through' : 'text-gray-900' %>">
+              <%= step.title %>
+            </p>
+            <% unless step.completed %>
+              <%= link_to t("onboarding.checklist.action"),
+                send(step.path),
+                class: "flex-shrink-0 text-sm font-medium text-blue-600 hover:text-blue-800" %>
+            <% end %>
+          </div>
+          <p class="text-xs text-gray-500 mt-0.5"><%= step.description %></p>
+        </div>
+      </li>
+    <% end %>
+  </ol>
+
+  <%# Skip link %>
+  <div class="text-center pt-2 border-t border-gray-100">
+    <%= button_to t("onboarding.checklist.skip"),
+      dismiss_onboarding_path,
+      method: :patch,
+      class: "text-sm text-gray-400 hover:text-gray-600" %>
+  </div>
+</div>

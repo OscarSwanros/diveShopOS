@@ -49,6 +49,11 @@
       </table>
     </div>
   <% else %>
-    <p class="text-sm text-gray-500"><%= t("courses.index.empty") %></p>
+    <%= render "shared/empty_state",
+      icon: :courses,
+      title: t("empty_states.courses.title"),
+      description: t("empty_states.courses.description"),
+      action_text: policy(Course).create? ? t("courses.index.new") : nil,
+      action_path: policy(Course).create? ? new_course_path : nil %>
   <% end %>
 </div>

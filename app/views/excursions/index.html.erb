@@ -53,6 +53,11 @@
       </table>
     </div>
   <% else %>
-    <p class="text-sm text-gray-500"><%= t("excursions.index.empty") %></p>
+    <%= render "shared/empty_state",
+      icon: :excursions,
+      title: t("empty_states.excursions.title"),
+      description: t("empty_states.excursions.description"),
+      action_text: policy(Excursion).create? ? t("excursions.index.new") : nil,
+      action_path: policy(Excursion).create? ? new_excursion_path : nil %>
   <% end %>
 </div>

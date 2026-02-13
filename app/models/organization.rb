@@ -19,6 +19,7 @@ class Organization < ApplicationRecord
   has_many :customer_tanks, dependent: :destroy
   has_many :checklist_templates, dependent: :destroy
   has_many :checklist_runs, dependent: :destroy
+  has_many :user_invitations, dependent: :destroy
 
   has_one_attached :logo
   has_one_attached :favicon

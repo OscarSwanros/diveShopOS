@@ -1,0 +1,58 @@
+<% content_for(:page_title) { t("onboarding.registration.title") } %>
+
+<div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+  <h1 class="text-2xl font-bold text-gray-900 mb-2"><%= t("onboarding.registration.title") %></h1>
+  <p class="text-sm text-gray-500 mb-6"><%= t("onboarding.registration.subtitle") %></p>
+
+  <% if flash[:alert] %>
+    <div class="mb-4 p-3 bg-red-100 text-red-800 rounded-md text-sm" role="alert">
+      <%= flash[:alert] %>
+    </div>
+  <% end %>
+
+  <%= form_with url: onboarding_start_path, method: :post, class: "space-y-4" do |f| %>
+    <div>
+      <%= f.label :shop_name, t("onboarding.registration.shop_name"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :shop_name, required: true, autofocus: true,
+        value: params[:shop_name],
+        placeholder: t("onboarding.registration.shop_name_placeholder"),
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+
+    <div>
+      <%= f.label :owner_name, t("onboarding.registration.owner_name"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :owner_name, required: true,
+        value: params[:owner_name],
+        placeholder: t("onboarding.registration.owner_name_placeholder"),
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+
+    <div>
+      <%= f.label :email, t("onboarding.registration.email"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.email_field :email, required: true,
+        value: params[:email],
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+
+    <div>
+      <%= f.label :password, t("onboarding.registration.password"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.password_field :password, required: true,
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+
+    <div>
+      <%= f.label :password_confirmation, t("onboarding.registration.password_confirmation"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.password_field :password_confirmation, required: true,
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+
+    <div>
+      <%= f.submit t("onboarding.registration.submit"), class: "w-full inline-flex justify-center items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer" %>
+    </div>
+  <% end %>
+
+  <p class="mt-4 text-center text-sm text-gray-500">
+    <%= t("onboarding.registration.have_account") %>
+    <%= link_to t("onboarding.registration.sign_in_link"), new_session_path, class: "text-blue-600 hover:text-blue-800 font-medium" %>
+  </p>
+</div>

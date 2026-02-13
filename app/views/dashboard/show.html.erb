@@ -1,6 +1,11 @@
 <% content_for(:page_title) { t("dashboard.title") } %>
 
 <div class="space-y-6">
+  <%# Onboarding Checklist %>
+  <% unless @onboarding.complete? || current_organization.onboarding_dismissed? %>
+    <%= render "dashboard/onboarding_checklist", onboarding: @onboarding %>
+  <% end %>
+
   <%# Header %>
   <div>
     <h1 class="text-2xl font-bold text-gray-900"><%= dashboard_greeting(current_user) %></h1>

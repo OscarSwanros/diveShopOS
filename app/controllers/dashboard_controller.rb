@@ -4,6 +4,7 @@ class DashboardController < ApplicationController
   def show
     authorize :dashboard, :show?
 
+    load_onboarding
     load_todays_schedule
     load_safety_alerts
     load_upcoming
@@ -11,6 +12,11 @@ class DashboardController < ApplicationController
   end
 
   private
+
+  def load_onboarding
+    @onboarding = OnboardingChecklist.new(organization: current_organization)
+    @has_demo_data = current_organization.customers.where(notes: Onboarding::SeedDemoData::DEMO_TAG).exists?
+  end
 
   def load_todays_schedule
     @todays_excursions = current_organization.excursions

@@ -85,6 +85,11 @@
       </table>
     </div>
   <% else %>
-    <p class="text-sm text-gray-500"><%= t("equipment_items.index.empty") %></p>
+    <%= render "shared/empty_state",
+      icon: :equipment,
+      title: t("empty_states.equipment.title"),
+      description: t("empty_states.equipment.description"),
+      action_text: policy(EquipmentItem).create? ? t("equipment_items.index.new") : nil,
+      action_path: policy(EquipmentItem).create? ? new_equipment_item_path : nil %>
   <% end %>
 </div>

@@ -1220,6 +1220,110 @@ en:
             custom_domain:
               invalid_domain: "is not a valid domain name."
 
+  onboarding:
+    registration:
+      title: "Start Your Dive Shop"
+      subtitle: "Set up your shop in under 2 minutes. No credit card required."
+      shop_name: "Shop Name"
+      shop_name_placeholder: "e.g., Blue Horizon Diving"
+      owner_name: "Your Name"
+      owner_name_placeholder: "e.g., Maria Torres"
+      email: "Email"
+      password: "Password"
+      password_confirmation: "Confirm Password"
+      submit: "Create My Shop"
+      have_account: "Already have a shop?"
+      sign_in_link: "Sign in"
+      errors:
+        fields_required: "Shop name, your name, and email are required."
+        password_mismatch: "Password and confirmation do not match."
+    checklist:
+      title: "Getting Started"
+      progress: "%{completed} of %{total} completed"
+      progress_label: "Onboarding progress"
+      completed: "Completed"
+      action: "Start"
+      skip: "Skip setup guide"
+      steps:
+        add_dive_site:
+          title: "Add a dive site"
+          description: "Add the sites you dive regularly so you can link them to excursions."
+        add_staff:
+          title: "Add a staff member"
+          description: "Bring your instructors, divemasters, and front desk staff on board."
+        schedule_excursion:
+          title: "Schedule an excursion"
+          description: "Create your first dive trip with a date, capacity, and dive plan."
+        create_course:
+          title: "Create a course"
+          description: "Add the courses you teach to start tracking enrollments."
+        add_customer:
+          title: "Add your first customer"
+          description: "Every diver gets a profile with certifications and medical records."
+        invite_team:
+          title: "Invite your team"
+          description: "Send invitations so staff can log in with their own accounts."
+        set_branding:
+          title: "Set up your branding"
+          description: "Add your brand colors so your shop feels like home."
+    demo_banner:
+      message: "You're looking at sample data to show you how DiveShopOS works. When you're ready, clear it and start with your own."
+      explore: "Explore Sample Data"
+      start_fresh: "Start Fresh"
+      cleared: "Demo data cleared. You're starting fresh!"
+    invitation:
+      new_title: "Invite Staff Member"
+      accept_title: "Join Your Team"
+      accept_subtitle: "You've been invited to join %{organization} on DiveShopOS."
+      sent: "Invitation sent!"
+      revoked: "Invitation revoked."
+      accepted: "Welcome! You're all set."
+      form:
+        name: "Name"
+        email: "Email"
+        role: "Role"
+        password: "Choose a Password"
+        password_confirmation: "Confirm Password"
+        submit: "Send Invitation"
+        accept: "Set Password & Join"
+      errors:
+        already_invited: "This email already has a pending invitation."
+        already_staff: "This email is already a staff member."
+        invalid_token: "This invitation link is invalid."
+        already_accepted: "This invitation has already been accepted."
+        expired: "This invitation has expired. Ask your shop owner to resend it."
+        invalid_or_expired: "This invitation link is invalid or has expired."
+    dismissed:
+      success: "Setup guide dismissed."
+
+  empty_states:
+    excursions:
+      title: "Schedule your first dive trip"
+      description: "Excursions are the trips you run -- boat dives, shore dives, snorkel trips. Set one up to start building manifests and tracking participants."
+    courses:
+      title: "Build your course catalog"
+      description: "Add the courses you teach -- from beginner to professional. DiveShopOS tracks enrollments, attendance, and issues certifications on completion."
+    customers:
+      title: "Add your divers"
+      description: "Every diver who visits your shop gets a profile. Track their certifications, medical clearance, and dive history in one place."
+    equipment:
+      title: "Track your gear"
+      description: "From regulators to BCDs, track every piece of rental equipment. Get alerts when life-support gear is due for service."
+    dive_sites:
+      title: "Map your dive sites"
+      description: "Add the sites you dive regularly -- depth, conditions, access notes. Link them to excursions so staff always have the info they need."
+    staff:
+      title: "Bring your team on board"
+      description: "Add your instructors, divemasters, and front desk staff. Each person gets their own login with role-appropriate permissions."
+
+  staff_invitation_mailer:
+    invite:
+      subject: "You're invited to join %{organization} on DiveShopOS"
+      greeting: "Hello %{name}!"
+      body: "You've been invited to join %{organization} on DiveShopOS by %{invited_by}."
+      action: "Accept Invitation"
+      expiry: "This invitation expires in 7 days."
+
   staff_notification_mailer:
     new_enrollment_request:
       subject: "New enrollment request: %{customer} for %{course}"

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for?(:page_title) ? "#{content_for(:page_title)} | DiveShopOS" : "DiveShopOS" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="application-name" content="DiveShopOS">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="bg-gray-50 min-h-screen flex flex-col">
+    <header class="py-6 text-center">
+      <span class="text-xl font-bold text-gray-900">DiveShopOS</span>
+    </header>
+
+    <main class="flex-1 flex items-start justify-center px-4 sm:px-6 lg:px-8 pb-12">
+      <div class="w-full max-w-lg">
+        <%= render "shared/flash" if defined?(flash) %>
+        <%= yield %>
+      </div>
+    </main>
+  </body>
+</html>

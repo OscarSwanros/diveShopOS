@@ -42,7 +42,8 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test "staff cannot access new user form" do
     sign_in @staff
-    assert_raises(Pundit::NotAuthorizedError) { get new_user_path }
+    get new_user_path
+    assert_response :forbidden
   end
 
   # --- Create ---
@@ -66,15 +67,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test "staff cannot create a user" do
     sign_in @staff
-    assert_raises(Pundit::NotAuthorizedError) do
-      post users_path, params: { user: {
-        name: "Sneaky",
-        email_address: "sneaky@reefdivers.com",
-        password: "password123",
-        password_confirmation: "password123",
-        role: "staff"
-      } }
-    end
+    post users_path, params: { user: {
+      name: "Sneaky",
+      email_address: "sneaky@reefdivers.com",
+      password: "password123",
+      password_confirmation: "password123",
+      role: "staff"
+    } }
+    assert_response :forbidden
   end
 
   test "create re-renders form on validation error" do
@@ -106,7 +106,8 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test "staff cannot edit other users" do
     sign_in @staff
-    assert_raises(Pundit::NotAuthorizedError) { get edit_user_path(@manager) }
+    get edit_user_path(@manager)
+    assert_response :forbidden
   end
 
   # --- Update ---
@@ -140,12 +141,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test "owner cannot destroy themselves" do
     sign_in @owner
-    assert_raises(Pundit::NotAuthorizedError) { delete user_path(@owner) }
+    delete user_path(@owner)
+    assert_response :forbidden
   end
 
   test "staff cannot destroy users" do
     sign_in @staff
-    assert_raises(Pundit::NotAuthorizedError) { delete user_path(@manager) }
+    delete user_path(@manager)
+    assert_response :forbidden
   end
 
   private

@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
   before_action :require_authentication
   before_action :load_review_queue_count
 
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
 
@@ -40,6 +42,13 @@ class ApplicationController < ActionController::Base
 
   def pundit_user
     current_user
+  end
+
+  def user_not_authorized
+    respond_to do |format|
+      format.html { head :forbidden }
+      format.json { head :forbidden }
+    end
   end
 
   def load_review_queue_count

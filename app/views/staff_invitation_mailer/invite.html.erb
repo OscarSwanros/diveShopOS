@@ -1,0 +1,7 @@
+<p><%= I18n.t("staff_invitation_mailer.invite.greeting", name: @invitation.name) %></p>
+
+<p><%= I18n.t("staff_invitation_mailer.invite.body", organization: @organization.name, invited_by: @invitation.invited_by.name) %></p>
+
+<p><%= link_to I18n.t("staff_invitation_mailer.invite.action"), @accept_url %></p>
+
+<p><%= I18n.t("staff_invitation_mailer.invite.expiry") %></p>

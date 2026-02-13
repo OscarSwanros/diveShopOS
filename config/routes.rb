@@ -1,6 +1,25 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  # Onboarding: shop registration (platform-level, no tenant/auth)
+  scope module: :onboarding do
+    get  "start", to: "registrations#new", as: :onboarding_start
+    post "start", to: "registrations#create"
+  end
+
+  # Invitation acceptance (tenant-resolved, no auth)
+  scope module: :onboarding do
+    get  "invitations/:token/accept", to: "invitation_acceptances#new", as: :accept_invitation
+    post "invitations/:token/accept", to: "invitation_acceptances#create"
+  end
+
+  # Onboarding management (authenticated)
+  delete "onboarding/demo_data", to: "onboarding/demo_data#destroy", as: :clear_demo_data
+  patch  "onboarding/dismiss", to: "onboarding/dismissals#update", as: :dismiss_onboarding
+
+  # Staff invitation management (authenticated, owner-only)
+  resources :user_invitations, only: [ :new, :create, :destroy ], path: "invitations"
+
   # Authentication
   resource :session, only: [ :new, :create, :destroy ]
 

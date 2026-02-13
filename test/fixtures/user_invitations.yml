@@ -1,0 +1,38 @@
+pending_invitation:
+  id: "inv-pending-uuid-0001"
+  organization_id: "org-reef-divers-uuid-0001"
+  invited_by_id: "user-maria-uuid-0001"
+  email: "newstaff@example.com"
+  name: "New Staff"
+  role: 0
+  token_digest: <%= Digest::SHA256.hexdigest("valid-invitation-token") %>
+  accepted_at:
+  expires_at: <%= 7.days.from_now %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+expired_invitation:
+  id: "inv-expired-uuid-0002"
+  organization_id: "org-reef-divers-uuid-0001"
+  invited_by_id: "user-maria-uuid-0001"
+  email: "expired@example.com"
+  name: "Expired Staff"
+  role: 0
+  token_digest: <%= Digest::SHA256.hexdigest("expired-invitation-token") %>
+  accepted_at:
+  expires_at: <%= 1.day.ago %>
+  created_at: <%= 8.days.ago %>
+  updated_at: <%= 8.days.ago %>
+
+accepted_invitation:
+  id: "inv-accepted-uuid-0003"
+  organization_id: "org-reef-divers-uuid-0001"
+  invited_by_id: "user-maria-uuid-0001"
+  email: "accepted@example.com"
+  name: "Accepted Staff"
+  role: 0
+  token_digest: <%= Digest::SHA256.hexdigest("accepted-invitation-token") %>
+  accepted_at: <%= 2.days.ago %>
+  expires_at: <%= 5.days.from_now %>
+  created_at: <%= 7.days.ago %>
+  updated_at: <%= 2.days.ago %>

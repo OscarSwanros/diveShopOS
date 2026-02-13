@@ -41,6 +41,11 @@
       </table>
     </div>
   <% else %>
-    <p class="text-sm text-gray-500"><%= t("users.index.empty") %></p>
+    <%= render "shared/empty_state",
+      icon: :staff,
+      title: t("empty_states.staff.title"),
+      description: t("empty_states.staff.description"),
+      action_text: policy(User).create? ? t("users.index.new") : nil,
+      action_path: policy(User).create? ? new_user_path : nil %>
   <% end %>
 </div>
