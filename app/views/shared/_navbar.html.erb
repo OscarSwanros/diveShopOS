@@ -27,6 +27,10 @@
               active: controller_name.in?(%w[users]) %>
         <%= nav_link t("navigation.review_queue"), review_queue_path,
               active: controller_name.in?(%w[review_queue enrollment_reviews join_request_reviews]) %>
+        <% if current_user.owner? %>
+          <%= nav_link t("navigation.settings"), settings_domain_path,
+                active: controller_path.start_with?("settings") %>
+        <% end %>
       </div>
 
       <%# Right: User info + sign out (desktop) %>
@@ -81,6 +85,11 @@
       <%= nav_link t("navigation.review_queue"), review_queue_path,
             active: controller_name.in?(%w[review_queue enrollment_reviews join_request_reviews]),
             mobile: true %>
+      <% if current_user.owner? %>
+        <%= nav_link t("navigation.settings"), settings_domain_path,
+              active: controller_path.start_with?("settings"),
+              mobile: true %>
+      <% end %>
     </div>
     <div class="border-t border-gray-200 px-4 py-3 flex items-center justify-between">
       <div>

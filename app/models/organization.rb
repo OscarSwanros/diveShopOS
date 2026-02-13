@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 class Organization < ApplicationRecord
+  RESERVED_SUBDOMAINS = %w[
+    www api mail admin app help support status blog docs cdn assets static
+    staging dev test demo billing payments portal
+  ].freeze
+
+  DOMAIN_FORMAT = /\A[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*\.[a-z]{2,}\z/
+
   has_many :users, dependent: :destroy
   has_many :customers, dependent: :destroy
   has_many :customer_accounts, dependent: :destroy
@@ -16,10 +23,28 @@ class Organization < ApplicationRecord
   has_one_attached :logo
   has_one_attached :favicon
 
+  normalizes :custom_domain, with: ->(value) {
+    domain = value.to_s.strip.downcase
+    domain = domain.sub(%r{\Ahttps?://}, "")
+    domain = domain.split("/").first.to_s
+    domain = domain.split(":").first.to_s
+    domain.presence
+  }
+
   validates :name, presence: true
   validates :slug, presence: true, uniqueness: true, format: { with: /\A[a-z0-9-]+\z/, message: "only allows lowercase letters, numbers, and hyphens" }
-  validates :custom_domain, uniqueness: true, allow_nil: true
-  validates :subdomain, uniqueness: true, allow_nil: true
+  validates :custom_domain, uniqueness: true, allow_nil: true,
+    format: { with: DOMAIN_FORMAT, message: :invalid_domain, allow_blank: true }
+  validates :subdomain, uniqueness: true, allow_nil: true,
+    exclusion: { in: RESERVED_SUBDOMAINS, message: :reserved }
   validates :locale, presence: true
   validates :time_zone, presence: true
+
+  before_validation :set_subdomain_from_slug, on: :create
+
+  private
+
+  def set_subdomain_from_slug
+    self.subdomain ||= slug if slug.present?
+  end
 end

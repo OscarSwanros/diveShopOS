@@ -165,6 +165,16 @@ Rails.application.routes.draw do
     post "cancel-join/:id", to: "cancellations#cancel_join", as: :cancel_join
   end
 
+  # Settings (owner only)
+  namespace :settings do
+    resource :domain, only: [ :show, :update ] do
+      post :verify, on: :member
+    end
+  end
+
+  # Caddy on-demand TLS verification
+  get "caddy/ask", to: "caddy#ask"
+
   # Staff review queue
   resource :review_queue, only: [ :show ], controller: "review_queue"
   resources :enrollment_reviews, only: [] do

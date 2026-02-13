@@ -60,6 +60,7 @@ en:
     instructor_ratings: "Ratings"
     staff: "Staff"
     review_queue: "Review Queue"
+    settings: "Settings"
     sign_out: "Sign Out"
     menu: "Menu"
 
@@ -97,11 +98,40 @@ en:
       manager: "Manager"
       owner: "Owner"
 
+  settings:
+    domain:
+      title: "Domain Settings"
+      updated: "Custom domain updated."
+      subdomain:
+        title: "Your Subdomain"
+        description: "This subdomain is always available and cannot be changed."
+        url: "%{subdomain}.%{platform_domain}"
+      custom_domain:
+        title: "Custom Domain"
+        label: "Custom Domain"
+        placeholder: "www.mydiveshop.com"
+        help: "Enter the domain you want customers to use to reach your shop."
+      dns:
+        title: "DNS Configuration"
+        instructions: "Add the following DNS record at your domain registrar to point your custom domain to your shop."
+        type: "Type"
+        name: "Name"
+        target: "Target"
+        propagation_note: "DNS changes can take up to 48 hours to propagate, though most update within a few minutes."
+      verify:
+        action: "Verify DNS"
+        verified: "DNS is correctly configured. Your custom domain is ready to use."
+        not_found: "No CNAME record found. Please add a CNAME record pointing to %{target}."
+        cname_mismatch: "CNAME record points to %{actual} instead of %{expected}. Please update your DNS record."
+        no_domain: "No custom domain configured. Save a custom domain first."
+        error: "Could not verify DNS: %{details}"
+
   common:
     edit: "Edit"
     back: "Back"
     delete: "Delete"
     cancel: "Cancel"
+    save: "Save"
     actions: "Actions"
     confirm_delete: "Are you sure you want to delete this?"
 
@@ -1163,6 +1193,16 @@ en:
       subject: "A spot opened up - %{item}"
       greeting: "Good news, %{name}!"
       body: "A spot has opened up for %{item}. Log in to confirm your spot before it expires."
+
+  activerecord:
+    errors:
+      models:
+        organization:
+          attributes:
+            subdomain:
+              reserved: "is reserved and cannot be used."
+            custom_domain:
+              invalid_domain: "is not a valid domain name."
 
   staff_notification_mailer:
     new_enrollment_request:
