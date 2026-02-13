@@ -38,6 +38,35 @@ test:
     database: vamosabucear_test_cable
     migrations_paths: db/cable_migrate
 
+staging:
+  primary:
+    <<: *default
+    host: <%= ENV["DB_HOST"] %>
+    database: <%= ENV.fetch("DB_NAME", "vamosabucear_staging") %>
+    username: <%= ENV["DB_USER"] %>
+    password: <%= ENV["DB_PASSWORD"] %>
+  cache:
+    <<: *default
+    host: <%= ENV["DB_HOST"] %>
+    database: vamosabucear_staging_cache
+    username: <%= ENV["DB_USER"] %>
+    password: <%= ENV["DB_PASSWORD"] %>
+    migrations_paths: db/cache_migrate
+  queue:
+    <<: *default
+    host: <%= ENV["DB_HOST"] %>
+    database: vamosabucear_staging_queue
+    username: <%= ENV["DB_USER"] %>
+    password: <%= ENV["DB_PASSWORD"] %>
+    migrations_paths: db/queue_migrate
+  cable:
+    <<: *default
+    host: <%= ENV["DB_HOST"] %>
+    database: vamosabucear_staging_cable
+    username: <%= ENV["DB_USER"] %>
+    password: <%= ENV["DB_PASSWORD"] %>
+    migrations_paths: db/cable_migrate
+
 production:
   primary:
     <<: *default

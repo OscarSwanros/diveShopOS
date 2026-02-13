@@ -1,0 +1,31 @@
+# Staging destination for Kamal
+# Deploy with: bin/kamal deploy -d staging
+
+servers:
+  web:
+    - STAGING_IP_HERE
+
+proxy:
+  ssl: false
+  host: staging.vamosabucear.com
+
+env:
+  clear:
+    RAILS_ENV: staging
+    RAILS_LOG_LEVEL: debug
+    MAILER_HOST: staging.vamosabucear.com
+    DB_NAME: vamosabucear_staging
+
+accessories:
+  db:
+    image: postgres:17
+    host: STAGING_IP_HERE
+    port: "127.0.0.1:5432:5432"
+    env:
+      clear:
+        POSTGRES_USER: diveshopos
+        POSTGRES_DB: vamosabucear_staging
+      secret:
+        - POSTGRES_PASSWORD
+    directories:
+      - data:/var/lib/postgresql/data

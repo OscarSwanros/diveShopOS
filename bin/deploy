@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# Deployment wrapper for DiveShopOS
+# Usage: bin/deploy staging    -- deploy to staging
+#        bin/deploy production  -- deploy to production (enforces main branch + clean state)
+set -euo pipefail
+
+DESTINATION="${1:-}"
+
+if [ -z "$DESTINATION" ]; then
+  echo "Usage: bin/deploy <staging|production>"
+  exit 1
+fi
+
+if [ "$DESTINATION" != "staging" ] && [ "$DESTINATION" != "production" ]; then
+  echo "Error: destination must be 'staging' or 'production'"
+  exit 1
+fi
+
+# Production safety checks
+if [ "$DESTINATION" = "production" ]; then
+  CURRENT_BRANCH=$(git branch --show-current)
+  if [ "$CURRENT_BRANCH" != "main" ]; then
+    echo "Error: production deploys must be from the 'main' branch (currently on '$CURRENT_BRANCH')"
+    exit 1
+  fi
+
+  if [ -n "$(git status --porcelain)" ]; then
+    echo "Error: working directory is not clean. Commit or stash changes first."
+    exit 1
+  fi
+
+  git fetch origin main --quiet
+  LOCAL=$(git rev-parse HEAD)
+  REMOTE=$(git rev-parse origin/main)
+  if [ "$LOCAL" != "$REMOTE" ]; then
+    echo "Error: local main is not up to date with origin/main. Pull first."
+    exit 1
+  fi
+fi
+
+echo "==> Running CI checks..."
+bin/ci
+
+echo "==> Deploying to $DESTINATION..."
+bin/kamal deploy -d "$DESTINATION"
+
+echo "==> Deploy to $DESTINATION complete."

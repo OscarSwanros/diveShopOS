@@ -1,0 +1,29 @@
+# Production destination for Kamal
+# Deploy with: bin/kamal deploy -d production
+
+servers:
+  web:
+    - PRODUCTION_IP_HERE
+
+proxy:
+  ssl: false
+  host: vamosabucear.com
+
+env:
+  clear:
+    MAILER_HOST: vamosabucear.com
+    DB_NAME: vamosabucear_production
+
+accessories:
+  db:
+    image: postgres:17
+    host: PRODUCTION_IP_HERE
+    port: "127.0.0.1:5432:5432"
+    env:
+      clear:
+        POSTGRES_USER: diveshopos
+        POSTGRES_DB: vamosabucear_production
+      secret:
+        - POSTGRES_PASSWORD
+    directories:
+      - data:/var/lib/postgresql/data

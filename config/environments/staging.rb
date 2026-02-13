@@ -1,7 +1,7 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
-  # Settings specified here will take precedence over those in config/application.rb.
+  # Staging mirrors production with verbose logging for debugging.
 
   # Code is not reloaded between requests.
   config.enable_reloading = false
@@ -18,9 +18,6 @@ Rails.application.configure do
   # Cache assets for far-future expiry since they are all digest stamped.
   config.public_file_server.headers = { "cache-control" => "public, max-age=#{1.year.to_i}" }
 
-  # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  # config.asset_host = "http://assets.example.com"
-
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
@@ -34,8 +31,8 @@ Rails.application.configure do
   config.log_tags = [ :request_id ]
   config.logger   = ActiveSupport::TaggedLogging.logger(STDOUT)
 
-  # Change to "debug" to log everything (including potentially personally-identifiable information!).
-  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
+  # Debug-level logging for staging.
+  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "debug")
 
   # Prevent health checks from clogging up the logs.
   config.silence_healthcheck_path = "/up"
@@ -50,21 +47,8 @@ Rails.application.configure do
   config.active_job.queue_adapter = :solid_queue
   config.solid_queue.connects_to = { database: { writing: :queue } }
 
-  # Ignore bad email addresses and do not raise email delivery errors.
-  # Set this to true and configure the email server for immediate delivery to raise delivery errors.
-  # config.action_mailer.raise_delivery_errors = false
-
   # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: ENV.fetch("MAILER_HOST", "vamosabucear.com") }
-
-  # Specify outgoing SMTP server. Remember to add smtp/* credentials via bin/rails credentials:edit.
-  # config.action_mailer.smtp_settings = {
-  #   user_name: Rails.application.credentials.dig(:smtp, :user_name),
-  #   password: Rails.application.credentials.dig(:smtp, :password),
-  #   address: "smtp.example.com",
-  #   port: 587,
-  #   authentication: :plain
-  # }
+  config.action_mailer.default_url_options = { host: ENV.fetch("MAILER_HOST", "staging.vamosabucear.com") }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
