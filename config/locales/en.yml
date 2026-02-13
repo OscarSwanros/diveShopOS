@@ -106,6 +106,27 @@ en:
       owner: "Owner"
 
   settings:
+    branding:
+      title: "Branding"
+      updated: "Branding settings updated."
+      logo: "Logo"
+      logo_help: "PNG, JPEG, or SVG. Max 2MB."
+      favicon: "Favicon"
+      favicon_help: "PNG, ICO, or SVG. Max 500KB."
+      colors: "Colors"
+      primary_color: "Primary Color"
+      accent_color: "Accent Color"
+      tagline: "Tagline"
+      tagline_placeholder: "e.g., Your adventure starts here"
+      phone: "Phone"
+      contact_email: "Contact Email"
+      address: "Address"
+      social_links: "Social Links"
+      shop_info: "Shop Info"
+      color_preview: "Preview"
+      sample_button: "Sample Button"
+      sample_link: "Sample Link"
+      accessibility_warning: "This color may not meet accessibility standards for text contrast."
     domain:
       title: "Domain Settings"
       updated: "Custom domain updated."

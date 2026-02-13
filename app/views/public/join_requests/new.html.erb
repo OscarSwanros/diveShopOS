@@ -43,7 +43,7 @@
     <%= form_with url: join_request_path(excursion_slug: @excursion.slug), method: :post do |f| %>
       <div class="flex items-center space-x-4">
         <%= f.submit I18n.t("public.join_requests.title"),
-          class: "inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+          class: "inline-flex items-center px-4 py-2 bg-brand-primary-600 text-white text-sm font-medium rounded-md hover:bg-brand-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary-500" %>
         <%= link_to I18n.t("common.cancel"),
           catalog_excursion_path(@excursion),
           class: "inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-md border border-gray-300 hover:bg-gray-50" %>

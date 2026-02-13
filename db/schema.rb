@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_13_224905) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_13_230725) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -420,14 +420,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_224905) do
   end
 
   create_table "organizations", id: :string, force: :cascade do |t|
+    t.text "address"
     t.string "brand_accent_color"
     t.string "brand_primary_color"
+    t.string "contact_email"
     t.datetime "created_at", null: false
     t.string "custom_domain"
     t.string "locale", default: "en", null: false
     t.string "name", null: false
     t.boolean "onboarding_dismissed", default: false, null: false
+    t.string "phone"
     t.string "slug", null: false
+    t.jsonb "social_links", default: {}
     t.string "subdomain"
     t.string "tagline"
     t.string "time_zone", default: "UTC", null: false

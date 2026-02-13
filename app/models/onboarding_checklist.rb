@@ -77,7 +77,7 @@ class OnboardingChecklist
         key: :set_branding,
         title: I18n.t("onboarding.checklist.steps.set_branding.title"),
         description: I18n.t("onboarding.checklist.steps.set_branding.description"),
-        path: :settings_domain_path,
+        path: :settings_branding_path,
         completed: organization.brand_primary_color.present?
       )
     ]

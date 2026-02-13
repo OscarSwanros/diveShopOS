@@ -46,4 +46,11 @@ module ApplicationHelper
   def user_menu_nav_active?
     controller_name.in?(%w[users instructor_ratings]) || controller_path.start_with?("settings")
   end
+
+  def brand_css_variables
+    return "" unless current_organization
+    Rails.cache.fetch([ "brand_css", current_organization.id, current_organization.updated_at ]) do
+      Branding::CssVariablesGenerator.new(current_organization).call
+    end
+  end
 end

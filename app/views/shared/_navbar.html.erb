@@ -1,8 +1,11 @@
 <nav class="fixed top-0 inset-x-0 z-50 bg-white border-b border-gray-200" data-controller="navbar">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between h-14">
-      <%# Left: Org name %>
-      <div class="flex items-center">
+      <%# Left: Org logo + name %>
+      <div class="flex items-center space-x-2">
+        <% if current_organization.logo.attached? %>
+          <%= image_tag current_organization.logo, alt: "", class: "h-8 w-auto" %>
+        <% end %>
         <%= link_to current_organization.name, root_path,
               class: "text-lg font-semibold text-gray-900 whitespace-nowrap" %>
       </div>
@@ -80,7 +83,9 @@
             <% end %>
             <% if current_user.owner? %>
               <%= nav_dropdown_link t("navigation.settings"), settings_domain_path,
-                    active: controller_path.start_with?("settings") %>
+                    active: controller_path == "settings/domains" %>
+              <%= nav_dropdown_link t("settings.branding.title"), settings_branding_path,
+                    active: controller_path == "settings/brandings" %>
             <% end %>
             <div class="border-t border-gray-200 my-1"></div>
             <div class="px-4 py-2">
@@ -150,7 +155,10 @@
       <% end %>
       <% if current_user.owner? %>
         <%= nav_link t("navigation.settings"), settings_domain_path,
-              active: controller_path.start_with?("settings"),
+              active: controller_path == "settings/domains",
+              mobile: true %>
+        <%= nav_link t("settings.branding.title"), settings_branding_path,
+              active: controller_path == "settings/brandings",
               mobile: true %>
       <% end %>
     </div>

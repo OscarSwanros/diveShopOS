@@ -1,1 +1,29 @@
 @import "tailwindcss";
+
+@theme {
+  /* Brand primary color scale -- overridden at runtime via CSS custom properties */
+  --color-brand-primary-50: var(--brand-primary-50, oklch(0.97 0.01 250));
+  --color-brand-primary-100: var(--brand-primary-100, oklch(0.93 0.03 250));
+  --color-brand-primary-200: var(--brand-primary-200, oklch(0.86 0.06 250));
+  --color-brand-primary-300: var(--brand-primary-300, oklch(0.76 0.10 250));
+  --color-brand-primary-400: var(--brand-primary-400, oklch(0.66 0.15 250));
+  --color-brand-primary-500: var(--brand-primary-500, oklch(0.55 0.20 250));
+  --color-brand-primary-600: var(--brand-primary-600, oklch(0.49 0.22 250));
+  --color-brand-primary-700: var(--brand-primary-700, oklch(0.42 0.20 250));
+  --color-brand-primary-800: var(--brand-primary-800, oklch(0.35 0.17 250));
+  --color-brand-primary-900: var(--brand-primary-900, oklch(0.28 0.14 250));
+  --color-brand-primary-950: var(--brand-primary-950, oklch(0.22 0.11 250));
+
+  /* Brand accent color scale -- overridden at runtime via CSS custom properties */
+  --color-brand-accent-50: var(--brand-accent-50, oklch(0.97 0.01 160));
+  --color-brand-accent-100: var(--brand-accent-100, oklch(0.93 0.03 160));
+  --color-brand-accent-200: var(--brand-accent-200, oklch(0.86 0.06 160));
+  --color-brand-accent-300: var(--brand-accent-300, oklch(0.76 0.10 160));
+  --color-brand-accent-400: var(--brand-accent-400, oklch(0.66 0.13 160));
+  --color-brand-accent-500: var(--brand-accent-500, oklch(0.55 0.15 160));
+  --color-brand-accent-600: var(--brand-accent-600, oklch(0.49 0.15 160));
+  --color-brand-accent-700: var(--brand-accent-700, oklch(0.42 0.14 160));
+  --color-brand-accent-800: var(--brand-accent-800, oklch(0.35 0.12 160));
+  --color-brand-accent-900: var(--brand-accent-900, oklch(0.28 0.10 160));
+  --color-brand-accent-950: var(--brand-accent-950, oklch(0.22 0.08 160));
+}

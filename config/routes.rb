@@ -193,6 +193,7 @@ Rails.application.routes.draw do
     resource :domain, only: [ :show, :update ] do
       post :verify, on: :member
     end
+    resource :branding, only: [ :show, :update ]
   end
 
   # Caddy on-demand TLS verification

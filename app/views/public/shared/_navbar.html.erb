@@ -1,8 +1,11 @@
 <nav class="fixed top-0 inset-x-0 z-50 bg-white border-b border-gray-200" data-controller="navbar">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between h-14">
-      <%# Left: Org name %>
-      <div class="flex items-center">
+      <%# Left: Org logo + name %>
+      <div class="flex items-center space-x-2">
+        <% if current_organization&.logo&.attached? %>
+          <%= image_tag current_organization.logo, alt: "", class: "h-8 w-auto" %>
+        <% end %>
         <%= link_to current_organization&.name || "DiveShopOS", root_path,
               class: "text-lg font-semibold text-gray-900 whitespace-nowrap" %>
       </div>
@@ -22,21 +25,21 @@
         <% if customer_signed_in? %>
           <span class="text-sm text-gray-700"><%= current_customer_account.customer.first_name %></span>
           <%= link_to I18n.t("public.navigation.my_account"), my_dashboard_path,
-                class: "text-sm font-medium text-blue-600 hover:text-blue-700" %>
+                class: "text-sm font-medium text-brand-primary-600 hover:text-brand-primary-700" %>
           <%= button_to I18n.t("public.navigation.sign_out"), public_logout_path, method: :delete,
                 class: "text-sm text-gray-500 hover:text-gray-700" %>
         <% else %>
           <%= link_to I18n.t("public.navigation.sign_in"), public_login_path,
                 class: "text-sm font-medium text-gray-600 hover:text-gray-900" %>
           <%= link_to I18n.t("public.navigation.sign_up"), public_signup_path,
-                class: "inline-flex items-center px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700" %>
+                class: "inline-flex items-center px-3 py-1.5 bg-brand-primary-600 text-white text-sm font-medium rounded-md hover:bg-brand-primary-700" %>
         <% end %>
       </div>
 
       <%# Mobile hamburger %>
       <div class="flex items-center md:hidden">
         <button type="button" data-action="navbar#toggle" aria-label="<%= I18n.t("navigation.menu") %>"
-                class="inline-flex items-center justify-center p-2 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
+                class="inline-flex items-center justify-center p-2 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand-primary-500">
           <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
           </svg>
@@ -67,7 +70,7 @@
           <%= link_to I18n.t("public.navigation.sign_in"), public_login_path,
                 class: "block text-sm font-medium text-gray-600 hover:text-gray-900" %>
           <%= link_to I18n.t("public.navigation.sign_up"), public_signup_path,
-                class: "block text-sm font-medium text-blue-600 hover:text-blue-700" %>
+                class: "block text-sm font-medium text-brand-primary-600 hover:text-brand-primary-700" %>
         </div>
       <% end %>
     </div>

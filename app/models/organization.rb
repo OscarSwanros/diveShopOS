@@ -24,6 +24,9 @@ class Organization < ApplicationRecord
   has_one_attached :logo
   has_one_attached :favicon
 
+  normalizes :brand_primary_color, with: ->(value) { value.to_s.strip.presence }
+  normalizes :brand_accent_color, with: ->(value) { value.to_s.strip.presence }
+
   normalizes :custom_domain, with: ->(value) {
     domain = value.to_s.strip.downcase
     domain = domain.sub(%r{\Ahttps?://}, "")
@@ -40,6 +43,15 @@ class Organization < ApplicationRecord
     exclusion: { in: RESERVED_SUBDOMAINS, message: :reserved }
   validates :locale, presence: true
   validates :time_zone, presence: true
+  validates :brand_primary_color, format: { with: /\A#[0-9a-fA-F]{6}\z/, message: "must be a valid hex color (e.g., #1a73e8)" }, allow_blank: true
+  validates :brand_accent_color, format: { with: /\A#[0-9a-fA-F]{6}\z/, message: "must be a valid hex color (e.g., #1a73e8)" }, allow_blank: true
+  validates :contact_email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
+
+  validate :logo_content_type_and_size
+  validate :favicon_content_type_and_size
+
+  LOGO_CONTENT_TYPES = %w[image/png image/jpeg image/svg+xml].freeze
+  FAVICON_CONTENT_TYPES = %w[image/png image/x-icon image/svg+xml].freeze
 
   before_validation :set_subdomain_from_slug, on: :create
 
@@ -47,5 +59,29 @@ class Organization < ApplicationRecord
 
   def set_subdomain_from_slug
     self.subdomain ||= slug if slug.present?
+  end
+
+  def logo_content_type_and_size
+    return unless logo.attached?
+
+    unless LOGO_CONTENT_TYPES.include?(logo.content_type)
+      errors.add(:logo, "must be a PNG, JPEG, or SVG image")
+    end
+
+    if logo.byte_size > 2.megabytes
+      errors.add(:logo, "must be less than 2MB")
+    end
+  end
+
+  def favicon_content_type_and_size
+    return unless favicon.attached?
+
+    unless FAVICON_CONTENT_TYPES.include?(favicon.content_type)
+      errors.add(:favicon, "must be a PNG, ICO, or SVG image")
+    end
+
+    if favicon.byte_size > 500.kilobytes
+      errors.add(:favicon, "must be less than 500KB")
+    end
   end
 end

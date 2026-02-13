@@ -100,10 +100,10 @@
                   <% if customer_signed_in? && spots > 0 %>
                     <%= link_to I18n.t("public.catalog.courses.request_enrollment"),
                           new_catalog_course_offering_enrollment_request_path(course_slug: @course.slug, offering_slug: offering.slug),
-                          class: "text-blue-600 hover:text-blue-700 font-medium" %>
+                          class: "text-brand-primary-600 hover:text-brand-primary-700 font-medium" %>
                   <% elsif !customer_signed_in? && spots > 0 %>
                     <%= link_to I18n.t("public.navigation.sign_in"), public_login_path,
-                          class: "text-blue-600 hover:text-blue-700 font-medium" %>
+                          class: "text-brand-primary-600 hover:text-brand-primary-700 font-medium" %>
                   <% end %>
                 </td>
               </tr>

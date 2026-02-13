@@ -4,4 +4,8 @@ class SettingsPolicy < ApplicationPolicy
   def domain?
     user.owner?
   end
+
+  def branding?
+    user.owner?
+  end
 end
