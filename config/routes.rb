@@ -221,5 +221,5 @@ Rails.application.routes.draw do
   resource :dashboard, only: [ :show ], controller: "dashboard"
 
   # Root path
-  root "dashboard#show"
+  root "public/homepage#show"
 end

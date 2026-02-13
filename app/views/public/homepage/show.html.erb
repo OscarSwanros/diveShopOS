@@ -1,0 +1,162 @@
+<% content_for(:page_title) { current_organization&.name || "DiveShopOS" } %>
+
+<%# Hero Section %>
+<div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center space-y-4">
+  <% if current_organization&.logo&.attached? %>
+    <%= image_tag current_organization.logo, alt: current_organization.name, class: "h-16 mx-auto" %>
+  <% end %>
+
+  <h1 class="text-3xl font-bold text-gray-900"><%= current_organization&.name %></h1>
+
+  <% if current_organization&.tagline.present? %>
+    <p class="text-lg text-gray-600"><%= current_organization.tagline %></p>
+  <% end %>
+
+  <div class="flex items-center justify-center space-x-4 pt-2">
+    <%= link_to I18n.t("public.homepage.browse_excursions"), catalog_excursions_path,
+          class: "inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+    <%= link_to I18n.t("public.homepage.create_account"), public_signup_path,
+          class: "inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-md border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+  </div>
+</div>
+
+<%# Upcoming Excursions %>
+<% if @excursions.any? %>
+  <div class="space-y-4 mt-8">
+    <div class="flex items-center justify-between">
+      <h2 class="text-xl font-semibold text-gray-900"><%= I18n.t("public.homepage.upcoming_excursions") %></h2>
+      <%= link_to I18n.t("public.homepage.view_all"), catalog_excursions_path,
+            class: "text-sm font-medium text-blue-600 hover:text-blue-700" %>
+    </div>
+
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <% @excursions.each do |excursion| %>
+        <%= link_to catalog_excursion_path(excursion), class: "block bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow" do %>
+          <div class="p-6 space-y-3">
+            <h3 class="text-lg font-semibold text-gray-900"><%= excursion.title %></h3>
+
+            <div class="space-y-1 text-sm text-gray-600">
+              <p>
+                <span class="font-medium"><%= I18n.t("public.catalog.excursions.date") %>:</span>
+                <%= I18n.l(excursion.scheduled_date, format: :long) %>
+              </p>
+              <% if excursion.departure_time.present? %>
+                <p>
+                  <span class="font-medium"><%= I18n.t("public.catalog.excursions.departs") %>:</span>
+                  <%= excursion.departure_time %>
+                </p>
+              <% end %>
+              <% if excursion.dive_sites.any? %>
+                <p>
+                  <span class="font-medium"><%= I18n.t("public.catalog.excursions.dive_sites") %>:</span>
+                  <%= excursion.dive_sites.map(&:name).join(", ") %>
+                </p>
+              <% end %>
+            </div>
+
+            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+              <% if excursion.price_cents.to_i > 0 %>
+                <span class="text-lg font-bold text-gray-900">$<%= number_with_precision(excursion.price, precision: 2) %></span>
+              <% else %>
+                <span></span>
+              <% end %>
+              <% spots = excursion.spots_remaining %>
+              <% if spots > 0 %>
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                  <%= I18n.t("public.catalog.excursions.spots_remaining", count: spots) %>
+                </span>
+              <% else %>
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                  <%= I18n.t("public.catalog.excursions.full") %>
+                </span>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<%# Our Courses %>
+<% if @courses.any? %>
+  <div class="space-y-4 mt-8">
+    <div class="flex items-center justify-between">
+      <h2 class="text-xl font-semibold text-gray-900"><%= I18n.t("public.homepage.featured_courses") %></h2>
+      <%= link_to I18n.t("public.homepage.view_all"), catalog_courses_path,
+            class: "text-sm font-medium text-blue-600 hover:text-blue-700" %>
+    </div>
+
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <% @courses.each do |course| %>
+        <% next_offering = course.course_offerings.published_upcoming.first %>
+        <%= link_to catalog_course_path(course), class: "block bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow" do %>
+          <div class="p-6 space-y-3">
+            <div class="flex items-start justify-between">
+              <h3 class="text-lg font-semibold text-gray-900"><%= course.name %></h3>
+              <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+                <%= course.agency %>
+              </span>
+            </div>
+
+            <p class="text-sm text-gray-600 line-clamp-2"><%= course.description %></p>
+
+            <div class="space-y-1 text-sm text-gray-600">
+              <p>
+                <span class="font-medium"><%= I18n.t("public.catalog.courses.level") %>:</span>
+                <%= course.level %>
+              </p>
+            </div>
+
+            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+              <span class="text-lg font-bold text-gray-900">$<%= number_with_precision(course.price, precision: 2) %></span>
+              <% if next_offering %>
+                <span class="text-xs text-gray-500">
+                  <%= I18n.t("public.catalog.courses.next_offering") %>: <%= I18n.l(next_offering.start_date, format: :long) %>
+                </span>
+              <% else %>
+                <span class="text-xs text-gray-500"><%= I18n.t("public.catalog.courses.no_upcoming") %></span>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<%# Dive Sites %>
+<% if @dive_sites.any? %>
+  <div class="space-y-4 mt-8">
+    <div class="flex items-center justify-between">
+      <h2 class="text-xl font-semibold text-gray-900"><%= I18n.t("public.homepage.featured_dive_sites") %></h2>
+      <%= link_to I18n.t("public.homepage.view_all"), catalog_dive_sites_path,
+            class: "text-sm font-medium text-blue-600 hover:text-blue-700" %>
+    </div>
+
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <% @dive_sites.each do |site| %>
+        <%= link_to catalog_dive_site_path(site), class: "block bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow" do %>
+          <div class="p-6 space-y-3">
+            <h3 class="text-lg font-semibold text-gray-900"><%= site.name %></h3>
+
+            <div class="flex items-center space-x-3 text-sm">
+              <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 capitalize">
+                <%= site.difficulty_level %>
+              </span>
+              <% if site.max_depth_meters %>
+                <span class="text-gray-600">
+                  <%= I18n.t("public.catalog.dive_sites.max_depth") %>: <%= site.max_depth_meters %>m
+                </span>
+              <% end %>
+            </div>
+
+            <% if site.location_description.present? %>
+              <p class="text-sm text-gray-500"><%= site.location_description %></p>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

@@ -20,11 +20,10 @@ class DashboardControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "root path loads dashboard" do
+  test "root path redirects staff to dashboard" do
     sign_in @owner
     get root_path
-    assert_response :success
-    assert_select "h1", /#{@owner.name}/
+    assert_redirected_to dashboard_path
   end
 
   # --- Today's Schedule ---

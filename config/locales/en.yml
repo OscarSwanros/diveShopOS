@@ -1032,6 +1032,14 @@ en:
         new_password: "New Password"
         new_password_confirmation: "Confirm New Password"
         reset_submit: "Reset Password"
+    homepage:
+      title: "Home"
+      browse_excursions: "Browse Excursions"
+      create_account: "Create Account"
+      upcoming_excursions: "Upcoming Excursions"
+      featured_courses: "Our Courses"
+      featured_dive_sites: "Dive Sites"
+      view_all: "View all"
     catalog:
       excursions:
         index:
