@@ -27,11 +27,29 @@
 - Use specific diving examples to make safety gates concrete (e.g., "Open Water diver on advanced wreck dive", "regulator overdue for service")
 - "Excursions" not "trips" (matches the domain model)
 
+## Landing Page Copy Patterns
+- Hero headline: "Run your dive operation, not your software."
+- CTA label: "Get Started Free" (links to https://diveshopos.com/start)
+- Self-serve signup messaging: "No credit card. No sales call. Ready in under 2 minutes."
+- Safety gates section uses red left-border cards in a 2-column grid
+- Feature grid: 6 features (Excursions, Courses, Customers, Equipment, Staff, Dive Sites)
+- Final CTA includes the "safety stop vs deco stop" line -- signals insider knowledge
+- Landing page uses HTML sections with `markdown="0"` inside Jekyll markdown files
+- CSS classes: .hero, .section, .section-centered, .safety-gates, .safety-gate, .features, .feature, .section-cta
+
+## Signup Path
+- Platform-level signup at `/start` (bypasses tenant resolution via TenantResolver)
+- 4 fields: shop name, name, email, password
+- Demo data pre-seeded on signup with real safety alerts (expired medical, overdue equipment)
+- "Start Fresh" button wipes demo data
+
 ## Site Infrastructure
 - Jekyll site in `/docs/` directory, deployed to diveshopos.com via GitHub Pages
-- Layout: default.html, includes header.html and footer.html
+- Layout: default.html (landing page), page.html (legal/content pages)
+- Includes: header.html (with nav-cta "Get Started" button), footer.html
 - CNAME: diveshopos.com
 - Pages: index, privacy-policy, terms-of-use
+- CSS: `/docs/assets/css/style.css` -- custom CSS, no framework
 
 ## Legal Copy Patterns
 - Terms of Use: `/Users/swanros/code/vamosabucear/docs/terms-of-use.md`
