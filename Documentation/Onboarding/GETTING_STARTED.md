@@ -3,7 +3,7 @@
 ## Prerequisites
 
 - Ruby 3.3.6
-- SQLite3
+- PostgreSQL 17
 - Node.js (for asset compilation)
 
 ## Setup

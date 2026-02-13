@@ -11,6 +11,9 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[8.1].define(version: 2026_02_13_170315) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
+
   create_table "api_tokens", id: :string, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "expires_at"
@@ -239,7 +242,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_170315) do
     t.string "slug", default: "", null: false
     t.datetime "updated_at", null: false
     t.index ["organization_id", "active"], name: "index_customers_on_org_and_active"
-    t.index ["organization_id", "email"], name: "index_customers_on_org_and_email", unique: true, where: "email IS NOT NULL"
+    t.index ["organization_id", "email"], name: "index_customers_on_org_and_email", unique: true, where: "(email IS NOT NULL)"
     t.index ["organization_id", "last_name", "first_name"], name: "index_customers_on_org_and_name"
     t.index ["organization_id", "slug"], name: "index_customers_on_org_and_slug", unique: true
     t.index ["organization_id"], name: "index_customers_on_organization_id"
@@ -281,7 +284,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_170315) do
     t.integer "status", default: 0, null: false
     t.datetime "updated_at", null: false
     t.index ["certification_id"], name: "index_enrollments_on_certification_id"
-    t.index ["course_offering_id", "customer_id"], name: "index_enrollments_on_course_offering_id_and_customer_id", unique: true, where: "status NOT IN (4, 5, 7)"
+    t.index ["course_offering_id", "customer_id"], name: "index_enrollments_on_course_offering_id_and_customer_id", unique: true, where: "(status <> ALL (ARRAY[4, 5, 7]))"
     t.index ["course_offering_id", "slug"], name: "index_enrollments_on_offering_and_slug", unique: true
     t.index ["course_offering_id", "status"], name: "index_enrollments_on_course_offering_id_and_status"
     t.index ["course_offering_id"], name: "index_enrollments_on_course_offering_id"
@@ -308,7 +311,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_170315) do
     t.index ["organization_id", "category", "size", "status"], name: "index_equipment_items_on_org_category_size_status"
     t.index ["organization_id", "category", "status"], name: "index_equipment_items_on_org_category_status"
     t.index ["organization_id", "life_support", "next_service_due"], name: "index_equipment_items_on_org_life_support_service"
-    t.index ["organization_id", "serial_number"], name: "index_equipment_items_on_org_serial_unique", unique: true, where: "serial_number IS NOT NULL"
+    t.index ["organization_id", "serial_number"], name: "index_equipment_items_on_org_serial_unique", unique: true, where: "(serial_number IS NOT NULL)"
     t.index ["organization_id", "slug"], name: "index_equipment_items_on_org_and_slug", unique: true
     t.index ["organization_id"], name: "index_equipment_items_on_organization_id"
   end
@@ -471,7 +474,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_170315) do
     t.integer "status"
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_trip_participants_on_customer_id"
-    t.index ["excursion_id", "customer_id"], name: "idx_trip_participants_excursion_customer_unique", unique: true, where: "customer_id IS NOT NULL AND status != 2"
+    t.index ["excursion_id", "customer_id"], name: "idx_trip_participants_excursion_customer_unique", unique: true, where: "((customer_id IS NOT NULL) AND (status <> 2))"
     t.index ["excursion_id", "email"], name: "index_trip_participants_on_excursion_id_and_email"
     t.index ["excursion_id", "slug"], name: "index_trip_participants_on_excursion_and_slug", unique: true
     t.index ["excursion_id"], name: "index_trip_participants_on_excursion_id"
@@ -506,7 +509,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_170315) do
     t.index ["customer_id"], name: "index_waitlist_entries_on_customer_id"
     t.index ["organization_id", "slug"], name: "index_waitlist_entries_on_organization_id_and_slug", unique: true
     t.index ["organization_id"], name: "index_waitlist_entries_on_organization_id"
-    t.index ["waitlistable_type", "waitlistable_id", "customer_id"], name: "idx_waitlist_entries_on_waitlistable_and_customer", unique: true, where: "status = 0"
+    t.index ["waitlistable_type", "waitlistable_id", "customer_id"], name: "idx_waitlist_entries_on_waitlistable_and_customer", unique: true, where: "(status = 0)"
     t.index ["waitlistable_type", "waitlistable_id", "position"], name: "idx_waitlist_entries_on_waitlistable_and_position", unique: true
   end
 

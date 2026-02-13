@@ -33,7 +33,7 @@
 ## ADR-003: SQLite for All Environments
 
 **Date**: 2026-02-12
-**Status**: Accepted
+**Status**: Superseded by ADR-010
 
 **Context**: Rails 8 has significantly improved SQLite support.
 
@@ -138,3 +138,18 @@
 **Rationale**: Same pattern as GitHub Personal Access Tokens. Simple, secure, no external dependencies. Token reveals organization via User association, so no tenant header needed. Tokens support expiration and revocation.
 
 **Consequences**: Users must store their tokens securely after creation. Token rotation requires creating a new token and revoking the old one. No refresh token mechanism (simplicity over complexity for target scale).
+
+---
+
+## ADR-010: PostgreSQL for All Environments
+
+**Date**: 2026-02-13
+**Status**: Accepted (supersedes ADR-003)
+
+**Context**: DiveShopOS is growing toward multi-tenant SaaS with concurrent staff users, public-facing pages, billing, and reporting dashboards. SQLite's single-writer constraint becomes a bottleneck under concurrent writes from multiple tenants. The app is not yet live -- no data to migrate, no downtime to negotiate.
+
+**Decision**: Use PostgreSQL 17 for development, test, and production. Solid Queue, Solid Cache, and Solid Cable each get their own PostgreSQL database (same pattern as the previous SQLite setup, just on PostgreSQL).
+
+**Rationale**: PostgreSQL provides concurrent write handling (MVCC), row-level locking, JSONB, full-text search, and mature tooling for monitoring and query optimization. The codebase has zero raw SQL and the existing schema is fully PostgreSQL-compatible, making this the cheapest possible moment to switch. UUID primary keys continue to use `SecureRandom.uuid` stored as `:string` -- no migration file changes needed.
+
+**Consequences**: Requires a PostgreSQL server in all environments. Development and CI need PostgreSQL installed or available as a service. Docker deployment uses a PostgreSQL accessory via Kamal. Gains access to PostgreSQL-specific features (JSONB columns, partial indexes, `EXPLAIN ANALYZE`) for future optimization.

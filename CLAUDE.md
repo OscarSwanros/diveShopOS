@@ -10,7 +10,7 @@ DiveShopOS is a web-based platform that manages all aspects of running a dive op
 |-------|-----------|
 | Language | Ruby 3.3.6 |
 | Framework | Rails 8.1.2 |
-| Database | SQLite3 (all environments) |
+| Database | PostgreSQL 17 (all environments) |
 | Frontend | Hotwire (Turbo + Stimulus), Tailwind CSS |
 | Background Jobs | Solid Queue |
 | Caching | Solid Cache |

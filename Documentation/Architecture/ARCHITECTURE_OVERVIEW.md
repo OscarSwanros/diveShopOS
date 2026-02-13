@@ -36,7 +36,7 @@ Organization (tenant)
 | Authentication | Rails 8 `has_secure_password` | Built-in, no additional gem |
 | Authorization | Pundit | Clean, testable policy objects |
 | CSS | Tailwind CSS | Utility-first, pairs well with Hotwire |
-| Database | SQLite everywhere | Rails 8 SQLite support, simpler deployment |
+| Database | PostgreSQL 17 | Concurrent writes, row-level locking, mature tooling (ADR-010) |
 | Primary keys | UUIDs | Multi-tenancy, future sync, API-friendly |
 | Soft deletes | Customer-facing data | Certifications and dive data are irreplaceable |
 | Background jobs | Solid Queue | Rails 8 default, no Redis needed |
