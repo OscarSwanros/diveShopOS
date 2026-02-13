@@ -1,5 +1,6 @@
 padi_ow_upcoming:
   id: "co-padi-ow-upcoming-uuid-0001"
+  slug: "feb-2026"
   course_id: "course-padi-ow-uuid-0001"
   organization_id: "org-reef-divers-uuid-0001"
   instructor_id: "user-maria-uuid-0001"
@@ -12,6 +13,7 @@ padi_ow_upcoming:
 
 padi_ow_full:
   id: "co-padi-ow-full-uuid-0002"
+  slug: "feb-2026-2"
   course_id: "course-padi-ow-uuid-0001"
   organization_id: "org-reef-divers-uuid-0001"
   instructor_id: "user-maria-uuid-0001"
@@ -23,6 +25,7 @@ padi_ow_full:
 
 padi_aow_draft:
   id: "co-padi-aow-draft-uuid-0003"
+  slug: "mar-2026"
   course_id: "course-padi-aow-uuid-0002"
   organization_id: "org-reef-divers-uuid-0001"
   instructor_id: "user-carlos-uuid-0002"
@@ -36,6 +39,7 @@ padi_aow_draft:
 
 other_org_offering:
   id: "co-other-org-uuid-0004"
+  slug: "feb-2026"
   course_id: "course-other-uuid-0005"
   organization_id: "org-blue-water-uuid-0002"
   instructor_id: "user-other-uuid-0004"

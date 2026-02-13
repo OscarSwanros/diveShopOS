@@ -41,7 +41,7 @@ module Api
       private
 
       def set_dive_site
-        @dive_site = current_organization.dive_sites.find(params[:id])
+        @dive_site = find_by_slug_or_id(current_organization.dive_sites, params[:id])
         authorize @dive_site
       end
 

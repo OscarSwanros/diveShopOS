@@ -1,5 +1,6 @@
 diver_jane:
   id: "tp-jane-uuid-0001"
+  slug: "jane-diver"
   excursion_id: "exc-morning-reef-uuid-0001"
   name: "Jane Diver"
   email: "jane@example.com"
@@ -13,6 +14,7 @@ diver_jane:
 
 diver_bob:
   id: "tp-bob-uuid-0002"
+  slug: "bob-bubbles"
   excursion_id: "exc-morning-reef-uuid-0001"
   name: "Bob Bubbles"
   email: "bob@example.com"
@@ -25,6 +27,7 @@ diver_bob:
 
 guide_pedro:
   id: "tp-pedro-uuid-0003"
+  slug: "pedro-ramirez"
   excursion_id: "exc-morning-reef-uuid-0001"
   name: "Pedro Ramirez"
   role: 2
@@ -34,6 +37,7 @@ guide_pedro:
 
 full_trip_diver_one:
   id: "tp-full-one-uuid-0004"
+  slug: "full-trip-diver-1"
   excursion_id: "exc-full-trip-uuid-0003"
   name: "Full Trip Diver 1"
   role: 0
@@ -43,6 +47,7 @@ full_trip_diver_one:
 
 full_trip_diver_two:
   id: "tp-full-two-uuid-0005"
+  slug: "full-trip-diver-2"
   excursion_id: "exc-full-trip-uuid-0003"
   name: "Full Trip Diver 2"
   role: 0

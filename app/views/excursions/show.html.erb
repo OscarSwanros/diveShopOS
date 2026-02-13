@@ -46,7 +46,7 @@
       <div>
         <dt class="text-sm font-medium text-gray-500"><%= t("excursions.show.price") %></dt>
         <dd class="mt-1 text-sm text-gray-900">
-          <%= number_to_currency(@excursion.price_cents / 100.0, unit: @excursion.price_currency == "USD" ? "$" : @excursion.price_currency) %>
+          <%= number_to_currency(@excursion.price, unit: @excursion.price_currency == "USD" ? "$" : @excursion.price_currency) %>
         </dd>
       </div>
     </dl>

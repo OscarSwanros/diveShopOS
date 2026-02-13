@@ -41,7 +41,7 @@ module Api
       private
 
       def set_instructor_rating
-        @instructor_rating = policy_scope(InstructorRating).find(params[:id])
+        @instructor_rating = find_by_slug_or_id(policy_scope(InstructorRating), params[:id])
         authorize @instructor_rating
       end
 

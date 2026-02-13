@@ -1,4 +1,4 @@
-json.extract! enrollment, :id, :status, :paid, :notes,
+json.extract! enrollment, :id, :slug, :status, :paid, :notes,
   :enrolled_at, :completed_at
 json.course_offering_id enrollment.course_offering_id
 json.customer_id enrollment.customer_id

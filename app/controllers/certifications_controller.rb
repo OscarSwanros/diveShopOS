@@ -42,11 +42,11 @@ class CertificationsController < ApplicationController
   private
 
   def set_customer
-    @customer = current_organization.customers.find(params[:customer_id])
+    @customer = current_organization.customers.find_by!(slug: params[:customer_id])
   end
 
   def set_certification
-    @certification = @customer.certifications.kept.find(params[:id])
+    @certification = @customer.certifications.kept.find_by!(slug: params[:id])
     authorize @certification
   end
 

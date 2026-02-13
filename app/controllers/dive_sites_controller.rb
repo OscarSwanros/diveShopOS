@@ -45,7 +45,7 @@ class DiveSitesController < ApplicationController
   private
 
   def set_dive_site
-    @dive_site = current_organization.dive_sites.find(params[:id])
+    @dive_site = current_organization.dive_sites.find_by!(slug: params[:id])
     authorize @dive_site
   end
 

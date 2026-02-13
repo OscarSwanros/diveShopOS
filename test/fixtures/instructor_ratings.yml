@@ -1,5 +1,6 @@
 maria_padi_instructor:
   id: "ir-maria-padi-uuid-0001"
+  slug: "maria-garcia-padi-open-water-instructor"
   user_id: "user-maria-uuid-0001"
   agency: "PADI"
   rating_level: "Open Water Instructor"
@@ -10,6 +11,7 @@ maria_padi_instructor:
 
 carlos_ssi_instructor:
   id: "ir-carlos-ssi-uuid-0002"
+  slug: "carlos-ruiz-ssi-instructor"
   user_id: "user-carlos-uuid-0002"
   agency: "SSI"
   rating_level: "Instructor"
@@ -20,6 +22,7 @@ carlos_ssi_instructor:
 
 expired_rating:
   id: "ir-expired-uuid-0003"
+  slug: "carlos-ruiz-dan-first-aid-instructor"
   user_id: "user-carlos-uuid-0002"
   agency: "DAN"
   rating_level: "First Aid Instructor"
@@ -30,6 +33,7 @@ expired_rating:
 
 inactive_rating:
   id: "ir-inactive-uuid-0004"
+  slug: "ana-lopez-padi-divemaster"
   user_id: "user-ana-uuid-0003"
   agency: "PADI"
   rating_level: "Divemaster"

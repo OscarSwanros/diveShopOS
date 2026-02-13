@@ -55,12 +55,12 @@ class ClassSessionsController < ApplicationController
   private
 
   def set_course_and_offering
-    @course = current_organization.courses.find(params[:course_id])
-    @course_offering = @course.course_offerings.find(params[:course_offering_id])
+    @course = current_organization.courses.find_by!(slug: params[:course_id])
+    @course_offering = @course.course_offerings.find_by!(slug: params[:course_offering_id])
   end
 
   def set_class_session
-    @class_session = @course_offering.class_sessions.find(params[:id])
+    @class_session = @course_offering.class_sessions.find_by!(slug: params[:id])
     authorize @class_session
   end
 

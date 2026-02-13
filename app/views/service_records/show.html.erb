@@ -29,7 +29,7 @@
       </div>
       <div>
         <dt class="text-sm font-medium text-gray-500"><%= t("service_records.show.cost") %></dt>
-        <dd class="mt-1 text-sm text-gray-900"><%= @service_record.cost_cents ? number_to_currency(@service_record.cost_cents / 100.0) : "---" %></dd>
+        <dd class="mt-1 text-sm text-gray-900"><%= @service_record.cost ? number_to_currency(@service_record.cost) : "---" %></dd>
       </div>
     </dl>
     <% if @service_record.description.present? %>

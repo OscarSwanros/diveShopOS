@@ -1,4 +1,4 @@
-json.extract! equipment_item, :id, :category, :name, :serial_number, :size,
+json.extract! equipment_item, :id, :slug, :category, :name, :serial_number, :size,
   :manufacturer, :product_model, :status, :life_support,
   :purchase_date, :last_service_date, :next_service_due, :notes
 json.organization_id equipment_item.organization_id

@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  include Sluggable
+
   belongs_to :organization
+
+  slugged_by :name, scope: :organization_id
 
   has_many :api_tokens, dependent: :destroy
   has_many :instructor_ratings, dependent: :destroy

@@ -51,7 +51,7 @@ class EquipmentItemsController < ApplicationController
   private
 
   def set_equipment_item
-    @equipment_item = current_organization.equipment_items.find(params[:id])
+    @equipment_item = current_organization.equipment_items.find_by!(slug: params[:id])
     authorize @equipment_item
   end
 

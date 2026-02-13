@@ -49,7 +49,7 @@ class CustomersController < ApplicationController
   private
 
   def set_customer
-    @customer = current_organization.customers.find(params[:id])
+    @customer = current_organization.customers.find_by!(slug: params[:id])
     authorize @customer
   end
 

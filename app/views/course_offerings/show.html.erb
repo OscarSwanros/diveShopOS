@@ -48,7 +48,7 @@
       <div>
         <dt class="text-sm font-medium text-gray-500"><%= t("course_offerings.show.price") %></dt>
         <dd class="mt-1 text-sm text-gray-900">
-          <%= number_to_currency(@course_offering.effective_price_cents / 100.0, unit: @course_offering.effective_price_currency == "USD" ? "$" : @course_offering.effective_price_currency) %>
+          <%= number_to_currency(@course_offering.effective_price, unit: @course_offering.effective_price_currency == "USD" ? "$" : @course_offering.effective_price_currency) %>
         </dd>
       </div>
     </dl>

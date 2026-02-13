@@ -41,7 +41,7 @@ module Api
       private
 
       def set_customer
-        @customer = current_organization.customers.find(params[:id])
+        @customer = find_by_slug_or_id(current_organization.customers, params[:id])
         authorize @customer
       end
 

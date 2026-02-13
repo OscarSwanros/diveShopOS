@@ -43,11 +43,11 @@ module Api
       private
 
       def set_customer
-        @customer = current_organization.customers.find(params[:customer_id])
+        @customer = find_by_slug_or_id(current_organization.customers, params[:customer_id])
       end
 
       def set_customer_tank
-        @customer_tank = @customer.customer_tanks.find(params[:id])
+        @customer_tank = find_by_slug_or_id(@customer.customer_tanks, params[:id])
         authorize @customer_tank
       end
 

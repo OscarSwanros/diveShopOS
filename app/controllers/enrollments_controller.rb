@@ -86,12 +86,12 @@ class EnrollmentsController < ApplicationController
   private
 
   def set_course_and_offering
-    @course = current_organization.courses.find(params[:course_id])
-    @course_offering = @course.course_offerings.find(params[:course_offering_id])
+    @course = current_organization.courses.find_by!(slug: params[:course_id])
+    @course_offering = @course.course_offerings.find_by!(slug: params[:course_offering_id])
   end
 
   def set_enrollment
-    @enrollment = @course_offering.enrollments.find(params[:id])
+    @enrollment = @course_offering.enrollments.find_by!(slug: params[:id])
     authorize @enrollment
   end
 

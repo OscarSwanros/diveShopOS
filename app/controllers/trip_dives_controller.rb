@@ -43,11 +43,11 @@ class TripDivesController < ApplicationController
   private
 
   def set_excursion
-    @excursion = current_organization.excursions.find(params[:excursion_id])
+    @excursion = current_organization.excursions.find_by!(slug: params[:excursion_id])
   end
 
   def set_trip_dive
-    @trip_dive = @excursion.trip_dives.find(params[:id])
+    @trip_dive = @excursion.trip_dives.find_by!(slug: params[:id])
     authorize @trip_dive
   end
 

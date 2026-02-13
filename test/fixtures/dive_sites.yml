@@ -1,5 +1,6 @@
 coral_garden:
   id: "site-coral-garden-uuid-0001"
+  slug: "coral-garden"
   organization_id: "org-reef-divers-uuid-0001"
   name: "Coral Garden"
   description: "Beautiful shallow reef with abundant marine life"
@@ -14,6 +15,7 @@ coral_garden:
 
 the_wall:
   id: "site-the-wall-uuid-0002"
+  slug: "the-wall"
   organization_id: "org-reef-divers-uuid-0001"
   name: "The Wall"
   description: "Dramatic drop-off starting at 20m"
@@ -28,6 +30,7 @@ the_wall:
 
 inactive_site:
   id: "site-inactive-uuid-0003"
+  slug: "old-pier"
   organization_id: "org-reef-divers-uuid-0001"
   name: "Old Pier"
   description: "Decommissioned pier dive"
@@ -39,6 +42,7 @@ inactive_site:
 
 other_org_site:
   id: "site-other-org-uuid-0004"
+  slug: "blue-hole"
   organization_id: "org-blue-water-uuid-0002"
   name: "Blue Hole"
   max_depth_meters: 30.0

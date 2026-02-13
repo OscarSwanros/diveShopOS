@@ -1,4 +1,4 @@
-json.extract! trip_dive, :id, :dive_number, :planned_max_depth_meters,
+json.extract! trip_dive, :id, :slug, :dive_number, :planned_max_depth_meters,
   :planned_bottom_time_minutes, :notes
 json.excursion_id trip_dive.excursion_id
 json.dive_site_id trip_dive.dive_site_id

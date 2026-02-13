@@ -43,11 +43,11 @@ module Api
       private
 
       def set_customer
-        @customer = current_organization.customers.find(params[:customer_id])
+        @customer = find_by_slug_or_id(current_organization.customers, params[:customer_id])
       end
 
       def set_medical_record
-        @medical_record = @customer.medical_records.kept.find(params[:id])
+        @medical_record = find_by_slug_or_id(@customer.medical_records.kept, params[:id])
         authorize @medical_record
       end
 

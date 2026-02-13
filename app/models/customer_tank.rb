@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
 class CustomerTank < ApplicationRecord
+  include Sluggable
+
   belongs_to :customer
   belongs_to :organization
+
+  slugged_by -> { "tank #{serial_number}" }, scope: :customer_id
 
   validates :serial_number, presence: true, uniqueness: { scope: :organization_id }
 

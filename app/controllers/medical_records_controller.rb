@@ -42,11 +42,11 @@ class MedicalRecordsController < ApplicationController
   private
 
   def set_customer
-    @customer = current_organization.customers.find(params[:customer_id])
+    @customer = current_organization.customers.find_by!(slug: params[:customer_id])
   end
 
   def set_medical_record
-    @medical_record = @customer.medical_records.kept.find(params[:id])
+    @medical_record = @customer.medical_records.kept.find_by!(slug: params[:id])
     authorize @medical_record
   end
 

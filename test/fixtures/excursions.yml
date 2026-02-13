@@ -1,5 +1,6 @@
 morning_reef:
   id: "exc-morning-reef-uuid-0001"
+  slug: "morning-reef-dive-feb-2026"
   organization_id: "org-reef-divers-uuid-0001"
   title: "Morning Reef Dive"
   description: "Two-tank morning dive on the reef"
@@ -15,6 +16,7 @@ morning_reef:
 
 draft_trip:
   id: "exc-draft-trip-uuid-0002"
+  slug: "weekend-wall-dive-feb-2026"
   organization_id: "org-reef-divers-uuid-0001"
   title: "Weekend Wall Dive"
   scheduled_date: <%= Date.current + 14.days %>
@@ -27,6 +29,7 @@ draft_trip:
 
 full_trip:
   id: "exc-full-trip-uuid-0003"
+  slug: "full-boat-trip-feb-2026"
   organization_id: "org-reef-divers-uuid-0001"
   title: "Full Boat Trip"
   scheduled_date: <%= Date.current + 3.days %>
@@ -39,6 +42,7 @@ full_trip:
 
 past_trip:
   id: "exc-past-trip-uuid-0004"
+  slug: "last-week-dive-feb-2026"
   organization_id: "org-reef-divers-uuid-0001"
   title: "Last Week Dive"
   scheduled_date: <%= Date.current - 7.days %>
@@ -51,6 +55,7 @@ past_trip:
 
 other_org_excursion:
   id: "exc-other-org-uuid-0005"
+  slug: "blue-water-morning-dive-feb-2026"
   organization_id: "org-blue-water-uuid-0002"
   title: "Blue Water Morning Dive"
   scheduled_date: <%= Date.current + 5.days %>

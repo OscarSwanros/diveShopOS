@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class Excursion < ApplicationRecord
+  include Sluggable
+
   belongs_to :organization
+
+  slugged_by -> { "#{title} #{scheduled_date&.strftime('%b-%Y')}" }, scope: :organization_id
 
   has_many :trip_dives, dependent: :destroy
   has_many :trip_participants, dependent: :destroy
@@ -13,6 +17,14 @@ class Excursion < ApplicationRecord
   validates :scheduled_date, presence: true
   validates :capacity, presence: true, numericality: { greater_than: 0, only_integer: true }
   validates :price_cents, numericality: { greater_than_or_equal_to: 0, only_integer: true }
+
+  def price
+    price_cents / 100.0
+  end
+
+  def price=(val)
+    self.price_cents = (val.to_f * 100).round
+  end
   validates :status, presence: true
 
   scope :upcoming, -> { where("scheduled_date >= ?", Date.current).order(:scheduled_date) }

@@ -42,7 +42,7 @@ class InstructorRatingsController < ApplicationController
   private
 
   def set_instructor_rating
-    @instructor_rating = policy_scope(InstructorRating).find(params[:id])
+    @instructor_rating = policy_scope(InstructorRating).find_by!(slug: params[:id])
     authorize @instructor_rating
   end
 

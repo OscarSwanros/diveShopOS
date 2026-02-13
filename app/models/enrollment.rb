@@ -1,9 +1,13 @@
 # frozen_string_literal: true
 
 class Enrollment < ApplicationRecord
+  include Sluggable
+
   belongs_to :course_offering
   belongs_to :customer
   belongs_to :certification, optional: true
+
+  slugged_by -> { customer.full_name }, scope: :course_offering_id
 
   has_many :session_attendances, dependent: :destroy
 

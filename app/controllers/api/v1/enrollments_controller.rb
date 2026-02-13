@@ -79,12 +79,12 @@ module Api
       private
 
       def set_course_and_offering
-        @course = current_organization.courses.find(params[:course_id])
-        @course_offering = @course.course_offerings.find(params[:course_offering_id])
+        @course = find_by_slug_or_id(current_organization.courses, params[:course_id])
+        @course_offering = find_by_slug_or_id(@course.course_offerings, params[:course_offering_id])
       end
 
       def set_enrollment
-        @enrollment = @course_offering.enrollments.find(params[:id])
+        @enrollment = find_by_slug_or_id(@course_offering.enrollments, params[:id])
         authorize @enrollment
       end
 

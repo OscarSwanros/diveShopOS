@@ -42,11 +42,11 @@ module Api
       private
 
       def set_excursion
-        @excursion = current_organization.excursions.find(params[:excursion_id])
+        @excursion = find_by_slug_or_id(current_organization.excursions, params[:excursion_id])
       end
 
       def set_trip_dive
-        @trip_dive = @excursion.trip_dives.find(params[:id])
+        @trip_dive = find_by_slug_or_id(@excursion.trip_dives, params[:id])
         authorize @trip_dive
       end
 

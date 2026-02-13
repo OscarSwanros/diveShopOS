@@ -1,5 +1,6 @@
 jane_in_ow:
   id: "enr-jane-ow-uuid-0001"
+  slug: "jane-diver"
   course_offering_id: "co-padi-ow-upcoming-uuid-0001"
   customer_id: "cust-jane-uuid-0001"
   status: 1
@@ -10,6 +11,7 @@ jane_in_ow:
 
 bob_in_ow:
   id: "enr-bob-ow-uuid-0002"
+  slug: "bob-bubbles"
   course_offering_id: "co-padi-ow-upcoming-uuid-0001"
   customer_id: "cust-bob-uuid-0002"
   status: 0
@@ -20,6 +22,7 @@ bob_in_ow:
 
 withdrawn_enrollment:
   id: "enr-withdrawn-uuid-0003"
+  slug: "inactive-customer"
   course_offering_id: "co-padi-ow-upcoming-uuid-0001"
   customer_id: "cust-inactive-uuid-0004"
   status: 4
@@ -30,6 +33,7 @@ withdrawn_enrollment:
 
 full_offering_enr_1:
   id: "enr-full-1-uuid-0004"
+  slug: "jane-diver"
   course_offering_id: "co-padi-ow-full-uuid-0002"
   customer_id: "cust-jane-uuid-0001"
   status: 1
@@ -40,6 +44,7 @@ full_offering_enr_1:
 
 full_offering_enr_2:
   id: "enr-full-2-uuid-0005"
+  slug: "bob-bubbles"
   course_offering_id: "co-padi-ow-full-uuid-0002"
   customer_id: "cust-bob-uuid-0002"
   status: 1

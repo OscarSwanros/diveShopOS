@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_13_000015) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_13_000016) do
   create_table "api_tokens", id: :string, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "expires_at"
@@ -35,8 +35,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_000015) do
     t.date "issued_date"
     t.string "issuing_organization_id"
     t.text "notes"
+    t.string "slug", default: "", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_id", "agency", "certification_level"], name: "index_certs_on_customer_agency_level"
+    t.index ["customer_id", "slug"], name: "index_certifications_on_customer_and_slug", unique: true
     t.index ["customer_id"], name: "index_certifications_on_customer_id"
     t.index ["discarded_at"], name: "index_certifications_on_discarded_at"
     t.index ["issuing_organization_id"], name: "index_certifications_on_issuing_organization_id"
@@ -51,10 +53,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_000015) do
     t.text "notes"
     t.date "scheduled_date", null: false
     t.integer "session_type", default: 0, null: false
+    t.string "slug", default: "", null: false
     t.time "start_time", null: false
     t.string "title"
     t.datetime "updated_at", null: false
     t.index ["course_offering_id", "scheduled_date"], name: "index_class_sessions_on_offering_and_date"
+    t.index ["course_offering_id", "slug"], name: "index_class_sessions_on_offering_and_slug", unique: true
     t.index ["course_offering_id"], name: "index_class_sessions_on_course_offering_id"
     t.index ["dive_site_id"], name: "index_class_sessions_on_dive_site_id"
   end
@@ -69,9 +73,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_000015) do
     t.string "organization_id", null: false
     t.integer "price_cents"
     t.string "price_currency"
+    t.string "slug", default: "", null: false
     t.date "start_date", null: false
     t.integer "status", default: 0, null: false
     t.datetime "updated_at", null: false
+    t.index ["course_id", "slug"], name: "index_course_offerings_on_course_and_slug", unique: true
     t.index ["course_id"], name: "index_course_offerings_on_course_id"
     t.index ["instructor_id", "start_date"], name: "index_course_offerings_on_instructor_id_and_start_date"
     t.index ["instructor_id"], name: "index_course_offerings_on_instructor_id"
@@ -95,10 +101,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_000015) do
     t.text "prerequisites_description"
     t.integer "price_cents", default: 0, null: false
     t.string "price_currency", default: "USD", null: false
+    t.string "slug", default: "", null: false
     t.datetime "updated_at", null: false
     t.index ["organization_id", "active"], name: "index_courses_on_organization_id_and_active"
     t.index ["organization_id", "agency"], name: "index_courses_on_organization_id_and_agency"
     t.index ["organization_id", "name"], name: "index_courses_on_organization_id_and_name", unique: true
+    t.index ["organization_id", "slug"], name: "index_courses_on_org_and_slug", unique: true
     t.index ["organization_id"], name: "index_courses_on_organization_id"
   end
 
@@ -114,8 +122,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_000015) do
     t.string "organization_id", null: false
     t.string "serial_number", null: false
     t.string "size"
+    t.string "slug", default: "", null: false
     t.datetime "updated_at", null: false
     t.date "vip_due_date"
+    t.index ["customer_id", "slug"], name: "index_customer_tanks_on_customer_and_slug", unique: true
     t.index ["customer_id"], name: "index_customer_tanks_on_customer_id"
     t.index ["organization_id", "serial_number"], name: "index_customer_tanks_on_org_serial_unique", unique: true
     t.index ["organization_id"], name: "index_customer_tanks_on_organization_id"
@@ -133,10 +143,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_000015) do
     t.text "notes"
     t.string "organization_id", null: false
     t.string "phone"
+    t.string "slug", default: "", null: false
     t.datetime "updated_at", null: false
     t.index ["organization_id", "active"], name: "index_customers_on_org_and_active"
     t.index ["organization_id", "email"], name: "index_customers_on_org_and_email", unique: true, where: "email IS NOT NULL"
     t.index ["organization_id", "last_name", "first_name"], name: "index_customers_on_org_and_name"
+    t.index ["organization_id", "slug"], name: "index_customers_on_org_and_slug", unique: true
     t.index ["organization_id"], name: "index_customers_on_organization_id"
   end
 
@@ -151,9 +163,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_000015) do
     t.decimal "max_depth_meters", precision: 6, scale: 1
     t.string "name", null: false
     t.string "organization_id", null: false
+    t.string "slug", default: "", null: false
     t.datetime "updated_at", null: false
     t.index ["organization_id", "active"], name: "index_dive_sites_on_organization_id_and_active"
     t.index ["organization_id", "name"], name: "index_dive_sites_on_organization_id_and_name", unique: true
+    t.index ["organization_id", "slug"], name: "index_dive_sites_on_org_and_slug", unique: true
     t.index ["organization_id"], name: "index_dive_sites_on_organization_id"
   end
 
@@ -166,10 +180,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_000015) do
     t.datetime "enrolled_at"
     t.text "notes"
     t.boolean "paid", default: false, null: false
+    t.string "slug", default: "", null: false
     t.integer "status", default: 0, null: false
     t.datetime "updated_at", null: false
     t.index ["certification_id"], name: "index_enrollments_on_certification_id"
     t.index ["course_offering_id", "customer_id"], name: "index_enrollments_on_course_offering_id_and_customer_id", unique: true
+    t.index ["course_offering_id", "slug"], name: "index_enrollments_on_offering_and_slug", unique: true
     t.index ["course_offering_id", "status"], name: "index_enrollments_on_course_offering_id_and_status"
     t.index ["course_offering_id"], name: "index_enrollments_on_course_offering_id"
     t.index ["customer_id"], name: "index_enrollments_on_customer_id"
@@ -189,12 +205,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_000015) do
     t.date "purchase_date"
     t.string "serial_number"
     t.string "size"
+    t.string "slug", default: "", null: false
     t.integer "status", default: 0, null: false
     t.datetime "updated_at", null: false
     t.index ["organization_id", "category", "size", "status"], name: "index_equipment_items_on_org_category_size_status"
     t.index ["organization_id", "category", "status"], name: "index_equipment_items_on_org_category_status"
     t.index ["organization_id", "life_support", "next_service_due"], name: "index_equipment_items_on_org_life_support_service"
     t.index ["organization_id", "serial_number"], name: "index_equipment_items_on_org_serial_unique", unique: true, where: "serial_number IS NOT NULL"
+    t.index ["organization_id", "slug"], name: "index_equipment_items_on_org_and_slug", unique: true
     t.index ["organization_id"], name: "index_equipment_items_on_organization_id"
   end
 
@@ -231,10 +249,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_000015) do
     t.string "price_currency", default: "USD", null: false
     t.time "return_time"
     t.date "scheduled_date", null: false
+    t.string "slug", default: "", null: false
     t.integer "status", default: 0, null: false
     t.string "title", null: false
     t.datetime "updated_at", null: false
     t.index ["organization_id", "scheduled_date"], name: "index_excursions_on_organization_id_and_scheduled_date"
+    t.index ["organization_id", "slug"], name: "index_excursions_on_org_and_slug", unique: true
     t.index ["organization_id", "status"], name: "index_excursions_on_organization_id_and_status"
     t.index ["organization_id"], name: "index_excursions_on_organization_id"
   end
@@ -246,9 +266,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_000015) do
     t.date "expiration_date"
     t.string "rating_level", null: false
     t.string "rating_number"
+    t.string "slug", default: "", null: false
     t.datetime "updated_at", null: false
     t.string "user_id", null: false
     t.index ["user_id", "agency", "rating_level"], name: "index_instructor_ratings_on_user_agency_level", unique: true
+    t.index ["user_id", "slug"], name: "index_instructor_ratings_on_user_and_slug", unique: true
     t.index ["user_id"], name: "index_instructor_ratings_on_user_id"
   end
 
@@ -260,8 +282,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_000015) do
     t.date "expiration_date"
     t.text "notes"
     t.string "physician_name"
+    t.string "slug", default: "", null: false
     t.integer "status", default: 0, null: false
     t.datetime "updated_at", null: false
+    t.index ["customer_id", "slug"], name: "index_medical_records_on_customer_and_slug", unique: true
     t.index ["customer_id", "status"], name: "index_medical_records_on_customer_and_status"
     t.index ["customer_id"], name: "index_medical_records_on_customer_id"
     t.index ["discarded_at"], name: "index_medical_records_on_discarded_at"
@@ -295,8 +319,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_000015) do
     t.string "performed_by", null: false
     t.date "service_date", null: false
     t.integer "service_type", null: false
+    t.string "slug", default: "", null: false
     t.datetime "updated_at", null: false
     t.index ["equipment_item_id", "service_date"], name: "index_service_records_on_item_and_date"
+    t.index ["equipment_item_id", "slug"], name: "index_service_records_on_item_and_slug", unique: true
     t.index ["equipment_item_id"], name: "index_service_records_on_equipment_item_id"
   end
 
@@ -320,9 +346,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_000015) do
     t.text "notes"
     t.integer "planned_bottom_time_minutes"
     t.decimal "planned_max_depth_meters", precision: 6, scale: 1
+    t.string "slug", default: "", null: false
     t.datetime "updated_at", null: false
     t.index ["dive_site_id"], name: "index_trip_dives_on_dive_site_id"
     t.index ["excursion_id", "dive_number"], name: "index_trip_dives_on_excursion_id_and_dive_number", unique: true
+    t.index ["excursion_id", "slug"], name: "index_trip_dives_on_excursion_and_slug", unique: true
     t.index ["excursion_id"], name: "index_trip_dives_on_excursion_id"
   end
 
@@ -337,8 +365,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_000015) do
     t.boolean "paid", default: false, null: false
     t.string "phone"
     t.integer "role", default: 0, null: false
+    t.string "slug", default: "", null: false
     t.datetime "updated_at", null: false
     t.index ["excursion_id", "email"], name: "index_trip_participants_on_excursion_id_and_email"
+    t.index ["excursion_id", "slug"], name: "index_trip_participants_on_excursion_and_slug", unique: true
     t.index ["excursion_id"], name: "index_trip_participants_on_excursion_id"
   end
 
@@ -349,8 +379,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_000015) do
     t.string "organization_id", null: false
     t.string "password_digest", null: false
     t.integer "role", default: 0, null: false
+    t.string "slug", default: "", null: false
     t.datetime "updated_at", null: false
     t.index ["organization_id", "email_address"], name: "index_users_on_organization_id_and_email_address", unique: true
+    t.index ["organization_id", "slug"], name: "index_users_on_org_and_slug", unique: true
     t.index ["organization_id"], name: "index_users_on_organization_id"
   end
 

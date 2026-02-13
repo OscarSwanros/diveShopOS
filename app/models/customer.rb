@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class Customer < ApplicationRecord
+  include Sluggable
+
   belongs_to :organization
+
+  slugged_by -> { "#{first_name} #{last_name}" }, scope: :organization_id
 
   has_many :certifications, dependent: :destroy
   has_many :enrollments, dependent: :destroy

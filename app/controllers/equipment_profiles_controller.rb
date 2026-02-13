@@ -42,7 +42,7 @@ class EquipmentProfilesController < ApplicationController
   private
 
   def set_customer
-    @customer = current_organization.customers.find(params[:customer_id])
+    @customer = current_organization.customers.find_by!(slug: params[:customer_id])
   end
 
   def set_equipment_profile

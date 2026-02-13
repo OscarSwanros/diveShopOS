@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class TripParticipant < ApplicationRecord
+  include Sluggable
+
   belongs_to :excursion
+
+  slugged_by :name, scope: :excursion_id
 
   enum :role, { diver: 0, guide: 1, divemaster: 2, instructor: 3 }
 

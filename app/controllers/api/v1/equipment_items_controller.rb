@@ -46,7 +46,7 @@ module Api
       private
 
       def set_equipment_item
-        @equipment_item = current_organization.equipment_items.find(params[:id])
+        @equipment_item = find_by_slug_or_id(current_organization.equipment_items, params[:id])
         authorize @equipment_item
       end
 

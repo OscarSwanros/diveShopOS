@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
 class Certification < ApplicationRecord
+  include Sluggable
+
   belongs_to :customer
   belongs_to :issuing_organization, class_name: "Organization", optional: true
+
+  slugged_by -> { "#{agency} #{certification_level}" }, scope: :customer_id
 
   validates :agency, presence: true
   validates :certification_level, presence: true

@@ -49,7 +49,7 @@ class UsersController < ApplicationController
   private
 
   def set_user
-    @user = current_organization.users.find(params[:id])
+    @user = current_organization.users.find_by!(slug: params[:id])
     authorize @user
   end
 

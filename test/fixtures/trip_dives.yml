@@ -1,5 +1,6 @@
 morning_dive_one:
   id: "td-morning-one-uuid-0001"
+  slug: "dive-1"
   excursion_id: "exc-morning-reef-uuid-0001"
   dive_site_id: "site-coral-garden-uuid-0001"
   dive_number: 1
@@ -10,6 +11,7 @@ morning_dive_one:
 
 morning_dive_two:
   id: "td-morning-two-uuid-0002"
+  slug: "dive-2"
   excursion_id: "exc-morning-reef-uuid-0001"
   dive_site_id: "site-the-wall-uuid-0002"
   dive_number: 2

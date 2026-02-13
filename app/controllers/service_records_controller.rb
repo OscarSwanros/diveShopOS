@@ -42,18 +42,18 @@ class ServiceRecordsController < ApplicationController
   private
 
   def set_equipment_item
-    @equipment_item = current_organization.equipment_items.find(params[:equipment_item_id])
+    @equipment_item = current_organization.equipment_items.find_by!(slug: params[:equipment_item_id])
   end
 
   def set_service_record
-    @service_record = @equipment_item.service_records.find(params[:id])
+    @service_record = @equipment_item.service_records.find_by!(slug: params[:id])
     authorize @service_record
   end
 
   def service_record_params
     params.require(:service_record).permit(
       :service_type, :service_date, :next_due_date, :performed_by,
-      :cost_cents, :cost_currency, :description, :notes
+      :cost, :cost_currency, :description, :notes
     )
   end
 end

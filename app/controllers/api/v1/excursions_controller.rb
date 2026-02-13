@@ -43,14 +43,14 @@ module Api
       private
 
       def set_excursion
-        @excursion = current_organization.excursions.find(params[:id])
+        @excursion = find_by_slug_or_id(current_organization.excursions, params[:id])
         authorize @excursion
       end
 
       def excursion_params
         params.require(:excursion).permit(
           :title, :description, :scheduled_date, :departure_time, :return_time,
-          :capacity, :price_cents, :price_currency, :status, :notes
+          :capacity, :price, :price_cents, :price_currency, :status, :notes
         )
       end
     end

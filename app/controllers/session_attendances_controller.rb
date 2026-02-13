@@ -18,9 +18,9 @@ class SessionAttendancesController < ApplicationController
   private
 
   def set_context
-    @course = current_organization.courses.find(params[:course_id])
-    @course_offering = @course.course_offerings.find(params[:course_offering_id])
-    @class_session = @course_offering.class_sessions.find(params[:class_session_id])
+    @course = current_organization.courses.find_by!(slug: params[:course_id])
+    @course_offering = @course.course_offerings.find_by!(slug: params[:course_offering_id])
+    @class_session = @course_offering.class_sessions.find_by!(slug: params[:class_session_id])
   end
 
   def attendance_params

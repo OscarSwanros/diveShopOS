@@ -1,4 +1,4 @@
-json.extract! class_session, :id, :session_type, :title,
+json.extract! class_session, :id, :slug, :session_type, :title,
   :scheduled_date, :start_time, :end_time,
   :location_description, :notes
 json.course_offering_id class_session.course_offering_id

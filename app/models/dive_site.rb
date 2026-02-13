@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class DiveSite < ApplicationRecord
+  include Sluggable
+
   belongs_to :organization
+
+  slugged_by :name, scope: :organization_id
 
   has_many :trip_dives, dependent: :restrict_with_error
 

@@ -1,4 +1,4 @@
-json.extract! excursion, :id, :title, :description, :scheduled_date,
+json.extract! excursion, :id, :slug, :title, :description, :scheduled_date,
   :departure_time, :return_time, :capacity, :price_cents, :price_currency,
   :status, :notes
 json.spots_remaining excursion.spots_remaining

@@ -1,4 +1,4 @@
-json.extract! instructor_rating, :id, :agency, :rating_level, :rating_number,
+json.extract! instructor_rating, :id, :slug, :agency, :rating_level, :rating_number,
   :active, :expiration_date
 json.user_id instructor_rating.user_id
 json.user_name instructor_rating.user.name

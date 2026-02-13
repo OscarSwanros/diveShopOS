@@ -55,18 +55,18 @@ class CourseOfferingsController < ApplicationController
   private
 
   def set_course
-    @course = current_organization.courses.find(params[:course_id])
+    @course = current_organization.courses.find_by!(slug: params[:course_id])
   end
 
   def set_course_offering
-    @course_offering = @course.course_offerings.find(params[:id])
+    @course_offering = @course.course_offerings.find_by!(slug: params[:id])
     authorize @course_offering
   end
 
   def course_offering_params
     params.require(:course_offering).permit(
       :instructor_id, :start_date, :end_date, :max_students,
-      :price_cents, :price_currency, :status, :notes
+      :price, :price_currency, :status, :notes
     )
   end
 end

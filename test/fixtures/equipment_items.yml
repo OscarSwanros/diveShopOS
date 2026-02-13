@@ -1,5 +1,6 @@
 bcd_medium:
   id: "equip-bcd-med-uuid-0001"
+  slug: "aqualung-pro-hd-bcd-1"
   organization_id: "org-reef-divers-uuid-0001"
   category: 1
   name: "Aqualung Pro HD BCD #1"
@@ -17,6 +18,7 @@ bcd_medium:
 
 regulator_available:
   id: "equip-reg-uuid-0002"
+  slug: "scubapro-mk25-regulator-1"
   organization_id: "org-reef-divers-uuid-0001"
   category: 2
   name: "Scubapro MK25 Regulator #1"
@@ -34,6 +36,7 @@ regulator_available:
 
 regulator_overdue:
   id: "equip-reg-overdue-uuid-0003"
+  slug: "mares-prestige-regulator-2"
   organization_id: "org-reef-divers-uuid-0001"
   category: 2
   name: "Mares Prestige Regulator #2"
@@ -51,6 +54,7 @@ regulator_overdue:
 
 regulator_no_service:
   id: "equip-reg-noservice-uuid-0004"
+  slug: "apeks-xtx50-regulator-3"
   organization_id: "org-reef-divers-uuid-0001"
   category: 2
   name: "Apeks XTX50 Regulator #3"
@@ -66,6 +70,7 @@ regulator_no_service:
 
 fins_medium:
   id: "equip-fins-uuid-0005"
+  slug: "mares-avanti-fins-m"
   organization_id: "org-reef-divers-uuid-0001"
   category: 0
   name: "Mares Avanti Fins M"
@@ -79,6 +84,7 @@ fins_medium:
 
 wetsuit_large:
   id: "equip-wetsuit-uuid-0006"
+  slug: "5mm-wetsuit-l"
   organization_id: "org-reef-divers-uuid-0001"
   category: 4
   name: "5mm Wetsuit L"
@@ -92,6 +98,7 @@ wetsuit_large:
 
 tank_al80:
   id: "equip-tank-uuid-0007"
+  slug: "al80-tank-1"
   organization_id: "org-reef-divers-uuid-0001"
   category: 5
   name: "AL80 Tank #1"
@@ -108,6 +115,7 @@ tank_al80:
 
 retired_bcd:
   id: "equip-retired-uuid-0008"
+  slug: "old-bcd-9"
   organization_id: "org-reef-divers-uuid-0001"
   category: 1
   name: "Old BCD #9"
@@ -121,6 +129,7 @@ retired_bcd:
 
 other_org_equipment:
   id: "equip-other-uuid-0009"
+  slug: "blue-water-fins-s"
   organization_id: "org-blue-water-uuid-0002"
   category: 0
   name: "Blue Water Fins S"

@@ -42,11 +42,11 @@ module Api
       private
 
       def set_customer
-        @customer = current_organization.customers.find(params[:customer_id])
+        @customer = find_by_slug_or_id(current_organization.customers, params[:customer_id])
       end
 
       def set_certification
-        @certification = @customer.certifications.kept.find(params[:id])
+        @certification = find_by_slug_or_id(@customer.certifications.kept, params[:id])
         authorize @certification
       end
 

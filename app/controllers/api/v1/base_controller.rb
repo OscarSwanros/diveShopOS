@@ -81,6 +81,10 @@ module Api
         }, status: :unprocessable_entity
       end
 
+      def find_by_slug_or_id(scope, param)
+        scope.find_by(slug: param) || scope.find(param)
+      end
+
       def render_safety_gate_failure(result)
         render json: {
           error: {

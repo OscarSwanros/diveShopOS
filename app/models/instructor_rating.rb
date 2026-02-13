@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class InstructorRating < ApplicationRecord
+  include Sluggable
+
   belongs_to :user
+
+  slugged_by -> { "#{user.name} #{agency} #{rating_level}" }, scope: :user_id
 
   validates :agency, presence: true
   validates :rating_level, presence: true

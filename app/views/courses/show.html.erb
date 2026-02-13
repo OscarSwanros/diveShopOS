@@ -31,7 +31,7 @@
       <div>
         <dt class="text-sm font-medium text-gray-500"><%= t("courses.show.price") %></dt>
         <dd class="mt-1 text-sm text-gray-900">
-          <%= number_to_currency(@course.price_cents / 100.0, unit: @course.price_currency == "USD" ? "$" : @course.price_currency) %>
+          <%= number_to_currency(@course.price, unit: @course.price_currency == "USD" ? "$" : @course.price_currency) %>
         </dd>
       </div>
       <% if @course.min_age %>

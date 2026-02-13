@@ -1,4 +1,4 @@
-json.extract! certification, :id, :agency, :certification_level,
+json.extract! certification, :id, :slug, :agency, :certification_level,
   :certification_number, :issued_date, :expiration_date, :notes
 json.customer_id certification.customer_id
 json.active certification.active?

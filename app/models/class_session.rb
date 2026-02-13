@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
 class ClassSession < ApplicationRecord
+  include Sluggable
+
   belongs_to :course_offering
   belongs_to :dive_site, optional: true
+
+  slugged_by :title, scope: :course_offering_id
 
   has_many :session_attendances, dependent: :destroy
 

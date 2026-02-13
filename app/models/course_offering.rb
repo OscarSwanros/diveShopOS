@@ -1,9 +1,13 @@
 # frozen_string_literal: true
 
 class CourseOffering < ApplicationRecord
+  include Sluggable
+
   belongs_to :course
   belongs_to :organization
   belongs_to :instructor, class_name: "User"
+
+  slugged_by -> { start_date&.strftime("%b-%Y") }, scope: :course_id
 
   has_many :class_sessions, dependent: :destroy
   has_many :enrollments, dependent: :restrict_with_error
@@ -17,8 +21,20 @@ class CourseOffering < ApplicationRecord
   scope :past, -> { where("start_date < ?", Date.current).order(start_date: :desc) }
   scope :by_status, ->(status) { where(status: status) }
 
+  def price
+    price_cents&./(100.0)
+  end
+
+  def price=(val)
+    self.price_cents = val.present? ? (val.to_f * 100).round : nil
+  end
+
   def effective_price_cents
     price_cents || course.price_cents
+  end
+
+  def effective_price
+    effective_price_cents / 100.0
   end
 
   def effective_price_currency

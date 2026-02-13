@@ -1,4 +1,4 @@
-json.extract! customer_tank, :id, :serial_number, :manufacturer, :material, :size,
+json.extract! customer_tank, :id, :slug, :serial_number, :manufacturer, :material, :size,
   :last_vip_date, :vip_due_date, :last_hydro_date, :hydro_due_date, :notes
 json.customer_id customer_tank.customer_id
 json.organization_id customer_tank.organization_id

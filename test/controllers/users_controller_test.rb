@@ -114,16 +114,18 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   test "owner can update a user" do
     sign_in @owner
     patch user_path(@staff), params: { user: { name: "Updated Name" } }
+    @staff.reload
     assert_redirected_to user_path(@staff)
-    assert_equal "Updated Name", @staff.reload.name
+    assert_equal "Updated Name", @staff.name
   end
 
   test "update with blank password does not change password" do
     sign_in @owner
     original_digest = @staff.password_digest
     patch user_path(@staff), params: { user: { name: "Same Password", password: "", password_confirmation: "" } }
+    @staff.reload
     assert_redirected_to user_path(@staff)
-    assert_equal original_digest, @staff.reload.password_digest
+    assert_equal original_digest, @staff.password_digest
   end
 
   # --- Destroy ---

@@ -1,5 +1,6 @@
 owner_maria:
   id: "user-maria-uuid-0001"
+  slug: "maria-garcia"
   organization_id: "org-reef-divers-uuid-0001"
   name: "Maria Garcia"
   email_address: "maria@reefdivers.com"
@@ -10,6 +11,7 @@ owner_maria:
 
 manager_carlos:
   id: "user-carlos-uuid-0002"
+  slug: "carlos-ruiz"
   organization_id: "org-reef-divers-uuid-0001"
   name: "Carlos Ruiz"
   email_address: "carlos@reefdivers.com"
@@ -20,6 +22,7 @@ manager_carlos:
 
 staff_ana:
   id: "user-ana-uuid-0003"
+  slug: "ana-lopez"
   organization_id: "org-reef-divers-uuid-0001"
   name: "Ana Lopez"
   email_address: "ana@reefdivers.com"
@@ -30,6 +33,7 @@ staff_ana:
 
 other_org_user:
   id: "user-other-uuid-0004"
+  slug: "john-smith"
   organization_id: "org-blue-water-uuid-0002"
   name: "John Smith"
   email_address: "john@bluewater.com"

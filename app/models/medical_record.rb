@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class MedicalRecord < ApplicationRecord
+  include Sluggable
+
   belongs_to :customer
+
+  slugged_by -> { "#{status} #{clearance_date || 'pending'}" }, scope: :customer_id
 
   enum :status, { pending_review: 0, cleared: 1, not_cleared: 2, expired: 3 }
 

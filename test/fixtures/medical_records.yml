@@ -1,5 +1,6 @@
 jane_cleared:
   id: "med-jane-cleared-uuid-0001"
+  slug: "cleared-2025-06-01"
   customer_id: "cust-jane-uuid-0001"
   status: 1
   clearance_date: "2025-06-01"
@@ -10,6 +11,7 @@ jane_cleared:
 
 bob_expired:
   id: "med-bob-expired-uuid-0002"
+  slug: "expired-2024-01-01"
   customer_id: "cust-bob-uuid-0002"
   status: 3
   clearance_date: "2024-01-01"
@@ -20,6 +22,7 @@ bob_expired:
 
 bob_pending:
   id: "med-bob-pending-uuid-0003"
+  slug: "pending-review-pending"
   customer_id: "cust-bob-uuid-0002"
   status: 0
   created_at: <%= Time.current %>
@@ -27,6 +30,7 @@ bob_pending:
 
 discarded_medical:
   id: "med-discarded-uuid-0004"
+  slug: "cleared-pending"
   customer_id: "cust-jane-uuid-0001"
   status: 1
   discarded_at: <%= Time.current - 1.day %>

@@ -1,5 +1,6 @@
 ow_classroom_1:
   id: "cs-ow-classroom-1-uuid-0001"
+  slug: "module-1-dive-theory"
   course_offering_id: "co-padi-ow-upcoming-uuid-0001"
   session_type: 0
   title: "Module 1: Dive Theory"
@@ -12,6 +13,7 @@ ow_classroom_1:
 
 ow_confined_1:
   id: "cs-ow-confined-1-uuid-0002"
+  slug: "confined-water-dive-1"
   course_offering_id: "co-padi-ow-upcoming-uuid-0001"
   session_type: 1
   title: "Confined Water Dive 1"
@@ -24,6 +26,7 @@ ow_confined_1:
 
 ow_open_water_1:
   id: "cs-ow-open-water-1-uuid-0003"
+  slug: "open-water-dive-1-2"
   course_offering_id: "co-padi-ow-upcoming-uuid-0001"
   session_type: 2
   title: "Open Water Dive 1 & 2"
@@ -36,6 +39,7 @@ ow_open_water_1:
 
 ow_open_water_2:
   id: "cs-ow-open-water-2-uuid-0004"
+  slug: "open-water-dive-3-4"
   course_offering_id: "co-padi-ow-upcoming-uuid-0001"
   session_type: 2
   title: "Open Water Dive 3 & 4"

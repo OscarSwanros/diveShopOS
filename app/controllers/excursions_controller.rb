@@ -50,14 +50,14 @@ class ExcursionsController < ApplicationController
   private
 
   def set_excursion
-    @excursion = current_organization.excursions.find(params[:id])
+    @excursion = current_organization.excursions.find_by!(slug: params[:id])
     authorize @excursion
   end
 
   def excursion_params
     params.require(:excursion).permit(
       :title, :description, :scheduled_date, :departure_time, :return_time,
-      :capacity, :price_cents, :price_currency, :status, :notes
+      :capacity, :price, :price_currency, :status, :notes
     )
   end
 end

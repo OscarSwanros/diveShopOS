@@ -1,5 +1,6 @@
 jane_ow:
   id: "cert-jane-ow-uuid-0001"
+  slug: "padi-open-water"
   customer_id: "cust-jane-uuid-0001"
   agency: "PADI"
   certification_level: "Open Water"
@@ -10,6 +11,7 @@ jane_ow:
 
 jane_aow:
   id: "cert-jane-aow-uuid-0002"
+  slug: "padi-advanced-open-water"
   customer_id: "cust-jane-uuid-0001"
   agency: "PADI"
   certification_level: "Advanced Open Water"
@@ -20,6 +22,7 @@ jane_aow:
 
 bob_ow:
   id: "cert-bob-ow-uuid-0003"
+  slug: "ssi-open-water"
   customer_id: "cust-bob-uuid-0002"
   agency: "SSI"
   certification_level: "Open Water"
@@ -30,6 +33,7 @@ bob_ow:
 
 expired_cert:
   id: "cert-expired-uuid-0004"
+  slug: "dan-first-aid"
   customer_id: "cust-bob-uuid-0002"
   agency: "DAN"
   certification_level: "First Aid"
@@ -40,6 +44,7 @@ expired_cert:
 
 discarded_cert:
   id: "cert-discarded-uuid-0005"
+  slug: "naui-intro-to-scuba"
   customer_id: "cust-jane-uuid-0001"
   agency: "NAUI"
   certification_level: "Intro to Scuba"

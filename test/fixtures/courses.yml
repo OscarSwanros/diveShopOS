@@ -1,5 +1,6 @@
 padi_ow:
   id: "course-padi-ow-uuid-0001"
+  slug: "padi-open-water-diver"
   organization_id: "org-reef-divers-uuid-0001"
   name: "PADI Open Water Diver"
   description: "Learn the fundamentals of scuba diving. Includes confined water dives and open water dives."
@@ -17,6 +18,7 @@ padi_ow:
 
 padi_aow:
   id: "course-padi-aow-uuid-0002"
+  slug: "padi-advanced-open-water"
   organization_id: "org-reef-divers-uuid-0001"
   name: "PADI Advanced Open Water"
   description: "Five adventure dives including deep and navigation."
@@ -34,6 +36,7 @@ padi_aow:
 
 ssi_nitrox:
   id: "course-ssi-nitrox-uuid-0003"
+  slug: "ssi-enriched-air-nitrox"
   organization_id: "org-reef-divers-uuid-0001"
   name: "SSI Enriched Air Nitrox"
   description: "Learn to dive with enriched air nitrox."
@@ -49,6 +52,7 @@ ssi_nitrox:
 
 inactive_course:
   id: "course-inactive-uuid-0004"
+  slug: "retired-course"
   organization_id: "org-reef-divers-uuid-0001"
   name: "Retired Course"
   agency: "PADI"
@@ -61,6 +65,7 @@ inactive_course:
 
 other_org_course:
   id: "course-other-uuid-0005"
+  slug: "blue-water-ow-course"
   organization_id: "org-blue-water-uuid-0002"
   name: "Blue Water OW Course"
   agency: "NAUI"

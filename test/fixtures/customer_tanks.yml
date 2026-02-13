@@ -1,5 +1,6 @@
 jane_al80:
   id: "ctank-jane-al80-uuid-0001"
+  slug: "tank-lux-12345"
   customer_id: "cust-jane-uuid-0001"
   organization_id: "org-reef-divers-uuid-0001"
   serial_number: "LUX-12345"
@@ -15,6 +16,7 @@ jane_al80:
 
 jane_hp100:
   id: "ctank-jane-hp100-uuid-0002"
+  slug: "tank-fbr-67890"
   customer_id: "cust-jane-uuid-0001"
   organization_id: "org-reef-divers-uuid-0001"
   serial_number: "FBR-67890"
@@ -31,6 +33,7 @@ jane_hp100:
 
 bob_tank_no_hydro:
   id: "ctank-bob-nohydro-uuid-0003"
+  slug: "tank-cat-11111"
   customer_id: "cust-bob-uuid-0002"
   organization_id: "org-reef-divers-uuid-0001"
   serial_number: "CAT-11111"
@@ -45,6 +48,7 @@ bob_tank_no_hydro:
 
 other_org_tank:
   id: "ctank-other-uuid-0004"
+  slug: "tank-oth-99999"
   customer_id: "cust-other-uuid-0005"
   organization_id: "org-blue-water-uuid-0002"
   serial_number: "OTH-99999"

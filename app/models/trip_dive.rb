@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
 class TripDive < ApplicationRecord
+  include Sluggable
+
   belongs_to :excursion
   belongs_to :dive_site
+
+  slugged_by -> { "dive #{dive_number}" }, scope: :excursion_id
 
   validates :dive_number, presence: true,
     numericality: { greater_than: 0, only_integer: true },

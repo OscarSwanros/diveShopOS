@@ -1,12 +1,24 @@
 # frozen_string_literal: true
 
 class ServiceRecord < ApplicationRecord
+  include Sluggable
+
   belongs_to :equipment_item
+
+  slugged_by -> { "#{service_type&.humanize} #{service_date}" }, scope: :equipment_item_id
 
   enum :service_type, {
     annual_service: 0, repair: 1, inspection: 2,
     visual_inspection: 3, hydrostatic_test: 4
   }
+
+  def cost
+    cost_cents&./(100.0)
+  end
+
+  def cost=(val)
+    self.cost_cents = val.present? ? (val.to_f * 100).round : nil
+  end
 
   validates :service_type, presence: true
   validates :service_date, presence: true

@@ -1,5 +1,6 @@
 bcd_annual:
   id: "svc-bcd-annual-uuid-0001"
+  slug: "annual-service-<%= Date.current - 3.months %>"
   equipment_item_id: "equip-bcd-med-uuid-0001"
   service_type: 0
   service_date: <%= Date.current - 3.months %>
@@ -13,6 +14,7 @@ bcd_annual:
 
 regulator_annual:
   id: "svc-reg-annual-uuid-0002"
+  slug: "annual-service-<%= Date.current - 6.months %>"
   equipment_item_id: "equip-reg-uuid-0002"
   service_type: 0
   service_date: <%= Date.current - 6.months %>
@@ -26,6 +28,7 @@ regulator_annual:
 
 tank_vip:
   id: "svc-tank-vip-uuid-0003"
+  slug: "visual-inspection-<%= Date.current - 4.months %>"
   equipment_item_id: "equip-tank-uuid-0007"
   service_type: 3
   service_date: <%= Date.current - 4.months %>

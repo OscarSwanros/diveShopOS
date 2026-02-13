@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class EquipmentItem < ApplicationRecord
+  include Sluggable
+
   belongs_to :organization
+
+  slugged_by :name, scope: :organization_id
 
   has_many :service_records, dependent: :destroy
 

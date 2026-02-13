@@ -47,7 +47,7 @@ module Api
       private
 
       def set_course
-        @course = current_organization.courses.find(params[:id])
+        @course = find_by_slug_or_id(current_organization.courses, params[:id])
         authorize @course
       end
 
@@ -55,7 +55,7 @@ module Api
         params.require(:course).permit(
           :name, :description, :agency, :level, :course_type,
           :min_age, :max_students, :duration_days,
-          :price_cents, :price_currency, :prerequisites_description, :active
+          :price, :price_cents, :price_currency, :prerequisites_description, :active
         )
       end
     end
