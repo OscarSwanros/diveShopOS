@@ -1,0 +1,102 @@
+<%= form_with model: [@customer, equipment_profile], url: equipment_profile.persisted? ? customer_equipment_profile_path(@customer) : customer_equipment_profile_path(@customer), class: "space-y-4" do |f| %>
+  <% if equipment_profile.errors.any? %>
+    <div class="p-3 bg-red-100 text-red-800 rounded-md text-sm" role="alert">
+      <ul class="list-disc list-inside">
+        <% equipment_profile.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+    <div>
+      <%= f.label :height_cm, t("equipment_profiles.form.height"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.number_field :height_cm, min: 50, max: 250,
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+    <div>
+      <%= f.label :weight_kg, t("equipment_profiles.form.weight"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.number_field :weight_kg, min: 20, max: 300, step: 0.5,
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+    <div>
+      <%= f.label :wetsuit_size, t("equipment_profiles.form.wetsuit_size"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.select :wetsuit_size, %w[XS S M ML L XL XXL], { include_blank: true },
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+    <div>
+      <%= f.label :wetsuit_thickness_mm, t("equipment_profiles.form.wetsuit_thickness"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.select :wetsuit_thickness_mm, [[t("equipment_profiles.form.thickness_3mm"), 3], [t("equipment_profiles.form.thickness_5mm"), 5], [t("equipment_profiles.form.thickness_7mm"), 7]], { include_blank: true },
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+    <div>
+      <%= f.label :bcd_size, t("equipment_profiles.form.bcd_size"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.select :bcd_size, %w[XS S M L XL], { include_blank: true },
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+    <div>
+      <%= f.label :boot_size, t("equipment_profiles.form.boot_size"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :boot_size, placeholder: t("equipment_profiles.form.boot_size_placeholder"),
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+    <div>
+      <%= f.label :fin_size, t("equipment_profiles.form.fin_size"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :fin_size, placeholder: t("equipment_profiles.form.fin_size_placeholder"),
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+    <div>
+      <%= f.label :glove_size, t("equipment_profiles.form.glove_size"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.select :glove_size, %w[S M L XL], { include_blank: true },
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+  </div>
+
+  <fieldset class="border border-gray-200 rounded-md p-4">
+    <legend class="text-sm font-medium text-gray-700 px-2"><%= t("equipment_profiles.form.owns_equipment") %></legend>
+    <div class="grid grid-cols-2 gap-2 sm:grid-cols-3">
+      <label class="flex items-center space-x-2">
+        <%= f.check_box :owns_mask, class: "h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" %>
+        <span class="text-sm text-gray-700"><%= t("equipment_profiles.form.owns_mask") %></span>
+      </label>
+      <label class="flex items-center space-x-2">
+        <%= f.check_box :owns_fins, class: "h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" %>
+        <span class="text-sm text-gray-700"><%= t("equipment_profiles.form.owns_fins") %></span>
+      </label>
+      <label class="flex items-center space-x-2">
+        <%= f.check_box :owns_wetsuit, class: "h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" %>
+        <span class="text-sm text-gray-700"><%= t("equipment_profiles.form.owns_wetsuit") %></span>
+      </label>
+      <label class="flex items-center space-x-2">
+        <%= f.check_box :owns_bcd, class: "h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" %>
+        <span class="text-sm text-gray-700"><%= t("equipment_profiles.form.owns_bcd") %></span>
+      </label>
+      <label class="flex items-center space-x-2">
+        <%= f.check_box :owns_regulator, class: "h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" %>
+        <span class="text-sm text-gray-700"><%= t("equipment_profiles.form.owns_regulator") %></span>
+      </label>
+      <label class="flex items-center space-x-2">
+        <%= f.check_box :owns_computer, class: "h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" %>
+        <span class="text-sm text-gray-700"><%= t("equipment_profiles.form.owns_computer") %></span>
+      </label>
+    </div>
+  </fieldset>
+
+  <div>
+    <%= f.label :notes, t("equipment_profiles.form.notes"), class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_area :notes, rows: 2,
+      class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+  <div class="flex items-center space-x-4">
+    <%= f.submit class: "inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer" %>
+    <%= link_to t("common.cancel"), customer_path(@customer),
+      class: "inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-md border border-gray-300 hover:bg-gray-50" %>
+  </div>
+<% end %>

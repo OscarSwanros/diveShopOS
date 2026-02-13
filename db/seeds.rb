@@ -624,4 +624,284 @@ end
 
 puts "  Enrollments: #{Enrollment.count}"
 
+# --- Equipment Items ---
+bcd1 = EquipmentItem.find_or_create_by!(organization: org, serial_number: "AQ-BCD-001") do |e|
+  e.category = :bcd
+  e.name = "Aqualung Pro HD BCD #1"
+  e.size = "M"
+  e.manufacturer = "Aqualung"
+  e.product_model = "Pro HD"
+  e.status = :available
+  e.life_support = true
+  e.purchase_date = Date.current - 1.year
+end
+
+bcd2 = EquipmentItem.find_or_create_by!(organization: org, serial_number: "AQ-BCD-002") do |e|
+  e.category = :bcd
+  e.name = "Aqualung Pro HD BCD #2"
+  e.size = "L"
+  e.manufacturer = "Aqualung"
+  e.product_model = "Pro HD"
+  e.status = :available
+  e.life_support = true
+  e.purchase_date = Date.current - 1.year
+end
+
+reg1 = EquipmentItem.find_or_create_by!(organization: org, serial_number: "SP-REG-001") do |e|
+  e.category = :regulator
+  e.name = "Scubapro MK25 Reg #1"
+  e.manufacturer = "Scubapro"
+  e.product_model = "MK25/S620Ti"
+  e.status = :available
+  e.life_support = true
+  e.purchase_date = Date.current - 2.years
+end
+
+reg2 = EquipmentItem.find_or_create_by!(organization: org, serial_number: "SP-REG-002") do |e|
+  e.category = :regulator
+  e.name = "Scubapro MK25 Reg #2"
+  e.manufacturer = "Scubapro"
+  e.product_model = "MK25/S620Ti"
+  e.status = :available
+  e.life_support = true
+  e.purchase_date = Date.current - 18.months
+end
+
+reg_overdue = EquipmentItem.find_or_create_by!(organization: org, serial_number: "MA-REG-003") do |e|
+  e.category = :regulator
+  e.name = "Mares Prestige Reg #3 (OVERDUE)"
+  e.manufacturer = "Mares"
+  e.product_model = "Prestige"
+  e.status = :available
+  e.life_support = true
+  e.purchase_date = Date.current - 3.years
+end
+
+tank1 = EquipmentItem.find_or_create_by!(organization: org, serial_number: "TANK-AL80-001") do |e|
+  e.category = :tank
+  e.name = "AL80 Tank #1"
+  e.size = "AL80"
+  e.manufacturer = "Luxfer"
+  e.status = :available
+  e.life_support = true
+  e.purchase_date = Date.current - 2.years
+end
+
+tank2 = EquipmentItem.find_or_create_by!(organization: org, serial_number: "TANK-AL80-002") do |e|
+  e.category = :tank
+  e.name = "AL80 Tank #2"
+  e.size = "AL80"
+  e.manufacturer = "Luxfer"
+  e.status = :available
+  e.life_support = true
+  e.purchase_date = Date.current - 2.years
+end
+
+comp1 = EquipmentItem.find_or_create_by!(organization: org, serial_number: "COMP-001") do |e|
+  e.category = :computer
+  e.name = "Shearwater Peregrine #1"
+  e.manufacturer = "Shearwater"
+  e.product_model = "Peregrine"
+  e.status = :available
+  e.life_support = true
+  e.purchase_date = Date.current - 6.months
+end
+
+6.times do |i|
+  EquipmentItem.find_or_create_by!(organization: org, name: "Fins M ##{i + 1}") do |e|
+    e.category = :fins
+    e.size = "M"
+    e.manufacturer = "Mares"
+    e.product_model = "Avanti Quattro"
+    e.status = :available
+    e.life_support = false
+  end
+end
+
+4.times do |i|
+  EquipmentItem.find_or_create_by!(organization: org, name: "Wetsuit 5mm M ##{i + 1}") do |e|
+    e.category = :wetsuit
+    e.size = "M"
+    e.manufacturer = "Bare"
+    e.product_model = "Velocity 5mm"
+    e.status = :available
+    e.life_support = false
+  end
+end
+
+4.times do |i|
+  EquipmentItem.find_or_create_by!(organization: org, name: "Mask ##{i + 1}") do |e|
+    e.category = :mask
+    e.manufacturer = "Cressi"
+    e.product_model = "Big Eyes Evolution"
+    e.status = :available
+    e.life_support = false
+  end
+end
+
+EquipmentItem.find_or_create_by!(organization: org, name: "Old BCD (Retired)") do |e|
+  e.category = :bcd
+  e.serial_number = "OLD-BCD-RETIRED"
+  e.size = "L"
+  e.manufacturer = "Zeagle"
+  e.status = :retired
+  e.life_support = true
+end
+
+puts "  Equipment items: #{org.equipment_items.count}"
+
+# --- Service Records ---
+ServiceRecord.find_or_create_by!(equipment_item: bcd1, service_date: Date.current - 3.months) do |s|
+  s.service_type = :annual_service
+  s.next_due_date = Date.current + 9.months
+  s.performed_by = "Dive Shop Service Center"
+  s.cost_cents = 15_000
+  s.description = "Annual service and inspection - all components OK"
+end
+
+ServiceRecord.find_or_create_by!(equipment_item: bcd2, service_date: Date.current - 4.months) do |s|
+  s.service_type = :annual_service
+  s.next_due_date = Date.current + 8.months
+  s.performed_by = "Dive Shop Service Center"
+  s.cost_cents = 15_000
+  s.description = "Annual service"
+end
+
+ServiceRecord.find_or_create_by!(equipment_item: reg1, service_date: Date.current - 6.months) do |s|
+  s.service_type = :annual_service
+  s.next_due_date = Date.current + 6.months
+  s.performed_by = "Scubapro Authorized Service"
+  s.cost_cents = 20_000
+  s.description = "Full regulator overhaul"
+end
+
+ServiceRecord.find_or_create_by!(equipment_item: reg2, service_date: Date.current - 5.months) do |s|
+  s.service_type = :annual_service
+  s.next_due_date = Date.current + 7.months
+  s.performed_by = "Scubapro Authorized Service"
+  s.cost_cents = 20_000
+  s.description = "Full regulator overhaul"
+end
+
+ServiceRecord.find_or_create_by!(equipment_item: reg_overdue, service_date: Date.current - 14.months) do |s|
+  s.service_type = :annual_service
+  s.next_due_date = Date.current - 2.months
+  s.performed_by = "Local Service Center"
+  s.cost_cents = 18_000
+  s.description = "Annual service - OVERDUE for next service"
+end
+
+ServiceRecord.find_or_create_by!(equipment_item: tank1, service_date: Date.current - 4.months) do |s|
+  s.service_type = :visual_inspection
+  s.next_due_date = Date.current + 8.months
+  s.performed_by = "PSI/PCI Inspector"
+  s.description = "Annual VIP passed"
+end
+
+ServiceRecord.find_or_create_by!(equipment_item: tank1, service_date: Date.current - 2.years) do |s|
+  s.service_type = :hydrostatic_test
+  s.next_due_date = Date.current + 3.years
+  s.performed_by = "Hydro Test Facility"
+  s.cost_cents = 4_000
+  s.description = "5-year hydrostatic test passed"
+end
+
+ServiceRecord.find_or_create_by!(equipment_item: comp1, service_date: Date.current - 1.month) do |s|
+  s.service_type = :inspection
+  s.next_due_date = Date.current + 11.months
+  s.performed_by = "Shearwater Authorized Dealer"
+  s.description = "Battery check and firmware update"
+end
+
+puts "  Service records: #{ServiceRecord.count}"
+
+# --- Equipment Profiles ---
+EquipmentProfile.find_or_create_by!(customer: jane) do |p|
+  p.height_cm = 170
+  p.weight_kg = 65.0
+  p.wetsuit_size = "M"
+  p.wetsuit_thickness_mm = 5
+  p.bcd_size = "M"
+  p.boot_size = "40"
+  p.fin_size = "40"
+  p.glove_size = "M"
+  p.owns_mask = true
+  p.owns_computer = true
+end
+
+EquipmentProfile.find_or_create_by!(customer: elena) do |p|
+  p.height_cm = 165
+  p.weight_kg = 58.0
+  p.wetsuit_size = "S"
+  p.wetsuit_thickness_mm = 5
+  p.bcd_size = "S"
+  p.boot_size = "38"
+  p.fin_size = "38"
+  p.glove_size = "S"
+  p.owns_mask = true
+  p.owns_wetsuit = true
+  p.owns_fins = true
+  p.owns_bcd = true
+  p.owns_regulator = true
+  p.owns_computer = true
+  p.notes = "Has full personal gear"
+end
+
+EquipmentProfile.find_or_create_by!(customer: david) do |p|
+  p.height_cm = 180
+  p.weight_kg = 82.0
+  p.wetsuit_size = "L"
+  p.wetsuit_thickness_mm = 5
+  p.bcd_size = "L"
+  p.boot_size = "44"
+  p.fin_size = "44"
+  p.glove_size = "L"
+  p.owns_mask = true
+end
+
+puts "  Equipment profiles: #{EquipmentProfile.count}"
+
+# --- Customer Tanks ---
+CustomerTank.find_or_create_by!(customer: elena, organization: org, serial_number: "LUX-E-001") do |t|
+  t.manufacturer = "Luxfer"
+  t.material = "aluminum"
+  t.size = "AL80"
+  t.last_vip_date = Date.current - 6.months
+  t.vip_due_date = Date.current + 6.months
+  t.last_hydro_date = Date.current - 2.years
+  t.hydro_due_date = Date.current + 3.years
+end
+
+CustomerTank.find_or_create_by!(customer: elena, organization: org, serial_number: "FAB-E-002") do |t|
+  t.manufacturer = "Faber"
+  t.material = "steel"
+  t.size = "HP100"
+  t.last_vip_date = Date.current - 4.months
+  t.vip_due_date = Date.current + 8.months
+  t.last_hydro_date = Date.current - 1.year
+  t.hydro_due_date = Date.current + 4.years
+end
+
+CustomerTank.find_or_create_by!(customer: maria, organization: org, serial_number: "CAT-M-001") do |t|
+  t.manufacturer = "Catalina"
+  t.material = "aluminum"
+  t.size = "AL80"
+  t.last_vip_date = Date.current - 14.months
+  t.vip_due_date = Date.current - 2.months
+  t.last_hydro_date = Date.current - 6.years
+  t.hydro_due_date = Date.current - 1.year
+  t.notes = "VIP and hydro both expired - do not fill"
+end
+
+CustomerTank.find_or_create_by!(customer: tom, organization: org, serial_number: "LUX-T-001") do |t|
+  t.manufacturer = "Luxfer"
+  t.material = "aluminum"
+  t.size = "AL63"
+  t.last_vip_date = Date.current - 3.months
+  t.vip_due_date = Date.current + 9.months
+  t.notes = "No hydro test on file - tank purchased used"
+end
+
+puts "  Customer tanks: #{org.customer_tanks.count}"
+
 puts "Done! Login with: oscar@abucear.mx / password"

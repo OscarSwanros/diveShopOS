@@ -1,0 +1,131 @@
+bcd_medium:
+  id: "equip-bcd-med-uuid-0001"
+  organization_id: "org-reef-divers-uuid-0001"
+  category: 1
+  name: "Aqualung Pro HD BCD #1"
+  serial_number: "AQ-BCD-001"
+  size: "M"
+  manufacturer: "Aqualung"
+  product_model: "Pro HD"
+  status: 0
+  life_support: true
+  purchase_date: <%= Date.current - 1.year %>
+  last_service_date: <%= Date.current - 3.months %>
+  next_service_due: <%= Date.current + 9.months %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+regulator_available:
+  id: "equip-reg-uuid-0002"
+  organization_id: "org-reef-divers-uuid-0001"
+  category: 2
+  name: "Scubapro MK25 Regulator #1"
+  serial_number: "SP-REG-001"
+  size:
+  manufacturer: "Scubapro"
+  product_model: "MK25/S620Ti"
+  status: 0
+  life_support: true
+  purchase_date: <%= Date.current - 2.years %>
+  last_service_date: <%= Date.current - 6.months %>
+  next_service_due: <%= Date.current + 6.months %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+regulator_overdue:
+  id: "equip-reg-overdue-uuid-0003"
+  organization_id: "org-reef-divers-uuid-0001"
+  category: 2
+  name: "Mares Prestige Regulator #2"
+  serial_number: "MA-REG-002"
+  size:
+  manufacturer: "Mares"
+  product_model: "Prestige"
+  status: 0
+  life_support: true
+  purchase_date: <%= Date.current - 3.years %>
+  last_service_date: <%= Date.current - 14.months %>
+  next_service_due: <%= Date.current - 2.months %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+regulator_no_service:
+  id: "equip-reg-noservice-uuid-0004"
+  organization_id: "org-reef-divers-uuid-0001"
+  category: 2
+  name: "Apeks XTX50 Regulator #3"
+  serial_number: "AP-REG-003"
+  size:
+  manufacturer: "Apeks"
+  product_model: "XTX50"
+  status: 0
+  life_support: true
+  purchase_date: <%= Date.current - 1.month %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+fins_medium:
+  id: "equip-fins-uuid-0005"
+  organization_id: "org-reef-divers-uuid-0001"
+  category: 0
+  name: "Mares Avanti Fins M"
+  size: "M"
+  manufacturer: "Mares"
+  product_model: "Avanti Quattro"
+  status: 0
+  life_support: false
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+wetsuit_large:
+  id: "equip-wetsuit-uuid-0006"
+  organization_id: "org-reef-divers-uuid-0001"
+  category: 4
+  name: "5mm Wetsuit L"
+  size: "L"
+  manufacturer: "Bare"
+  product_model: "Velocity 5mm"
+  status: 0
+  life_support: false
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+tank_al80:
+  id: "equip-tank-uuid-0007"
+  organization_id: "org-reef-divers-uuid-0001"
+  category: 5
+  name: "AL80 Tank #1"
+  serial_number: "TANK-AL80-001"
+  size: "AL80"
+  manufacturer: "Luxfer"
+  status: 0
+  life_support: true
+  purchase_date: <%= Date.current - 2.years %>
+  last_service_date: <%= Date.current - 4.months %>
+  next_service_due: <%= Date.current + 8.months %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+retired_bcd:
+  id: "equip-retired-uuid-0008"
+  organization_id: "org-reef-divers-uuid-0001"
+  category: 1
+  name: "Old BCD #9"
+  serial_number: "OLD-BCD-009"
+  size: "L"
+  manufacturer: "Zeagle"
+  status: 3
+  life_support: true
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+other_org_equipment:
+  id: "equip-other-uuid-0009"
+  organization_id: "org-blue-water-uuid-0002"
+  category: 0
+  name: "Blue Water Fins S"
+  size: "S"
+  status: 0
+  life_support: false
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

@@ -10,6 +10,7 @@ class CustomersController < ApplicationController
 
   def show
     @certifications = @customer.certifications.kept.order(issued_date: :desc)
+    @customer_tanks = @customer.customer_tanks.order(created_at: :desc)
     @medical_records = @customer.medical_records.kept.order(created_at: :desc) if policy(MedicalRecord).show?
   end
 

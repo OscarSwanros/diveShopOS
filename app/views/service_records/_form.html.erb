@@ -1,0 +1,67 @@
+<%= form_with model: [@equipment_item, service_record], class: "space-y-4" do |f| %>
+  <% if service_record.errors.any? %>
+    <div class="p-3 bg-red-100 text-red-800 rounded-md text-sm" role="alert">
+      <ul class="list-disc list-inside">
+        <% service_record.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <div>
+      <%= f.label :service_type, t("service_records.form.type"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.select :service_type, ServiceRecord.service_types.keys.map { |s| [t("service_records.service_types.#{s}"), s] },
+        { prompt: t("service_records.form.select_type") },
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+
+    <div>
+      <%= f.label :service_date, t("service_records.form.date"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.date_field :service_date, required: true,
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <div>
+      <%= f.label :next_due_date, t("service_records.form.next_due"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.date_field :next_due_date,
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+
+    <div>
+      <%= f.label :performed_by, t("service_records.form.performed_by"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :performed_by, required: true,
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <div>
+      <%= f.label :cost_cents, t("service_records.form.cost"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.number_field :cost_cents, min: 0,
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+      <p class="mt-1 text-xs text-gray-500"><%= t("service_records.form.cost_hint") %></p>
+    </div>
+  </div>
+
+  <div>
+    <%= f.label :description, t("service_records.form.description"), class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_area :description, rows: 2,
+      class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+  <div>
+    <%= f.label :notes, t("service_records.form.notes"), class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_area :notes, rows: 2,
+      class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+  <div class="flex items-center space-x-4">
+    <%= f.submit class: "inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer" %>
+    <%= link_to t("common.cancel"), equipment_item_path(@equipment_item),
+      class: "inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-md border border-gray-300 hover:bg-gray-50" %>
+  </div>
+<% end %>

@@ -111,6 +111,114 @@
     <% end %>
   </div>
 
+  <%# Equipment Profile section %>
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-xl font-semibold"><%= t("customers.show.equipment_profile") %></h2>
+      <% if @customer.equipment_profile %>
+        <% if policy(@customer.equipment_profile).update? %>
+          <%= link_to t("common.edit"), edit_customer_equipment_profile_path(@customer),
+            class: "inline-flex items-center px-3 py-1.5 bg-white text-gray-700 text-sm font-medium rounded-md border border-gray-300 hover:bg-gray-50" %>
+        <% end %>
+      <% elsif policy(EquipmentProfile).create? %>
+        <%= link_to t("equipment_profiles.new.title"), new_customer_equipment_profile_path(@customer),
+          class: "inline-flex items-center px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+      <% end %>
+    </div>
+
+    <% if (profile = @customer.equipment_profile) %>
+      <dl class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <div>
+          <dt class="text-xs font-medium text-gray-500"><%= t("equipment_profiles.show.wetsuit") %></dt>
+          <dd class="mt-0.5 text-sm text-gray-900"><%= profile.wetsuit_size || "---" %><%= " (#{profile.wetsuit_thickness_mm}mm)" if profile.wetsuit_thickness_mm %></dd>
+        </div>
+        <div>
+          <dt class="text-xs font-medium text-gray-500"><%= t("equipment_profiles.show.bcd") %></dt>
+          <dd class="mt-0.5 text-sm text-gray-900"><%= profile.bcd_size || "---" %></dd>
+        </div>
+        <div>
+          <dt class="text-xs font-medium text-gray-500"><%= t("equipment_profiles.show.boots") %></dt>
+          <dd class="mt-0.5 text-sm text-gray-900"><%= profile.boot_size || "---" %></dd>
+        </div>
+        <div>
+          <dt class="text-xs font-medium text-gray-500"><%= t("equipment_profiles.show.gloves") %></dt>
+          <dd class="mt-0.5 text-sm text-gray-900"><%= profile.glove_size || "---" %></dd>
+        </div>
+      </dl>
+    <% else %>
+      <p class="text-sm text-gray-500"><%= t("equipment_profiles.empty") %></p>
+    <% end %>
+  </div>
+
+  <%# Customer Tanks section %>
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-xl font-semibold"><%= t("customers.show.customer_tanks") %></h2>
+      <% if policy(CustomerTank).create? %>
+        <%= link_to t("customer_tanks.new.title"), new_customer_customer_tank_path(@customer),
+          class: "inline-flex items-center px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+      <% end %>
+    </div>
+
+    <% if @customer_tanks.any? %>
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase"><%= t("customer_tanks.table.serial") %></th>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase"><%= t("customer_tanks.table.size") %></th>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase"><%= t("customer_tanks.table.vip") %></th>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase"><%= t("customer_tanks.table.hydro") %></th>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase"><%= t("customer_tanks.table.fill_ok") %></th>
+              <th class="px-4 py-2 text-right text-xs font-medium text-gray-500 uppercase"><%= t("common.actions") %></th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <% @customer_tanks.each do |tank| %>
+              <tr>
+                <td class="px-4 py-2 text-sm">
+                  <%= link_to tank.serial_number, customer_customer_tank_path(@customer, tank), class: "text-blue-600 hover:text-blue-800 font-medium" %>
+                </td>
+                <td class="px-4 py-2 text-sm text-gray-900"><%= tank.size || "---" %></td>
+                <td class="px-4 py-2 text-sm">
+                  <% if tank.vip_current? %>
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800"><%= t("customer_tanks.compliance.current") %></span>
+                  <% else %>
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800"><%= t("customer_tanks.compliance.expired") %></span>
+                  <% end %>
+                </td>
+                <td class="px-4 py-2 text-sm">
+                  <% if tank.hydro_current? %>
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800"><%= t("customer_tanks.compliance.current") %></span>
+                  <% else %>
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800"><%= t("customer_tanks.compliance.expired") %></span>
+                  <% end %>
+                </td>
+                <td class="px-4 py-2 text-sm">
+                  <% if tank.fill_compliant? %>
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800"><%= t("customer_tanks.compliance.fill_ok") %></span>
+                  <% else %>
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800"><%= t("customer_tanks.compliance.fill_blocked") %></span>
+                  <% end %>
+                </td>
+                <td class="px-4 py-2 text-sm text-right space-x-2">
+                  <%= link_to t("common.edit"), edit_customer_customer_tank_path(@customer, tank), class: "text-blue-600 hover:text-blue-800" %>
+                  <% if policy(tank).destroy? %>
+                    <%= button_to t("common.delete"), customer_customer_tank_path(@customer, tank), method: :delete,
+                      class: "text-red-600 hover:text-red-800",
+                      form: { data: { turbo_confirm: t("common.confirm_delete") } } %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% else %>
+      <p class="text-sm text-gray-500"><%= t("customer_tanks.empty") %></p>
+    <% end %>
+  </div>
+
   <%# Medical Records section (manager+ only) %>
   <% if policy(MedicalRecord).show? %>
     <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">

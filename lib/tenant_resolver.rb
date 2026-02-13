@@ -28,15 +28,17 @@ class TenantResolver
   private
 
   def resolve_organization(host)
-    Rails.cache.fetch("tenant:#{host}", expires_in: 5.minutes) do
-      # Try custom domain first
-      org = Organization.find_by(custom_domain: host)
-      return org if org
+    # Try custom domain first
+    org = Organization.find_by(custom_domain: host)
+    return org if org
 
-      # Try subdomain
-      subdomain = extract_subdomain(host)
-      Organization.find_by(subdomain: subdomain) if subdomain.present?
-    end
+    # Try subdomain match (e.g., shop.diveshopos.com)
+    subdomain = extract_subdomain(host)
+    org = Organization.find_by(subdomain: subdomain) if subdomain.present?
+    return org if org
+
+    # In development, match by subdomain = "localhost" for bare localhost access
+    Organization.find_by(subdomain: host) if Rails.env.development?
   end
 
   def extract_subdomain(host)

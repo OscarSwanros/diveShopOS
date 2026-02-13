@@ -1,0 +1,83 @@
+<%= form_with model: [@customer, customer_tank], class: "space-y-4" do |f| %>
+  <% if customer_tank.errors.any? %>
+    <div class="p-3 bg-red-100 text-red-800 rounded-md text-sm" role="alert">
+      <ul class="list-disc list-inside">
+        <% customer_tank.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <div>
+      <%= f.label :serial_number, t("customer_tanks.form.serial_number"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :serial_number, required: true,
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+
+    <div>
+      <%= f.label :size, t("customer_tanks.form.size"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :size, placeholder: t("customer_tanks.form.size_placeholder"),
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+    <div>
+      <%= f.label :manufacturer, t("customer_tanks.form.manufacturer"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :manufacturer,
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+
+    <div>
+      <%= f.label :material, t("customer_tanks.form.material"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.select :material, [["Aluminum", "aluminum"], ["Steel", "steel"]], { include_blank: true },
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+  </div>
+
+  <fieldset class="border border-gray-200 rounded-md p-4">
+    <legend class="text-sm font-medium text-gray-700 px-2"><%= t("customer_tanks.form.vip_section") %></legend>
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div>
+        <%= f.label :last_vip_date, t("customer_tanks.form.last_vip"), class: "block text-sm font-medium text-gray-700" %>
+        <%= f.date_field :last_vip_date,
+          class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+      </div>
+      <div>
+        <%= f.label :vip_due_date, t("customer_tanks.form.vip_due"), class: "block text-sm font-medium text-gray-700" %>
+        <%= f.date_field :vip_due_date,
+          class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset class="border border-gray-200 rounded-md p-4">
+    <legend class="text-sm font-medium text-gray-700 px-2"><%= t("customer_tanks.form.hydro_section") %></legend>
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div>
+        <%= f.label :last_hydro_date, t("customer_tanks.form.last_hydro"), class: "block text-sm font-medium text-gray-700" %>
+        <%= f.date_field :last_hydro_date,
+          class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+      </div>
+      <div>
+        <%= f.label :hydro_due_date, t("customer_tanks.form.hydro_due"), class: "block text-sm font-medium text-gray-700" %>
+        <%= f.date_field :hydro_due_date,
+          class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+      </div>
+    </div>
+  </fieldset>
+
+  <div>
+    <%= f.label :notes, t("customer_tanks.form.notes"), class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_area :notes, rows: 2,
+      class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+  <div class="flex items-center space-x-4">
+    <%= f.submit class: "inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer" %>
+    <%= link_to t("common.cancel"), customer_path(@customer),
+      class: "inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-md border border-gray-300 hover:bg-gray-50" %>
+  </div>
+<% end %>

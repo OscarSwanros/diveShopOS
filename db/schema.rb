@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_13_000010) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_13_000015) do
   create_table "api_tokens", id: :string, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "expires_at"
@@ -102,6 +102,25 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_000010) do
     t.index ["organization_id"], name: "index_courses_on_organization_id"
   end
 
+  create_table "customer_tanks", id: :string, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "customer_id", null: false
+    t.date "hydro_due_date"
+    t.date "last_hydro_date"
+    t.date "last_vip_date"
+    t.string "manufacturer"
+    t.string "material"
+    t.text "notes"
+    t.string "organization_id", null: false
+    t.string "serial_number", null: false
+    t.string "size"
+    t.datetime "updated_at", null: false
+    t.date "vip_due_date"
+    t.index ["customer_id"], name: "index_customer_tanks_on_customer_id"
+    t.index ["organization_id", "serial_number"], name: "index_customer_tanks_on_org_serial_unique", unique: true
+    t.index ["organization_id"], name: "index_customer_tanks_on_organization_id"
+  end
+
   create_table "customers", id: :string, force: :cascade do |t|
     t.boolean "active", default: true, null: false
     t.datetime "created_at", null: false
@@ -154,6 +173,51 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_000010) do
     t.index ["course_offering_id", "status"], name: "index_enrollments_on_course_offering_id_and_status"
     t.index ["course_offering_id"], name: "index_enrollments_on_course_offering_id"
     t.index ["customer_id"], name: "index_enrollments_on_customer_id"
+  end
+
+  create_table "equipment_items", id: :string, force: :cascade do |t|
+    t.integer "category", null: false
+    t.datetime "created_at", null: false
+    t.date "last_service_date"
+    t.boolean "life_support", default: false, null: false
+    t.string "manufacturer"
+    t.string "name", null: false
+    t.date "next_service_due"
+    t.text "notes"
+    t.string "organization_id", null: false
+    t.string "product_model"
+    t.date "purchase_date"
+    t.string "serial_number"
+    t.string "size"
+    t.integer "status", default: 0, null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id", "category", "size", "status"], name: "index_equipment_items_on_org_category_size_status"
+    t.index ["organization_id", "category", "status"], name: "index_equipment_items_on_org_category_status"
+    t.index ["organization_id", "life_support", "next_service_due"], name: "index_equipment_items_on_org_life_support_service"
+    t.index ["organization_id", "serial_number"], name: "index_equipment_items_on_org_serial_unique", unique: true, where: "serial_number IS NOT NULL"
+    t.index ["organization_id"], name: "index_equipment_items_on_organization_id"
+  end
+
+  create_table "equipment_profiles", id: :string, force: :cascade do |t|
+    t.string "bcd_size"
+    t.string "boot_size"
+    t.datetime "created_at", null: false
+    t.string "customer_id", null: false
+    t.string "fin_size"
+    t.string "glove_size"
+    t.integer "height_cm"
+    t.text "notes"
+    t.boolean "owns_bcd", default: false, null: false
+    t.boolean "owns_computer", default: false, null: false
+    t.boolean "owns_fins", default: false, null: false
+    t.boolean "owns_mask", default: false, null: false
+    t.boolean "owns_regulator", default: false, null: false
+    t.boolean "owns_wetsuit", default: false, null: false
+    t.datetime "updated_at", null: false
+    t.decimal "weight_kg", precision: 5, scale: 1
+    t.string "wetsuit_size"
+    t.integer "wetsuit_thickness_mm"
+    t.index ["customer_id"], name: "index_equipment_profiles_on_customer_id", unique: true
   end
 
   create_table "excursions", id: :string, force: :cascade do |t|
@@ -220,6 +284,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_000010) do
     t.index ["subdomain"], name: "index_organizations_on_subdomain", unique: true
   end
 
+  create_table "service_records", id: :string, force: :cascade do |t|
+    t.integer "cost_cents"
+    t.string "cost_currency", default: "USD"
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.string "equipment_item_id", null: false
+    t.date "next_due_date"
+    t.text "notes"
+    t.string "performed_by", null: false
+    t.date "service_date", null: false
+    t.integer "service_type", null: false
+    t.datetime "updated_at", null: false
+    t.index ["equipment_item_id", "service_date"], name: "index_service_records_on_item_and_date"
+    t.index ["equipment_item_id"], name: "index_service_records_on_equipment_item_id"
+  end
+
   create_table "session_attendances", id: :string, force: :cascade do |t|
     t.boolean "attended", default: false, null: false
     t.string "class_session_id", null: false
@@ -283,14 +363,19 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_000010) do
   add_foreign_key "course_offerings", "organizations"
   add_foreign_key "course_offerings", "users", column: "instructor_id"
   add_foreign_key "courses", "organizations"
+  add_foreign_key "customer_tanks", "customers"
+  add_foreign_key "customer_tanks", "organizations"
   add_foreign_key "customers", "organizations"
   add_foreign_key "dive_sites", "organizations"
   add_foreign_key "enrollments", "certifications"
   add_foreign_key "enrollments", "course_offerings"
   add_foreign_key "enrollments", "customers"
+  add_foreign_key "equipment_items", "organizations"
+  add_foreign_key "equipment_profiles", "customers"
   add_foreign_key "excursions", "organizations"
   add_foreign_key "instructor_ratings", "users"
   add_foreign_key "medical_records", "customers"
+  add_foreign_key "service_records", "equipment_items"
   add_foreign_key "session_attendances", "class_sessions"
   add_foreign_key "session_attendances", "enrollments"
   add_foreign_key "trip_dives", "dive_sites"

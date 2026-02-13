@@ -1,0 +1,59 @@
+jane_al80:
+  id: "ctank-jane-al80-uuid-0001"
+  customer_id: "cust-jane-uuid-0001"
+  organization_id: "org-reef-divers-uuid-0001"
+  serial_number: "LUX-12345"
+  manufacturer: "Luxfer"
+  material: "aluminum"
+  size: "AL80"
+  last_vip_date: <%= Date.current - 6.months %>
+  vip_due_date: <%= Date.current + 6.months %>
+  last_hydro_date: <%= Date.current - 2.years %>
+  hydro_due_date: <%= Date.current + 3.years %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+jane_hp100:
+  id: "ctank-jane-hp100-uuid-0002"
+  customer_id: "cust-jane-uuid-0001"
+  organization_id: "org-reef-divers-uuid-0001"
+  serial_number: "FBR-67890"
+  manufacturer: "Faber"
+  material: "steel"
+  size: "HP100"
+  last_vip_date: <%= Date.current - 14.months %>
+  vip_due_date: <%= Date.current - 2.months %>
+  last_hydro_date: <%= Date.current - 1.year %>
+  hydro_due_date: <%= Date.current + 4.years %>
+  notes: "VIP expired - needs visual before fill"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+bob_tank_no_hydro:
+  id: "ctank-bob-nohydro-uuid-0003"
+  customer_id: "cust-bob-uuid-0002"
+  organization_id: "org-reef-divers-uuid-0001"
+  serial_number: "CAT-11111"
+  manufacturer: "Catalina"
+  material: "aluminum"
+  size: "AL63"
+  last_vip_date: <%= Date.current - 3.months %>
+  vip_due_date: <%= Date.current + 9.months %>
+  notes: "No hydro test on file"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+other_org_tank:
+  id: "ctank-other-uuid-0004"
+  customer_id: "cust-other-uuid-0005"
+  organization_id: "org-blue-water-uuid-0002"
+  serial_number: "OTH-99999"
+  manufacturer: "Luxfer"
+  material: "aluminum"
+  size: "AL80"
+  last_vip_date: <%= Date.current - 1.month %>
+  vip_due_date: <%= Date.current + 11.months %>
+  last_hydro_date: <%= Date.current - 1.year %>
+  hydro_due_date: <%= Date.current + 4.years %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

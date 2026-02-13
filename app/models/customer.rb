@@ -6,6 +6,8 @@ class Customer < ApplicationRecord
   has_many :certifications, dependent: :destroy
   has_many :enrollments, dependent: :destroy
   has_many :medical_records, dependent: :destroy
+  has_one :equipment_profile, dependent: :destroy
+  has_many :customer_tanks, dependent: :destroy
 
   validates :first_name, presence: true
   validates :last_name, presence: true

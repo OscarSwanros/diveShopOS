@@ -14,7 +14,9 @@
         <%= nav_link t("navigation.courses"), courses_path,
               active: controller_name.in?(%w[courses course_offerings class_sessions enrollments session_attendances]) %>
         <%= nav_link t("navigation.customers"), customers_path,
-              active: controller_name.in?(%w[customers certifications medical_records]) %>
+              active: controller_name.in?(%w[customers certifications medical_records equipment_profiles customer_tanks]) %>
+        <%= nav_link t("navigation.equipment"), equipment_items_path,
+              active: controller_name.in?(%w[equipment_items service_records]) %>
         <%= nav_link t("navigation.dive_sites"), dive_sites_path,
               active: controller_name.in?(%w[dive_sites]) %>
         <%= nav_link t("navigation.instructor_ratings"), instructor_ratings_path,
@@ -55,7 +57,10 @@
             active: controller_name.in?(%w[courses course_offerings class_sessions enrollments session_attendances]),
             mobile: true %>
       <%= nav_link t("navigation.customers"), customers_path,
-            active: controller_name.in?(%w[customers certifications medical_records]),
+            active: controller_name.in?(%w[customers certifications medical_records equipment_profiles customer_tanks]),
+            mobile: true %>
+      <%= nav_link t("navigation.equipment"), equipment_items_path,
+            active: controller_name.in?(%w[equipment_items service_records]),
             mobile: true %>
       <%= nav_link t("navigation.dive_sites"), dive_sites_path,
             active: controller_name.in?(%w[dive_sites]),

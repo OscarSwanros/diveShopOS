@@ -4,10 +4,12 @@ Rails.application.routes.draw do
   # Authentication
   resource :session, only: [ :new, :create, :destroy ]
 
-  # Customers with nested certifications and medical records
+  # Customers with nested certifications, medical records, equipment profile, and tanks
   resources :customers do
     resources :certifications, except: [ :index ]
     resources :medical_records, except: [ :index ]
+    resource :equipment_profile, only: [ :show, :new, :create, :edit, :update, :destroy ]
+    resources :customer_tanks
   end
 
   # Staff users
@@ -28,6 +30,11 @@ Rails.application.routes.draw do
         member { post :complete }
       end
     end
+  end
+
+  # Equipment items with nested service records
+  resources :equipment_items do
+    resources :service_records, except: [ :index ]
   end
 
   # Dive sites
@@ -52,6 +59,12 @@ Rails.application.routes.draw do
       resources :customers, except: [ :new, :edit ] do
         resources :certifications, except: [ :new, :edit ]
         resources :medical_records, except: [ :new, :edit ]
+        resource :equipment_profile, only: [ :show, :create, :update, :destroy ]
+        resources :customer_tanks, except: [ :new, :edit ]
+      end
+
+      resources :equipment_items, except: [ :new, :edit ] do
+        resources :service_records, except: [ :new, :edit ]
       end
 
       resources :users, except: [ :new, :edit ]

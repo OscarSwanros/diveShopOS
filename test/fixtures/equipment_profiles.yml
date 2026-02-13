@@ -1,0 +1,20 @@
+jane_profile:
+  id: "eqprofile-jane-uuid-0001"
+  customer_id: "cust-jane-uuid-0001"
+  height_cm: 170
+  weight_kg: 65.0
+  wetsuit_size: "M"
+  wetsuit_thickness_mm: 5
+  bcd_size: "M"
+  boot_size: "40"
+  fin_size: "40"
+  glove_size: "M"
+  owns_mask: true
+  owns_computer: true
+  owns_wetsuit: false
+  owns_fins: false
+  owns_bcd: false
+  owns_regulator: false
+  notes: "Prefers short fins"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

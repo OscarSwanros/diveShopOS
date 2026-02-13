@@ -1,0 +1,36 @@
+bcd_annual:
+  id: "svc-bcd-annual-uuid-0001"
+  equipment_item_id: "equip-bcd-med-uuid-0001"
+  service_type: 0
+  service_date: <%= Date.current - 3.months %>
+  next_due_date: <%= Date.current + 9.months %>
+  performed_by: "Dive Shop Service Center"
+  cost_cents: 15000
+  cost_currency: "USD"
+  description: "Annual service and inspection"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+regulator_annual:
+  id: "svc-reg-annual-uuid-0002"
+  equipment_item_id: "equip-reg-uuid-0002"
+  service_type: 0
+  service_date: <%= Date.current - 6.months %>
+  next_due_date: <%= Date.current + 6.months %>
+  performed_by: "Scubapro Authorized Service"
+  cost_cents: 20000
+  cost_currency: "USD"
+  description: "Full regulator overhaul"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+tank_vip:
+  id: "svc-tank-vip-uuid-0003"
+  equipment_item_id: "equip-tank-uuid-0007"
+  service_type: 3
+  service_date: <%= Date.current - 4.months %>
+  next_due_date: <%= Date.current + 8.months %>
+  performed_by: "PSI/PCI Inspector"
+  description: "Annual visual inspection passed"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

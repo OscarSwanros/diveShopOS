@@ -1,0 +1,48 @@
+<div class="space-y-6">
+  <div class="flex items-center justify-between">
+    <h1 class="text-2xl font-bold"><%= t("service_records.show.title") %></h1>
+    <%= link_to t("common.back"), equipment_item_path(@equipment_item),
+      class: "inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-md border border-gray-300 hover:bg-gray-50" %>
+  </div>
+
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <dl class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+      <div>
+        <dt class="text-sm font-medium text-gray-500"><%= t("service_records.show.equipment") %></dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= @equipment_item.name %></dd>
+      </div>
+      <div>
+        <dt class="text-sm font-medium text-gray-500"><%= t("service_records.show.type") %></dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= t("service_records.service_types.#{@service_record.service_type}") %></dd>
+      </div>
+      <div>
+        <dt class="text-sm font-medium text-gray-500"><%= t("service_records.show.date") %></dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= l(@service_record.service_date, format: :long) %></dd>
+      </div>
+      <div>
+        <dt class="text-sm font-medium text-gray-500"><%= t("service_records.show.performed_by") %></dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= @service_record.performed_by %></dd>
+      </div>
+      <div>
+        <dt class="text-sm font-medium text-gray-500"><%= t("service_records.show.next_due") %></dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= @service_record.next_due_date ? l(@service_record.next_due_date, format: :long) : "---" %></dd>
+      </div>
+      <div>
+        <dt class="text-sm font-medium text-gray-500"><%= t("service_records.show.cost") %></dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= @service_record.cost_cents ? number_to_currency(@service_record.cost_cents / 100.0) : "---" %></dd>
+      </div>
+    </dl>
+    <% if @service_record.description.present? %>
+      <div class="mt-4 pt-4 border-t border-gray-200">
+        <dt class="text-sm font-medium text-gray-500"><%= t("service_records.show.description") %></dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= @service_record.description %></dd>
+      </div>
+    <% end %>
+    <% if @service_record.notes.present? %>
+      <div class="mt-4 pt-4 border-t border-gray-200">
+        <dt class="text-sm font-medium text-gray-500"><%= t("service_records.show.notes") %></dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= @service_record.notes %></dd>
+      </div>
+    <% end %>
+  </div>
+</div>

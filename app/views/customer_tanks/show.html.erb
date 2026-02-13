@@ -1,0 +1,56 @@
+<div class="space-y-6">
+  <div class="flex items-center justify-between">
+    <h1 class="text-2xl font-bold"><%= t("customer_tanks.show.title") %> - <%= @customer_tank.serial_number %></h1>
+    <div class="space-x-2">
+      <% if policy(@customer_tank).update? %>
+        <%= link_to t("common.edit"), edit_customer_customer_tank_path(@customer, @customer_tank),
+          class: "inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-md border border-gray-300 hover:bg-gray-50" %>
+      <% end %>
+      <%= link_to t("common.back"), customer_path(@customer),
+        class: "inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-md border border-gray-300 hover:bg-gray-50" %>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <dl class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+      <div>
+        <dt class="text-sm font-medium text-gray-500"><%= t("customer_tanks.show.serial_number") %></dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= @customer_tank.serial_number %></dd>
+      </div>
+      <div>
+        <dt class="text-sm font-medium text-gray-500"><%= t("customer_tanks.show.size") %></dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= @customer_tank.size || "---" %></dd>
+      </div>
+      <div>
+        <dt class="text-sm font-medium text-gray-500"><%= t("customer_tanks.show.material") %></dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= @customer_tank.material&.capitalize || "---" %></dd>
+      </div>
+      <div>
+        <dt class="text-sm font-medium text-gray-500"><%= t("customer_tanks.show.manufacturer") %></dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= @customer_tank.manufacturer || "---" %></dd>
+      </div>
+      <div>
+        <dt class="text-sm font-medium text-gray-500"><%= t("customer_tanks.show.vip_status") %></dt>
+        <dd class="mt-1 text-sm">
+          <% if @customer_tank.vip_current? %>
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800"><%= t("customer_tanks.compliance.current") %></span>
+            <span class="text-gray-500 ml-1"><%= t("customer_tanks.show.due") %>: <%= l(@customer_tank.vip_due_date, format: :long) %></span>
+          <% else %>
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800"><%= t("customer_tanks.compliance.expired") %></span>
+          <% end %>
+        </dd>
+      </div>
+      <div>
+        <dt class="text-sm font-medium text-gray-500"><%= t("customer_tanks.show.hydro_status") %></dt>
+        <dd class="mt-1 text-sm">
+          <% if @customer_tank.hydro_current? %>
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800"><%= t("customer_tanks.compliance.current") %></span>
+            <span class="text-gray-500 ml-1"><%= t("customer_tanks.show.due") %>: <%= l(@customer_tank.hydro_due_date, format: :long) %></span>
+          <% else %>
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800"><%= t("customer_tanks.compliance.expired") %></span>
+          <% end %>
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>

@@ -1,0 +1,85 @@
+<%= form_with model: equipment_item, class: "space-y-4" do |f| %>
+  <% if equipment_item.errors.any? %>
+    <div class="p-3 bg-red-100 text-red-800 rounded-md text-sm" role="alert">
+      <ul class="list-disc list-inside">
+        <% equipment_item.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <div>
+      <%= f.label :name, t("equipment_items.form.name"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :name, required: true,
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+
+    <div>
+      <%= f.label :category, t("equipment_items.form.category"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.select :category, EquipmentItem.categories.keys.map { |c| [t("equipment_items.categories.#{c}"), c] },
+        { prompt: t("equipment_items.form.select_category") },
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+    <div>
+      <%= f.label :serial_number, t("equipment_items.form.serial_number"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :serial_number,
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+      <p class="mt-1 text-xs text-gray-500"><%= t("equipment_items.form.serial_number_hint") %></p>
+    </div>
+
+    <div>
+      <%= f.label :size, t("equipment_items.form.size"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :size,
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+
+    <div>
+      <%= f.label :status, t("equipment_items.form.status"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.select :status, EquipmentItem.statuses.keys.map { |s| [t("equipment_items.statuses.#{s}"), s] },
+        {}, class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+    <div>
+      <%= f.label :manufacturer, t("equipment_items.form.manufacturer"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :manufacturer,
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+
+    <div>
+      <%= f.label :product_model, t("equipment_items.form.model"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :product_model,
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+
+    <div>
+      <%= f.label :purchase_date, t("equipment_items.form.purchase_date"), class: "block text-sm font-medium text-gray-700" %>
+      <%= f.date_field :purchase_date,
+        class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+  </div>
+
+  <div class="flex items-center">
+    <%= f.check_box :life_support, class: "h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" %>
+    <%= f.label :life_support, t("equipment_items.form.life_support"), class: "ml-2 text-sm font-medium text-gray-700" %>
+    <p class="ml-6 text-xs text-gray-500"><%= t("equipment_items.form.life_support_hint") %></p>
+  </div>
+
+  <div>
+    <%= f.label :notes, t("equipment_items.form.notes"), class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_area :notes, rows: 2,
+      class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+  <div class="flex items-center space-x-4">
+    <%= f.submit class: "inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer" %>
+    <%= link_to t("common.cancel"), equipment_items_path,
+      class: "inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-md border border-gray-300 hover:bg-gray-50" %>
+  </div>
+<% end %>

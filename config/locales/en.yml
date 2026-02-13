@@ -12,6 +12,7 @@ en:
     excursions: "Excursions"
     courses: "Courses"
     customers: "Customers"
+    equipment: "Equipment"
     dive_sites: "Dive Sites"
     instructor_ratings: "Ratings"
     staff: "Staff"
@@ -233,6 +234,8 @@ en:
       emergency_contact: "Emergency Contact"
       notes: "Notes"
       certifications: "Certifications"
+      equipment_profile: "Equipment Profile"
+      customer_tanks: "Customer Tanks"
       medical_records: "Medical Records"
     table:
       name: "Name"
@@ -251,6 +254,199 @@ en:
     status:
       active: "Active"
       inactive: "Inactive"
+
+  equipment_items:
+    created: "Equipment item created."
+    updated: "Equipment item updated."
+    deleted: "Equipment item deleted."
+    life_support_badge: "Life Support"
+    index:
+      title: "Equipment Inventory"
+      new: "New Equipment"
+      empty: "No equipment items yet. Add your first item to get started."
+    new:
+      title: "New Equipment Item"
+    edit:
+      title: "Edit Equipment Item"
+    show:
+      category: "Category"
+      status: "Status"
+      size: "Size"
+      serial_number: "Serial Number"
+      manufacturer: "Manufacturer"
+      model: "Model"
+      purchase_date: "Purchase Date"
+      last_service: "Last Service"
+      next_service: "Next Service Due"
+      notes: "Notes"
+      service_history: "Service History"
+    table:
+      name: "Name"
+      category: "Category"
+      size: "Size"
+      status: "Status"
+      service: "Service"
+    form:
+      name: "Name"
+      category: "Category"
+      select_category: "Select a category..."
+      serial_number: "Serial Number"
+      serial_number_hint: "Required for life-support equipment."
+      size: "Size"
+      status: "Status"
+      manufacturer: "Manufacturer"
+      model: "Model"
+      purchase_date: "Purchase Date"
+      life_support: "Life-Support Equipment"
+      life_support_hint: "Regulators, BCDs, tanks, and computers require service tracking."
+      notes: "Notes"
+    categories:
+      fins: "Fins"
+      bcd: "BCD"
+      regulator: "Regulator"
+      mask: "Mask"
+      wetsuit: "Wetsuit"
+      tank: "Tank"
+      boots: "Boots"
+      gloves: "Gloves"
+      weights: "Weights"
+      computer: "Computer"
+    statuses:
+      available: "Available"
+      assigned: "Assigned"
+      in_service: "In Service"
+      retired: "Retired"
+    service_status:
+      current: "Current"
+      overdue: "Overdue"
+      no_record: "No Service Record"
+
+  service_records:
+    created: "Service record added."
+    updated: "Service record updated."
+    deleted: "Service record removed."
+    empty: "No service records yet."
+    new:
+      title: "Add Service Record"
+    edit:
+      title: "Edit Service Record"
+    show:
+      title: "Service Record"
+      equipment: "Equipment"
+      type: "Service Type"
+      date: "Service Date"
+      performed_by: "Performed By"
+      next_due: "Next Due"
+      cost: "Cost"
+      description: "Description"
+      notes: "Notes"
+    table:
+      date: "Date"
+      type: "Type"
+      performed_by: "Performed By"
+      next_due: "Next Due"
+    form:
+      type: "Service Type"
+      select_type: "Select a service type..."
+      date: "Service Date"
+      next_due: "Next Due Date"
+      performed_by: "Performed By"
+      cost: "Cost (cents)"
+      cost_hint: "Enter cost in cents (e.g., 15000 = $150.00)"
+      description: "Description"
+      notes: "Notes"
+    service_types:
+      annual_service: "Annual Service"
+      repair: "Repair"
+      inspection: "Inspection"
+      visual_inspection: "Visual Inspection (VIP)"
+      hydrostatic_test: "Hydrostatic Test"
+
+  equipment_profiles:
+    created: "Equipment profile created."
+    updated: "Equipment profile updated."
+    deleted: "Equipment profile removed."
+    empty: "No equipment profile on file."
+    new:
+      title: "Add Equipment Profile"
+    edit:
+      title: "Edit Equipment Profile"
+    show:
+      title: "Equipment Profile"
+      height: "Height"
+      weight: "Weight"
+      wetsuit: "Wetsuit"
+      bcd: "BCD"
+      boots: "Boots"
+      fins: "Fins"
+      gloves: "Gloves"
+    form:
+      height: "Height (cm)"
+      weight: "Weight (kg)"
+      wetsuit_size: "Wetsuit Size"
+      wetsuit_thickness: "Wetsuit Thickness"
+      thickness_3mm: "3mm"
+      thickness_5mm: "5mm"
+      thickness_7mm: "7mm"
+      bcd_size: "BCD Size"
+      boot_size: "Boot Size"
+      boot_size_placeholder: "e.g., 42"
+      fin_size: "Fin Size"
+      fin_size_placeholder: "e.g., 42"
+      glove_size: "Glove Size"
+      owns_equipment: "Customer Owns"
+      owns_mask: "Mask"
+      owns_fins: "Fins"
+      owns_wetsuit: "Wetsuit"
+      owns_bcd: "BCD"
+      owns_regulator: "Regulator"
+      owns_computer: "Computer"
+      notes: "Notes"
+
+  customer_tanks:
+    created: "Customer tank added."
+    updated: "Customer tank updated."
+    deleted: "Customer tank removed."
+    empty: "No customer tanks on file."
+    index:
+      title: "Customer Tanks"
+    new:
+      title: "Add Tank"
+    edit:
+      title: "Edit Tank"
+    show:
+      title: "Tank"
+      serial_number: "Serial Number"
+      size: "Size"
+      material: "Material"
+      manufacturer: "Manufacturer"
+      vip_status: "VIP Status"
+      hydro_status: "Hydrostatic Status"
+      due: "Due"
+    table:
+      serial: "Serial #"
+      size: "Size"
+      vip: "VIP"
+      hydro: "Hydro"
+      fill_ok: "Fill Status"
+    form:
+      serial_number: "Serial Number"
+      size: "Size"
+      size_placeholder: "e.g., AL80, HP100"
+      manufacturer: "Manufacturer"
+      material: "Material"
+      vip_section: "Visual Inspection (VIP)"
+      last_vip: "Last VIP Date"
+      vip_due: "VIP Due Date"
+      hydro_section: "Hydrostatic Test"
+      last_hydro: "Last Hydro Date"
+      hydro_due: "Hydro Due Date"
+      notes: "Notes"
+    compliance:
+      current: "Current"
+      expired: "Expired"
+      fill_ok: "Fill OK"
+      fill_blocked: "Fill Blocked"
 
   certifications:
     created: "Certification added."
@@ -577,6 +773,13 @@ en:
         missing_sessions:
           one: "Student has not attended %{count} required session."
           other: "Student has not attended %{count} required sessions."
+    equipment:
+      check_service_status:
+        no_service_record: "%{item} is life-support equipment with no service record. Cannot assign."
+        service_overdue: "%{item} has overdue service (due %{due_date}). Cannot assign until serviced."
+      check_tank_compliance:
+        vip_expired: "Tank %{serial} has an expired or missing visual inspection (VIP). Cannot fill."
+        hydro_expired: "Tank %{serial} has an expired or missing hydrostatic test. Cannot fill."
     scheduling:
       check_instructor_conflict:
         conflict: "%{instructor} has a scheduling conflict on %{date}."

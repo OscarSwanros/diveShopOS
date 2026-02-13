@@ -1,0 +1,51 @@
+<div class="space-y-6">
+  <div class="flex items-center justify-between">
+    <h1 class="text-2xl font-bold"><%= t("equipment_profiles.show.title") %></h1>
+    <div class="space-x-2">
+      <% if policy(@equipment_profile).update? %>
+        <%= link_to t("common.edit"), edit_customer_equipment_profile_path(@customer),
+          class: "inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-md border border-gray-300 hover:bg-gray-50" %>
+      <% end %>
+      <%= link_to t("common.back"), customer_path(@customer),
+        class: "inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-md border border-gray-300 hover:bg-gray-50" %>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <dl class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+      <div>
+        <dt class="text-sm font-medium text-gray-500"><%= t("equipment_profiles.show.height") %></dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= @equipment_profile.height_cm ? "#{@equipment_profile.height_cm} cm" : "---" %></dd>
+      </div>
+      <div>
+        <dt class="text-sm font-medium text-gray-500"><%= t("equipment_profiles.show.weight") %></dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= @equipment_profile.weight_kg ? "#{@equipment_profile.weight_kg} kg" : "---" %></dd>
+      </div>
+      <div>
+        <dt class="text-sm font-medium text-gray-500"><%= t("equipment_profiles.show.wetsuit") %></dt>
+        <dd class="mt-1 text-sm text-gray-900">
+          <%= @equipment_profile.wetsuit_size || "---" %>
+          <% if @equipment_profile.wetsuit_thickness_mm %>
+            (<%= @equipment_profile.wetsuit_thickness_mm %>mm)
+          <% end %>
+        </dd>
+      </div>
+      <div>
+        <dt class="text-sm font-medium text-gray-500"><%= t("equipment_profiles.show.bcd") %></dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= @equipment_profile.bcd_size || "---" %></dd>
+      </div>
+      <div>
+        <dt class="text-sm font-medium text-gray-500"><%= t("equipment_profiles.show.boots") %></dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= @equipment_profile.boot_size || "---" %></dd>
+      </div>
+      <div>
+        <dt class="text-sm font-medium text-gray-500"><%= t("equipment_profiles.show.fins") %></dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= @equipment_profile.fin_size || "---" %></dd>
+      </div>
+      <div>
+        <dt class="text-sm font-medium text-gray-500"><%= t("equipment_profiles.show.gloves") %></dt>
+        <dd class="mt-1 text-sm text-gray-900"><%= @equipment_profile.glove_size || "---" %></dd>
+      </div>
+    </dl>
+  </div>
+</div>
