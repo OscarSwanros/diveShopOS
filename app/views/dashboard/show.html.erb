@@ -1,0 +1,29 @@
+<% content_for(:page_title) { t("dashboard.title") } %>
+
+<div class="space-y-6">
+  <%# Header %>
+  <div>
+    <h1 class="text-2xl font-bold text-gray-900"><%= dashboard_greeting(current_user) %></h1>
+    <p class="text-sm text-gray-500"><%= l(Date.current, format: :long) %></p>
+  </div>
+
+  <%# Today's Schedule %>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <%= render "dashboard/todays_excursions" %>
+    <%= render "dashboard/todays_class_sessions" %>
+  </div>
+
+  <%# Safety Alerts %>
+  <% if @equipment_overdue_count > 0 || @medical_pending_count > 0 || @ratings_expiring_count > 0 || @tanks_noncompliant_count > 0 %>
+    <%= render "dashboard/safety_alerts" %>
+  <% end %>
+
+  <%# Upcoming (Next 7 Days) %>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <%= render "dashboard/upcoming_excursions" %>
+    <%= render "dashboard/upcoming_offerings" %>
+  </div>
+
+  <%# Quick Stats %>
+  <%= render "dashboard/quick_stats" %>
+</div>

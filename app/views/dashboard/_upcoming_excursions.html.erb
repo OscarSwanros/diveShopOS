@@ -1,0 +1,30 @@
+<div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-lg font-medium text-gray-900"><%= t("dashboard.upcoming.excursions") %></h2>
+    <%= link_to t("dashboard.upcoming.view_all"), excursions_path, class: "text-sm text-blue-600 hover:text-blue-800" %>
+  </div>
+
+  <% if @upcoming_excursions.any? %>
+    <div class="space-y-3">
+      <% @upcoming_excursions.each do |excursion| %>
+        <div class="flex items-center justify-between py-2 border-b border-gray-100 last:border-0">
+          <div>
+            <%= link_to excursion.title, excursion, class: "text-sm font-medium text-blue-600 hover:text-blue-800" %>
+            <p class="text-xs text-gray-500"><%= l(excursion.scheduled_date, format: :long) %></p>
+          </div>
+          <div class="flex items-center space-x-2">
+            <% badge_class = excursion.published? ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800" %>
+            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium <%= badge_class %>">
+              <%= t("excursions.statuses.#{excursion.status}") %>
+            </span>
+            <span class="text-sm text-gray-700">
+              <%= excursion.trip_participants.size %> / <%= excursion.capacity %>
+            </span>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="text-sm text-gray-500"><%= t("dashboard.upcoming.no_excursions") %></p>
+  <% end %>
+</div>

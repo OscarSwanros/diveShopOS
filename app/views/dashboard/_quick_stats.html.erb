@@ -1,0 +1,27 @@
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+    <p class="text-sm font-medium text-gray-500"><%= t("dashboard.stats.active_customers") %></p>
+    <p class="text-2xl font-bold text-gray-900 mt-1"><%= @active_customers_count %></p>
+  </div>
+
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+    <p class="text-sm font-medium text-gray-500"><%= t("dashboard.stats.active_enrollments") %></p>
+    <p class="text-2xl font-bold text-gray-900 mt-1"><%= @active_enrollments_count %></p>
+  </div>
+
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+    <p class="text-sm font-medium text-gray-500"><%= t("dashboard.stats.equipment_fleet") %></p>
+    <p class="text-2xl font-bold text-gray-900 mt-1"><%= @equipment_count %></p>
+    <p class="text-xs text-gray-500"><%= t("dashboard.stats.life_support_subset", count: @life_support_count) %></p>
+  </div>
+
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+    <p class="text-sm font-medium text-gray-500"><%= t("dashboard.stats.unpaid_trip_spots") %></p>
+    <p class="text-2xl font-bold text-gray-900 mt-1"><%= @unpaid_trip_spots_count %></p>
+  </div>
+
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+    <p class="text-sm font-medium text-gray-500"><%= t("dashboard.stats.unpaid_enrollments") %></p>
+    <p class="text-2xl font-bold text-gray-900 mt-1"><%= @unpaid_enrollments_count %></p>
+  </div>
+</div>

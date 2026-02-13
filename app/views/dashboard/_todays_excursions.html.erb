@@ -1,0 +1,23 @@
+<div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+  <h2 class="text-lg font-medium text-gray-900 mb-4"><%= t("dashboard.today.excursions") %></h2>
+
+  <% if @todays_excursions.any? %>
+    <div class="space-y-3">
+      <% @todays_excursions.each do |excursion| %>
+        <div class="flex items-center justify-between py-2 border-b border-gray-100 last:border-0">
+          <div>
+            <%= link_to excursion.title, excursion, class: "text-sm font-medium text-blue-600 hover:text-blue-800" %>
+            <% if excursion.departure_time.present? %>
+              <p class="text-xs text-gray-500"><%= excursion.departure_time %></p>
+            <% end %>
+          </div>
+          <span class="text-sm text-gray-700">
+            <%= excursion.trip_participants.size %> / <%= excursion.capacity %>
+          </span>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="text-sm text-gray-500"><%= t("dashboard.today.no_excursions") %></p>
+  <% end %>
+</div>

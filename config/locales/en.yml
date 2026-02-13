@@ -1,4 +1,46 @@
 en:
+  dashboard:
+    title: "Dashboard"
+    greeting:
+      morning: "Good morning, %{name}"
+      afternoon: "Good afternoon, %{name}"
+      evening: "Good evening, %{name}"
+      night: "Good evening, %{name}"
+    today:
+      excursions: "Today's Excursions"
+      class_sessions: "Today's Class Sessions"
+      no_excursions: "No excursions scheduled for today."
+      no_class_sessions: "No class sessions scheduled for today."
+    safety_alerts:
+      title: "Needs Attention"
+      equipment_overdue:
+        one: "%{count} life-support item overdue for service"
+        other: "%{count} life-support items overdue for service"
+      medical_pending:
+        one: "%{count} medical record pending review"
+        other: "%{count} medical records pending review"
+      ratings_expiring:
+        one: "%{count} instructor rating expiring within 30 days"
+        other: "%{count} instructor ratings expiring within 30 days"
+      tanks_noncompliant:
+        one: "%{count} customer tank out of compliance"
+        other: "%{count} customer tanks out of compliance"
+    upcoming:
+      excursions: "Upcoming Excursions"
+      offerings: "Upcoming Course Offerings"
+      no_excursions: "No excursions in the next 7 days."
+      no_offerings: "No upcoming course offerings."
+      view_all: "View all"
+    stats:
+      active_customers: "Active Customers"
+      active_enrollments: "Active Enrollments"
+      equipment_fleet: "Equipment Fleet"
+      life_support_subset:
+        one: "%{count} life-support"
+        other: "%{count} life-support"
+      unpaid_trip_spots: "Unpaid Trip Spots"
+      unpaid_enrollments: "Unpaid Enrollments"
+
   api:
     errors:
       unauthorized: "Invalid or missing API token."

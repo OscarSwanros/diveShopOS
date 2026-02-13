@@ -1,0 +1,49 @@
+<div class="bg-white rounded-lg shadow-sm border border-gray-200 border-l-4 border-l-red-600 p-6">
+  <h2 class="text-lg font-medium text-gray-900 mb-4"><%= t("dashboard.safety_alerts.title") %></h2>
+
+  <div class="space-y-3">
+    <% if @equipment_overdue_count > 0 %>
+      <div class="flex items-center justify-between">
+        <%= link_to equipment_items_path, class: "text-sm text-red-700 hover:text-red-900" do %>
+          <%= t("dashboard.safety_alerts.equipment_overdue", count: @equipment_overdue_count) %>
+        <% end %>
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+          <%= @equipment_overdue_count %>
+        </span>
+      </div>
+    <% end %>
+
+    <% if @medical_pending_count > 0 %>
+      <div class="flex items-center justify-between">
+        <%= link_to customers_path, class: "text-sm text-red-700 hover:text-red-900" do %>
+          <%= t("dashboard.safety_alerts.medical_pending", count: @medical_pending_count) %>
+        <% end %>
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+          <%= @medical_pending_count %>
+        </span>
+      </div>
+    <% end %>
+
+    <% if @ratings_expiring_count > 0 %>
+      <div class="flex items-center justify-between">
+        <%= link_to instructor_ratings_path, class: "text-sm text-red-700 hover:text-red-900" do %>
+          <%= t("dashboard.safety_alerts.ratings_expiring", count: @ratings_expiring_count) %>
+        <% end %>
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
+          <%= @ratings_expiring_count %>
+        </span>
+      </div>
+    <% end %>
+
+    <% if @tanks_noncompliant_count > 0 %>
+      <div class="flex items-center justify-between">
+        <%= link_to customers_path, class: "text-sm text-red-700 hover:text-red-900" do %>
+          <%= t("dashboard.safety_alerts.tanks_noncompliant", count: @tanks_noncompliant_count) %>
+        <% end %>
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+          <%= @tanks_noncompliant_count %>
+        </span>
+      </div>
+    <% end %>
+  </div>
+</div>
