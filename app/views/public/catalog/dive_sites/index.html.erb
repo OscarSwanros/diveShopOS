@@ -1,0 +1,36 @@
+<% content_for(:page_title) { I18n.t("public.catalog.dive_sites.index.title") } %>
+
+<div class="space-y-6">
+  <h1 class="text-2xl font-bold text-gray-900"><%= I18n.t("public.catalog.dive_sites.index.title") %></h1>
+
+  <% if @dive_sites.any? %>
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <% @dive_sites.each do |site| %>
+        <%= link_to catalog_dive_site_path(site), class: "block bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow" do %>
+          <div class="p-6 space-y-3">
+            <h2 class="text-lg font-semibold text-gray-900"><%= site.name %></h2>
+
+            <div class="flex items-center space-x-3 text-sm">
+              <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 capitalize">
+                <%= site.difficulty_level %>
+              </span>
+              <% if site.max_depth_meters %>
+                <span class="text-gray-600">
+                  <%= I18n.t("public.catalog.dive_sites.max_depth") %>: <%= site.max_depth_meters %>m
+                </span>
+              <% end %>
+            </div>
+
+            <% if site.location_description.present? %>
+              <p class="text-sm text-gray-500"><%= site.location_description %></p>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-center text-gray-500">
+      <p><%= I18n.t("public.catalog.dive_sites.index.empty") %></p>
+    </div>
+  <% end %>
+</div>

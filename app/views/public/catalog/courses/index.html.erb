@@ -1,0 +1,59 @@
+<% content_for(:page_title) { I18n.t("public.catalog.courses.index.title") } %>
+
+<div class="space-y-6">
+  <h1 class="text-2xl font-bold text-gray-900"><%= I18n.t("public.catalog.courses.index.title") %></h1>
+
+  <% if @courses.any? %>
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <% @courses.each do |course| %>
+        <% next_offering = course.course_offerings.published_upcoming.first %>
+        <%= link_to catalog_course_path(course), class: "block bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow" do %>
+          <div class="p-6 space-y-3">
+            <div class="flex items-start justify-between">
+              <h2 class="text-lg font-semibold text-gray-900"><%= course.name %></h2>
+              <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+                <%= course.agency %>
+              </span>
+            </div>
+
+            <p class="text-sm text-gray-600 line-clamp-2"><%= course.description %></p>
+
+            <div class="space-y-1 text-sm text-gray-600">
+              <p>
+                <span class="font-medium"><%= I18n.t("public.catalog.courses.level") %>:</span>
+                <%= course.level %>
+              </p>
+              <% if course.min_age.to_i > 0 %>
+                <p>
+                  <span class="font-medium"><%= I18n.t("public.catalog.courses.min_age") %>:</span>
+                  <%= I18n.t("public.catalog.courses.years_old", age: course.min_age) %>
+                </p>
+              <% end %>
+              <% if course.duration_days.to_i > 0 %>
+                <p>
+                  <span class="font-medium"><%= I18n.t("public.catalog.courses.duration") %>:</span>
+                  <%= I18n.t("courses.show.duration_days", count: course.duration_days) %>
+                </p>
+              <% end %>
+            </div>
+
+            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+              <span class="text-lg font-bold text-gray-900">$<%= number_with_precision(course.price, precision: 2) %></span>
+              <% if next_offering %>
+                <span class="text-xs text-gray-500">
+                  <%= I18n.t("public.catalog.courses.next_offering") %>: <%= I18n.l(next_offering.start_date, format: :long) %>
+                </span>
+              <% else %>
+                <span class="text-xs text-gray-500"><%= I18n.t("public.catalog.courses.no_upcoming") %></span>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-center text-gray-500">
+      <p><%= I18n.t("public.catalog.courses.index.empty") %></p>
+    </div>
+  <% end %>
+</div>

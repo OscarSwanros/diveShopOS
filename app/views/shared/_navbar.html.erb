@@ -25,6 +25,8 @@
               active: controller_name.in?(%w[instructor_ratings]) %>
         <%= nav_link t("navigation.staff"), users_path,
               active: controller_name.in?(%w[users]) %>
+        <%= nav_link t("navigation.review_queue"), review_queue_path,
+              active: controller_name.in?(%w[review_queue enrollment_reviews join_request_reviews]) %>
       </div>
 
       <%# Right: User info + sign out (desktop) %>
@@ -75,6 +77,9 @@
             mobile: true %>
       <%= nav_link t("navigation.staff"), users_path,
             active: controller_name.in?(%w[users]),
+            mobile: true %>
+      <%= nav_link t("navigation.review_queue"), review_queue_path,
+            active: controller_name.in?(%w[review_queue enrollment_reviews join_request_reviews]),
             mobile: true %>
     </div>
     <div class="border-t border-gray-200 px-4 py-3 flex items-center justify-between">

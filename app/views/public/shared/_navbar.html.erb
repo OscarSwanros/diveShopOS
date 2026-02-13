@@ -1,0 +1,75 @@
+<nav class="fixed top-0 inset-x-0 z-50 bg-white border-b border-gray-200" data-controller="navbar">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-14">
+      <%# Left: Org name %>
+      <div class="flex items-center">
+        <%= link_to current_organization&.name || "DiveShopOS", catalog_excursions_path,
+              class: "text-lg font-semibold text-gray-900 whitespace-nowrap" %>
+      </div>
+
+      <%# Center: Nav links (desktop) %>
+      <div class="hidden md:flex md:items-center md:space-x-1">
+        <%= nav_link I18n.t("public.navigation.excursions"), catalog_excursions_path,
+              active: controller_path == "public/catalog/excursions" %>
+        <%= nav_link I18n.t("public.navigation.courses"), catalog_courses_path,
+              active: controller_path == "public/catalog/courses" %>
+        <%= nav_link I18n.t("public.navigation.dive_sites"), catalog_dive_sites_path,
+              active: controller_path == "public/catalog/dive_sites" %>
+      </div>
+
+      <%# Right: Auth links (desktop) %>
+      <div class="hidden md:flex md:items-center md:space-x-3">
+        <% if customer_signed_in? %>
+          <span class="text-sm text-gray-700"><%= current_customer_account.customer.first_name %></span>
+          <%= link_to I18n.t("public.navigation.my_account"), my_dashboard_path,
+                class: "text-sm font-medium text-blue-600 hover:text-blue-700" %>
+          <%= button_to I18n.t("public.navigation.sign_out"), public_logout_path, method: :delete,
+                class: "text-sm text-gray-500 hover:text-gray-700" %>
+        <% else %>
+          <%= link_to I18n.t("public.navigation.sign_in"), public_login_path,
+                class: "text-sm font-medium text-gray-600 hover:text-gray-900" %>
+          <%= link_to I18n.t("public.navigation.sign_up"), public_signup_path,
+                class: "inline-flex items-center px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700" %>
+        <% end %>
+      </div>
+
+      <%# Mobile hamburger %>
+      <div class="flex items-center md:hidden">
+        <button type="button" data-action="navbar#toggle" aria-label="<%= I18n.t("navigation.menu") %>"
+                class="inline-flex items-center justify-center p-2 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <%# Mobile menu %>
+  <div class="hidden md:hidden border-t border-gray-200" data-navbar-target="mobileMenu">
+    <div class="px-2 pt-2 pb-3 space-y-1">
+      <%= nav_link I18n.t("public.navigation.excursions"), catalog_excursions_path,
+            active: controller_path == "public/catalog/excursions", mobile: true %>
+      <%= nav_link I18n.t("public.navigation.courses"), catalog_courses_path,
+            active: controller_path == "public/catalog/courses", mobile: true %>
+      <%= nav_link I18n.t("public.navigation.dive_sites"), catalog_dive_sites_path,
+            active: controller_path == "public/catalog/dive_sites", mobile: true %>
+    </div>
+    <div class="border-t border-gray-200 px-4 py-3">
+      <% if customer_signed_in? %>
+        <div class="flex items-center justify-between">
+          <span class="text-sm font-medium text-gray-700"><%= current_customer_account.customer.full_name %></span>
+          <%= button_to I18n.t("public.navigation.sign_out"), public_logout_path, method: :delete,
+                class: "text-sm text-gray-500 hover:text-gray-700" %>
+        </div>
+      <% else %>
+        <div class="space-y-2">
+          <%= link_to I18n.t("public.navigation.sign_in"), public_login_path,
+                class: "block text-sm font-medium text-gray-600 hover:text-gray-900" %>
+          <%= link_to I18n.t("public.navigation.sign_up"), public_signup_path,
+                class: "block text-sm font-medium text-blue-600 hover:text-blue-700" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</nav>

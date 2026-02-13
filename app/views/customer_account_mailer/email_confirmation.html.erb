@@ -1,0 +1,10 @@
+<h1><%= I18n.t("customer_account_mailer.email_confirmation.greeting", name: @customer.first_name) %></h1>
+
+<p><%= I18n.t("customer_account_mailer.email_confirmation.body") %></p>
+
+<p>
+  <%= link_to I18n.t("customer_account_mailer.email_confirmation.action"),
+        public_confirm_email_url(token: @customer_account.confirmation_token) %>
+</p>
+
+<p><%= I18n.t("customer_account_mailer.email_confirmation.closing") %></p>

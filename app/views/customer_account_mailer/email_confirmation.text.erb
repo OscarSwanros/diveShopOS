@@ -1,0 +1,7 @@
+<%= I18n.t("customer_account_mailer.email_confirmation.greeting", name: @customer.first_name) %>
+
+<%= I18n.t("customer_account_mailer.email_confirmation.body") %>
+
+<%= public_confirm_email_url(token: @customer_account.confirmation_token) %>
+
+<%= I18n.t("customer_account_mailer.email_confirmation.closing") %>

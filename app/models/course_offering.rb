@@ -20,6 +20,7 @@ class CourseOffering < ApplicationRecord
   scope :upcoming, -> { where("start_date >= ?", Date.current).order(:start_date) }
   scope :past, -> { where("start_date < ?", Date.current).order(start_date: :desc) }
   scope :by_status, ->(status) { where(status: status) }
+  scope :published_upcoming, -> { published.upcoming }
 
   def price
     price_cents&./(100.0)

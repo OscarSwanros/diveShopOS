@@ -119,6 +119,67 @@ Rails.application.routes.draw do
     end
   end
 
+  # Public-facing catalog and customer auth (no staff auth required)
+  scope module: :public do
+    # Catalog
+    scope "/catalog", as: :catalog do
+      scope module: :catalog do
+        resources :excursions, only: [ :index, :show ]
+        resources :courses, only: [ :index, :show ]
+        resources :dive_sites, only: [ :index, :show ], path: "dive-sites"
+      end
+    end
+
+    # Customer authentication
+    get "signup", to: "registrations#new", as: :public_signup
+    post "signup", to: "registrations#create"
+    get "login", to: "sessions#new", as: :public_login
+    post "login", to: "sessions#create"
+    delete "logout", to: "sessions#destroy", as: :public_logout
+    get "confirm-email", to: "confirmations#show", as: :public_confirm_email
+    get "confirmation-pending", to: "confirmations#pending", as: :public_confirmation_pending
+    post "resend-confirmation", to: "confirmations#resend", as: :public_resend_confirmation
+    get "forgot-password", to: "password_resets#new", as: :public_forgot_password
+    post "forgot-password", to: "password_resets#create"
+    get "reset-password", to: "password_resets#edit", as: :public_edit_password_reset
+    patch "reset-password", to: "password_resets#update", as: :public_password_reset
+
+    # Customer enrollment and join requests
+    scope "/catalog/courses/:course_slug/offerings/:offering_slug" do
+      resource :enrollment_request, only: [ :new, :create ]
+    end
+    scope "/catalog/excursions/:excursion_slug" do
+      resource :join_request, only: [ :new, :create ]
+    end
+
+    # Customer dashboard
+    scope "/my", as: :my do
+      resource :dashboard, only: [ :show ], controller: "dashboard"
+      resource :profile, only: [ :show, :edit, :update ], controller: "profile"
+      resources :certifications, only: [ :index, :new, :create ]
+    end
+
+    # Waitlist and cancellations
+    resources :waitlist_entries, only: [ :create, :destroy ]
+    post "cancel-enrollment/:id", to: "cancellations#cancel_enrollment", as: :cancel_enrollment
+    post "cancel-join/:id", to: "cancellations#cancel_join", as: :cancel_join
+  end
+
+  # Staff review queue
+  resource :review_queue, only: [ :show ], controller: "review_queue"
+  resources :enrollment_reviews, only: [] do
+    member do
+      post :approve
+      post :decline
+    end
+  end
+  resources :join_request_reviews, only: [] do
+    member do
+      post :approve
+      post :decline
+    end
+  end
+
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check

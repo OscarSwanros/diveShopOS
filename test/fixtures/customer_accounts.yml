@@ -1,0 +1,23 @@
+jane_account:
+  id: "ca-jane-uuid-0001"
+  slug: "jane-diver"
+  organization_id: "org-reef-divers-uuid-0001"
+  customer_id: "cust-jane-uuid-0001"
+  email: "jane@example.com"
+  password_digest: <%= BCrypt::Password.create("password123") %>
+  confirmed_at: <%= Time.current - 1.day %>
+  last_sign_in_at: <%= Time.current - 1.day %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+bob_account_unconfirmed:
+  id: "ca-bob-uuid-0002"
+  slug: "bob-bubbles"
+  organization_id: "org-reef-divers-uuid-0001"
+  customer_id: "cust-bob-uuid-0002"
+  email: "bob@example.com"
+  password_digest: <%= BCrypt::Password.create("password123") %>
+  confirmation_token: "bob-confirmation-token-abc123"
+  confirmation_sent_at: <%= Time.current %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

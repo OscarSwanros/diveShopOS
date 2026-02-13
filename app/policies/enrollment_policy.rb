@@ -21,6 +21,10 @@ class EnrollmentPolicy < ApplicationPolicy
     true
   end
 
+  def review?
+    user.manager? || user.owner?
+  end
+
   def destroy?
     user.manager? || user.owner?
   end

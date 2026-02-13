@@ -1,0 +1,4 @@
+<p><%= I18n.t("staff_notification_mailer.new_enrollment_request.body",
+  customer: @customer.full_name, course: @course.name) %></p>
+
+<p><%= link_to I18n.t("review_queue.title"), review_queue_url %></p>

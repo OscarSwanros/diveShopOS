@@ -3,6 +3,7 @@
 class Organization < ApplicationRecord
   has_many :users, dependent: :destroy
   has_many :customers, dependent: :destroy
+  has_many :customer_accounts, dependent: :destroy
   has_many :courses, dependent: :destroy
   has_many :course_offerings, dependent: :destroy
   has_many :dive_sites, dependent: :destroy

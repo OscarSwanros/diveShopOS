@@ -31,9 +31,10 @@ class Excursion < ApplicationRecord
   scope :upcoming, -> { where("scheduled_date >= ?", Date.current).order(:scheduled_date) }
   scope :past, -> { where("scheduled_date < ?", Date.current).order(scheduled_date: :desc) }
   scope :by_status, ->(status) { where(status: status) }
+  scope :published_upcoming, -> { published.upcoming }
 
   def spots_remaining
-    capacity - trip_participants.count
+    capacity - trip_participants.confirmed_or_legacy.count
   end
 
   def full?

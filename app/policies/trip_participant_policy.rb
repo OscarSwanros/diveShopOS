@@ -17,6 +17,10 @@ class TripParticipantPolicy < ApplicationPolicy
     true
   end
 
+  def review?
+    user.manager? || user.owner?
+  end
+
   def destroy?
     true
   end

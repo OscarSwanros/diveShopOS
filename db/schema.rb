@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_13_100004) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_13_165134) do
   create_table "api_tokens", id: :string, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "expires_at"
@@ -180,6 +180,29 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_100004) do
     t.index ["organization_id"], name: "index_courses_on_organization_id"
   end
 
+  create_table "customer_accounts", id: :string, force: :cascade do |t|
+    t.datetime "confirmation_sent_at"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "created_at", null: false
+    t.string "customer_id", null: false
+    t.string "email", null: false
+    t.datetime "last_sign_in_at"
+    t.string "last_sign_in_ip"
+    t.string "organization_id", null: false
+    t.string "password_digest", null: false
+    t.datetime "password_reset_sent_at"
+    t.string "password_reset_token"
+    t.string "slug", null: false
+    t.datetime "updated_at", null: false
+    t.index ["confirmation_token"], name: "index_customer_accounts_on_confirmation_token", unique: true
+    t.index ["customer_id"], name: "index_customer_accounts_on_customer_id", unique: true
+    t.index ["organization_id", "email"], name: "index_customer_accounts_on_organization_id_and_email", unique: true
+    t.index ["organization_id", "slug"], name: "index_customer_accounts_on_organization_id_and_slug", unique: true
+    t.index ["organization_id"], name: "index_customer_accounts_on_organization_id"
+    t.index ["password_reset_token"], name: "index_customer_accounts_on_password_reset_token", unique: true
+  end
+
   create_table "customer_tanks", id: :string, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "customer_id", null: false
@@ -247,14 +270,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_100004) do
     t.string "course_offering_id", null: false
     t.datetime "created_at", null: false
     t.string "customer_id", null: false
+    t.datetime "declined_at"
+    t.text "declined_reason"
     t.datetime "enrolled_at"
     t.text "notes"
     t.boolean "paid", default: false, null: false
+    t.datetime "requested_at"
+    t.text "safety_gate_results"
     t.string "slug", default: "", null: false
     t.integer "status", default: 0, null: false
     t.datetime "updated_at", null: false
     t.index ["certification_id"], name: "index_enrollments_on_certification_id"
-    t.index ["course_offering_id", "customer_id"], name: "index_enrollments_on_course_offering_id_and_customer_id", unique: true
+    t.index ["course_offering_id", "customer_id"], name: "index_enrollments_on_course_offering_id_and_customer_id", unique: true, where: "status NOT IN (4, 5, 7)"
     t.index ["course_offering_id", "slug"], name: "index_enrollments_on_offering_and_slug", unique: true
     t.index ["course_offering_id", "status"], name: "index_enrollments_on_course_offering_id_and_status"
     t.index ["course_offering_id"], name: "index_enrollments_on_course_offering_id"
@@ -428,15 +455,23 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_100004) do
     t.string "certification_agency"
     t.string "certification_level"
     t.datetime "created_at", null: false
+    t.string "customer_id"
+    t.datetime "declined_at"
+    t.text "declined_reason"
     t.string "email"
     t.string "excursion_id", null: false
     t.string "name", null: false
     t.text "notes"
     t.boolean "paid", default: false, null: false
     t.string "phone"
+    t.datetime "requested_at"
     t.integer "role", default: 0, null: false
+    t.text "safety_gate_results"
     t.string "slug", default: "", null: false
+    t.integer "status"
     t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_trip_participants_on_customer_id"
+    t.index ["excursion_id", "customer_id"], name: "idx_trip_participants_excursion_customer_unique", unique: true, where: "customer_id IS NOT NULL AND status != 2"
     t.index ["excursion_id", "email"], name: "index_trip_participants_on_excursion_id_and_email"
     t.index ["excursion_id", "slug"], name: "index_trip_participants_on_excursion_and_slug", unique: true
     t.index ["excursion_id"], name: "index_trip_participants_on_excursion_id"
@@ -473,6 +508,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_100004) do
   add_foreign_key "course_offerings", "organizations"
   add_foreign_key "course_offerings", "users", column: "instructor_id"
   add_foreign_key "courses", "organizations"
+  add_foreign_key "customer_accounts", "customers"
+  add_foreign_key "customer_accounts", "organizations"
   add_foreign_key "customer_tanks", "customers"
   add_foreign_key "customer_tanks", "organizations"
   add_foreign_key "customers", "organizations"
@@ -490,6 +527,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_100004) do
   add_foreign_key "session_attendances", "enrollments"
   add_foreign_key "trip_dives", "dive_sites"
   add_foreign_key "trip_dives", "excursions"
+  add_foreign_key "trip_participants", "customers"
   add_foreign_key "trip_participants", "excursions"
   add_foreign_key "users", "organizations"
 end

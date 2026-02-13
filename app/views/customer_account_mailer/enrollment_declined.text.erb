@@ -1,0 +1,7 @@
+<%= I18n.t("customer_account_mailer.enrollment_declined.greeting", name: @customer.first_name) %>
+
+<%= I18n.t("customer_account_mailer.enrollment_declined.body", course: @course.name) %>
+
+<% if @enrollment.declined_reason.present? %>
+<%= I18n.t("customer_account_mailer.enrollment_declined.reason", reason: @enrollment.declined_reason) %>
+<% end %>

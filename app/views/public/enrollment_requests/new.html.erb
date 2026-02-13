@@ -1,0 +1,52 @@
+<div class="max-w-2xl mx-auto">
+  <h1 class="text-2xl font-bold text-gray-900 mb-6"><%= I18n.t("public.enrollment_requests.title") %></h1>
+
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+    <h2 class="text-xl font-semibold text-gray-900"><%= @course.name %></h2>
+    <p class="text-sm text-gray-500 mt-1"><%= @course.agency %> &middot; <%= @course.level %></p>
+
+    <% if @course.description.present? %>
+      <p class="text-gray-700 mt-4"><%= @course.description %></p>
+    <% end %>
+
+    <dl class="mt-4 grid grid-cols-2 gap-4 text-sm">
+      <div>
+        <dt class="font-medium text-gray-500"><%= I18n.t("public.catalog.courses.start_date") %></dt>
+        <dd class="text-gray-900"><%= @offering.start_date.strftime("%B %-d, %Y") %></dd>
+      </div>
+      <div>
+        <dt class="font-medium text-gray-500"><%= I18n.t("public.catalog.courses.instructor") %></dt>
+        <dd class="text-gray-900"><%= @offering.instructor.name.split.first %></dd>
+      </div>
+      <div>
+        <dt class="font-medium text-gray-500"><%= I18n.t("public.catalog.courses.price") %></dt>
+        <dd class="text-gray-900">$<%= number_with_precision(@offering.effective_price, precision: 2) %></dd>
+      </div>
+      <div>
+        <dt class="font-medium text-gray-500"><%= I18n.t("public.catalog.courses.availability") %></dt>
+        <dd class="text-gray-900"><%= I18n.t("public.catalog.courses.spots_remaining", count: @offering.spots_remaining) %></dd>
+      </div>
+    </dl>
+  </div>
+
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <p class="text-gray-700 mb-4">
+      You are requesting enrollment as <strong><%= current_customer_account.customer.full_name %></strong>
+      (<%= current_customer_account.email %>).
+    </p>
+
+    <p class="text-sm text-gray-500 mb-6">
+      Your request will be reviewed by staff. You will receive an email once a decision has been made.
+    </p>
+
+    <%= form_with url: enrollment_request_path(course_slug: @course.slug, offering_slug: @offering.slug), method: :post do |f| %>
+      <div class="flex items-center space-x-4">
+        <%= f.submit I18n.t("public.enrollment_requests.title"),
+          class: "inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+        <%= link_to I18n.t("common.cancel"),
+          catalog_course_path(@course),
+          class: "inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-md border border-gray-300 hover:bg-gray-50" %>
+      </div>
+    <% end %>
+  </div>
+</div>

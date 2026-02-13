@@ -1,0 +1,53 @@
+<div class="max-w-2xl mx-auto">
+  <h1 class="text-2xl font-bold text-gray-900 mb-6"><%= I18n.t("public.join_requests.title") %></h1>
+
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+    <h2 class="text-xl font-semibold text-gray-900"><%= @excursion.title %></h2>
+
+    <% if @excursion.description.present? %>
+      <p class="text-gray-700 mt-4"><%= @excursion.description %></p>
+    <% end %>
+
+    <dl class="mt-4 grid grid-cols-2 gap-4 text-sm">
+      <div>
+        <dt class="font-medium text-gray-500"><%= I18n.t("public.catalog.excursions.date") %></dt>
+        <dd class="text-gray-900"><%= @excursion.scheduled_date.strftime("%B %-d, %Y") %></dd>
+      </div>
+      <% if @excursion.departure_time.present? %>
+        <div>
+          <dt class="font-medium text-gray-500"><%= I18n.t("public.catalog.excursions.departs") %></dt>
+          <dd class="text-gray-900"><%= @excursion.departure_time %></dd>
+        </div>
+      <% end %>
+      <div>
+        <dt class="font-medium text-gray-500"><%= I18n.t("public.catalog.excursions.price") %></dt>
+        <dd class="text-gray-900">$<%= number_with_precision(@excursion.price, precision: 2) %></dd>
+      </div>
+      <div>
+        <dt class="font-medium text-gray-500"><%= I18n.t("public.catalog.excursions.spots_remaining", count: @excursion.spots_remaining) %></dt>
+        <dd class="text-gray-900"><%= @excursion.spots_remaining %></dd>
+      </div>
+    </dl>
+  </div>
+
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <p class="text-gray-700 mb-4">
+      You are requesting to join as <strong><%= current_customer_account.customer.full_name %></strong>
+      (<%= current_customer_account.email %>).
+    </p>
+
+    <p class="text-sm text-gray-500 mb-6">
+      Your request will be reviewed by staff. You will receive an email once a decision has been made.
+    </p>
+
+    <%= form_with url: join_request_path(excursion_slug: @excursion.slug), method: :post do |f| %>
+      <div class="flex items-center space-x-4">
+        <%= f.submit I18n.t("public.join_requests.title"),
+          class: "inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+        <%= link_to I18n.t("common.cancel"),
+          catalog_excursion_path(@excursion),
+          class: "inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-md border border-gray-300 hover:bg-gray-50" %>
+      </div>
+    <% end %>
+  </div>
+</div>

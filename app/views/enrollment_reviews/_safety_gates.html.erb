@@ -1,0 +1,21 @@
+<% if gate_results.present? %>
+  <div class="flex flex-wrap gap-1">
+    <% gate_results.each do |gate_name, result| %>
+      <% passed = result.is_a?(Hash) ? result["passed"] : result %>
+      <% if passed %>
+        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+          <%= gate_name.humanize %> - <%= I18n.t("review_queue.gate_passed") %>
+        </span>
+      <% else %>
+        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+          <%= gate_name.humanize %> - <%= I18n.t("review_queue.gate_failed") %>
+          <% if result.is_a?(Hash) && result["reason"].present? %>
+            (<%= result["reason"] %>)
+          <% end %>
+        </span>
+      <% end %>
+    <% end %>
+  </div>
+<% else %>
+  <span class="text-xs text-gray-400">--</span>
+<% end %>

@@ -1,0 +1,7 @@
+<h1><%= I18n.t("customer_account_mailer.join_request_declined.greeting", name: @customer.first_name) %></h1>
+
+<p><%= I18n.t("customer_account_mailer.join_request_declined.body", excursion: @excursion.title) %></p>
+
+<% if @trip_participant.declined_reason.present? %>
+  <p><%= I18n.t("customer_account_mailer.join_request_declined.reason", reason: @trip_participant.declined_reason) %></p>
+<% end %>

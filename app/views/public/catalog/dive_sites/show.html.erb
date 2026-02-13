@@ -1,0 +1,68 @@
+<% content_for(:page_title) { @dive_site.name } %>
+
+<div class="space-y-6">
+  <div class="flex items-center space-x-2 text-sm text-gray-500">
+    <%= link_to I18n.t("public.catalog.dive_sites.index.title"), catalog_dive_sites_path, class: "hover:text-gray-700" %>
+    <span>/</span>
+    <span class="text-gray-900"><%= @dive_site.name %></span>
+  </div>
+
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 space-y-6">
+    <h1 class="text-2xl font-bold text-gray-900"><%= @dive_site.name %></h1>
+
+    <div class="grid gap-4 sm:grid-cols-3">
+      <div>
+        <p class="text-sm font-medium text-gray-500"><%= I18n.t("public.catalog.dive_sites.difficulty") %></p>
+        <p class="text-gray-900 capitalize"><%= @dive_site.difficulty_level %></p>
+      </div>
+      <% if @dive_site.max_depth_meters %>
+        <div>
+          <p class="text-sm font-medium text-gray-500"><%= I18n.t("public.catalog.dive_sites.max_depth") %></p>
+          <p class="text-gray-900"><%= @dive_site.max_depth_meters %>m</p>
+        </div>
+      <% end %>
+      <% if @dive_site.location_description.present? %>
+        <div>
+          <p class="text-sm font-medium text-gray-500"><%= I18n.t("public.catalog.dive_sites.location") %></p>
+          <p class="text-gray-900"><%= @dive_site.location_description %></p>
+        </div>
+      <% end %>
+    </div>
+
+    <% if @dive_site.description.present? %>
+      <div>
+        <h2 class="text-lg font-semibold text-gray-900 mb-2"><%= I18n.t("public.catalog.dive_sites.description") %></h2>
+        <p class="text-gray-700"><%= simple_format(@dive_site.description) %></p>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @upcoming_excursions.any? %>
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <h2 class="text-lg font-semibold text-gray-900 mb-4"><%= I18n.t("public.catalog.dive_sites.upcoming_excursions") %></h2>
+      <div class="space-y-3">
+        <% @upcoming_excursions.each do |excursion| %>
+          <%= link_to catalog_excursion_path(excursion), class: "block p-4 bg-gray-50 rounded-md hover:bg-gray-100 transition-colors" do %>
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="font-medium text-gray-900"><%= excursion.title %></p>
+                <p class="text-sm text-gray-500"><%= I18n.l(excursion.scheduled_date, format: :long) %></p>
+              </div>
+              <div class="text-right">
+                <% if excursion.price_cents.to_i > 0 %>
+                  <p class="font-bold text-gray-900">$<%= number_with_precision(excursion.price, precision: 2) %></p>
+                <% end %>
+                <% spots = excursion.spots_remaining %>
+                <% if spots > 0 %>
+                  <span class="text-xs text-green-700"><%= I18n.t("public.catalog.excursions.spots_remaining", count: spots) %></span>
+                <% else %>
+                  <span class="text-xs text-red-700"><%= I18n.t("public.catalog.excursions.full") %></span>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

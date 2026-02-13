@@ -11,12 +11,19 @@ class Enrollment < ApplicationRecord
 
   has_many :session_attendances, dependent: :destroy
 
-  enum :status, { pending: 0, confirmed: 1, active: 2, completed: 3, withdrawn: 4, failed: 5 }
+  enum :status, { pending: 0, confirmed: 1, active: 2, completed: 3, withdrawn: 4, failed: 5, requested: 6, declined: 7 }
 
-  validates :customer_id, uniqueness: { scope: :course_offering_id }
+  serialize :safety_gate_results, coder: JSON
+
+  validates :customer_id, uniqueness: { scope: :course_offering_id, conditions: -> { where.not(status: [ :withdrawn, :failed, :declined ]) } }
 
   scope :active_enrollments, -> { where(status: [ :pending, :confirmed, :active ]) }
-  scope :countable, -> { where.not(status: [ :withdrawn, :failed ]) }
+  scope :countable, -> { where.not(status: [ :withdrawn, :failed, :declined, :requested ]) }
+  scope :review_queue, -> { requested.order(created_at: :asc) }
+
+  def decline!(reason:)
+    update!(status: :declined, declined_at: Time.current, declined_reason: reason)
+  end
 
   def complete!(certification: nil)
     update!(

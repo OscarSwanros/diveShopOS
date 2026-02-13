@@ -59,6 +59,7 @@ en:
     dive_sites: "Dive Sites"
     instructor_ratings: "Ratings"
     staff: "Staff"
+    review_queue: "Review Queue"
     sign_out: "Sign Out"
     menu: "Menu"
 
@@ -935,3 +936,242 @@ en:
     scheduling:
       check_instructor_conflict:
         conflict: "%{instructor} has a scheduling conflict on %{date}."
+
+  public:
+    navigation:
+      excursions: "Excursions"
+      courses: "Courses"
+      dive_sites: "Dive Sites"
+      sign_in: "Sign In"
+      sign_up: "Sign Up"
+      sign_out: "Sign Out"
+      my_account: "My Account"
+    sessions:
+      please_sign_in: "Please sign in to continue."
+      signed_in: "Welcome back!"
+      signed_out: "You have been signed out."
+      invalid_credentials: "Invalid email or password."
+      unconfirmed: "Please confirm your email address first."
+      title: "Sign In"
+    registrations:
+      title: "Create Account"
+      created: "Account created! Please check your email to confirm your address."
+      already_registered: "An account with this email already exists."
+      form:
+        first_name: "First Name"
+        last_name: "Last Name"
+        email: "Email"
+        password: "Password"
+        password_confirmation: "Confirm Password"
+        submit: "Create Account"
+        have_account: "Already have an account?"
+    confirmations:
+      confirmed: "Your email has been confirmed. You can now sign in."
+      already_confirmed: "Your email was already confirmed."
+      invalid_token: "Invalid or expired confirmation link."
+      pending:
+        title: "Check Your Email"
+        message: "We sent a confirmation link to %{email}. Please check your inbox."
+        resend: "Resend confirmation email"
+      resent: "Confirmation email has been resent."
+    password_resets:
+      title: "Forgot Password"
+      sent: "If an account exists with that email, we sent password reset instructions."
+      edit_title: "Reset Password"
+      updated: "Your password has been reset. You can now sign in."
+      invalid_token: "Invalid or expired reset link."
+      form:
+        email: "Email"
+        submit: "Send Reset Instructions"
+        new_password: "New Password"
+        new_password_confirmation: "Confirm New Password"
+        reset_submit: "Reset Password"
+    catalog:
+      excursions:
+        index:
+          title: "Upcoming Excursions"
+          empty: "No upcoming excursions at this time. Check back soon!"
+        date: "Date"
+        departs: "Departs"
+        returns: "Returns"
+        schedule: "Schedule"
+        dive_sites: "Dive Sites"
+        price: "Price"
+        description: "Description"
+        dive_plan: "Dive Plan"
+        spots_remaining:
+          one: "%{count} spot left"
+          other: "%{count} spots left"
+        full: "Full"
+        join_trip: "Join This Trip"
+        sign_in_to_join: "Sign in to join this trip."
+      courses:
+        index:
+          title: "Course Catalog"
+          empty: "No courses available at this time. Check back soon!"
+        level: "Level"
+        min_age: "Minimum Age"
+        years_old: "%{age}+"
+        duration: "Duration"
+        course_type: "Type"
+        description: "Description"
+        prerequisites: "Prerequisites"
+        price: "Price"
+        instructor: "Instructor"
+        start_date: "Start Date"
+        availability: "Availability"
+        upcoming_offerings: "Upcoming Offerings"
+        next_offering: "Next"
+        no_upcoming: "No upcoming offerings"
+        spots_remaining:
+          one: "%{count} spot left"
+          other: "%{count} spots left"
+        full: "Full"
+        request_enrollment: "Request Enrollment"
+      dive_sites:
+        index:
+          title: "Dive Sites"
+          empty: "No dive sites listed at this time."
+        difficulty: "Difficulty"
+        max_depth: "Max Depth"
+        location: "Location"
+        description: "Description"
+        upcoming_excursions: "Upcoming Excursions at This Site"
+    dashboard:
+      title: "My Dashboard"
+      enrollments:
+        title: "My Enrollments"
+        empty: "You have no enrollments yet."
+        course: "Course"
+        start_date: "Start Date"
+        status: "Status"
+      excursions:
+        title: "My Excursions"
+        empty: "You haven't joined any excursions yet."
+        date: "Date"
+        status: "Status"
+      certifications:
+        title: "My Certifications"
+        empty: "No certifications on file."
+    profile:
+      title: "My Profile"
+      edit_title: "Edit Profile"
+      updated: "Profile updated."
+      form:
+        first_name: "First Name"
+        last_name: "Last Name"
+        phone: "Phone"
+        date_of_birth: "Date of Birth"
+        emergency_contact_name: "Emergency Contact Name"
+        emergency_contact_phone: "Emergency Contact Phone"
+        submit: "Save Changes"
+    certifications:
+      title: "My Certifications"
+      new_title: "Add Certification"
+      created: "Certification added."
+      form:
+        agency: "Agency"
+        agency_placeholder: "e.g., PADI, SSI, NAUI"
+        level: "Certification Level"
+        level_placeholder: "e.g., Open Water, Advanced"
+        number: "Certification Number"
+        issued_date: "Issued Date"
+        submit: "Add Certification"
+    enrollment_requests:
+      title: "Request Enrollment"
+      created: "Your enrollment request has been submitted. You will be notified once staff reviews it."
+      duplicate: "You already have an active enrollment or pending request for this offering."
+    join_requests:
+      title: "Join This Trip"
+      created: "Your request to join has been submitted. You will be notified once staff reviews it."
+      duplicate: "You already have an active participation or pending request for this excursion."
+      full: "This excursion is currently full."
+    waitlist:
+      joined: "You have been added to the waitlist."
+      already_on_list: "You are already on the waitlist."
+      cancelled: "You have been removed from the waitlist."
+    cancellations:
+      enrollment_cancelled: "Your enrollment has been cancelled."
+      join_cancelled: "Your trip participation has been cancelled."
+
+  review_queue:
+    title: "Review Queue"
+    enrollment_requests: "Enrollment Requests"
+    join_requests: "Join Requests"
+    empty_enrollments: "No pending enrollment requests."
+    empty_joins: "No pending join requests."
+    customer: "Customer"
+    requested: "Requested"
+    safety_gates: "Safety Checks"
+    actions: "Actions"
+    approve: "Approve"
+    decline: "Decline"
+    decline_reason: "Reason for declining"
+    approved: "Request approved."
+    declined: "Request declined."
+    gate_passed: "Passed"
+    gate_failed: "Failed"
+
+  customer_account_mailer:
+    email_confirmation:
+      subject: "Confirm your email - %{organization}"
+      greeting: "Welcome, %{name}!"
+      body: "Please confirm your email address by clicking the link below."
+      action: "Confirm Email"
+      closing: "If you did not create an account, you can ignore this email."
+    password_reset:
+      subject: "Reset your password - %{organization}"
+      greeting: "Hello %{name},"
+      body: "We received a request to reset your password. Click the link below to choose a new one."
+      action: "Reset Password"
+      expiry: "This link will expire in 2 hours."
+      closing: "If you did not request a password reset, you can ignore this email."
+    enrollment_request_submitted:
+      subject: "Enrollment request received - %{course}"
+      greeting: "Hello %{name},"
+      body: "We received your enrollment request for %{course}. Our staff will review it and get back to you."
+    enrollment_approved:
+      subject: "Enrollment approved - %{course}"
+      greeting: "Great news, %{name}!"
+      body: "Your enrollment in %{course} has been approved."
+    enrollment_declined:
+      subject: "Enrollment update - %{course}"
+      greeting: "Hello %{name},"
+      body: "Unfortunately, your enrollment request for %{course} could not be approved."
+      reason: "Reason: %{reason}"
+    join_request_submitted:
+      subject: "Trip request received - %{excursion}"
+      greeting: "Hello %{name},"
+      body: "We received your request to join %{excursion}. Our staff will review it and get back to you."
+    join_request_approved:
+      subject: "Trip request approved - %{excursion}"
+      greeting: "Great news, %{name}!"
+      body: "Your request to join %{excursion} has been approved."
+    join_request_declined:
+      subject: "Trip update - %{excursion}"
+      greeting: "Hello %{name},"
+      body: "Unfortunately, your request to join %{excursion} could not be approved."
+      reason: "Reason: %{reason}"
+    waitlist_joined:
+      subject: "Waitlist confirmation - %{item}"
+      greeting: "Hello %{name},"
+      body: "You have been added to the waitlist for %{item}. We will notify you when a spot opens up."
+      position: "Your position: %{position}"
+    waitlist_spot_available:
+      subject: "A spot opened up - %{item}"
+      greeting: "Good news, %{name}!"
+      body: "A spot has opened up for %{item}. Log in to confirm your spot before it expires."
+
+  staff_notification_mailer:
+    new_enrollment_request:
+      subject: "New enrollment request: %{customer} for %{course}"
+      body: "%{customer} has requested enrollment in %{course}. Please review."
+    new_join_request:
+      subject: "New trip request: %{customer} for %{excursion}"
+      body: "%{customer} has requested to join %{excursion}. Please review."
+    enrollment_cancelled:
+      subject: "Enrollment cancelled: %{customer} from %{course}"
+      body: "%{customer} has cancelled their enrollment in %{course}."
+    join_cancelled:
+      subject: "Trip cancelled: %{customer} from %{excursion}"
+      body: "%{customer} has cancelled their participation in %{excursion}."

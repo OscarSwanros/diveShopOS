@@ -7,6 +7,7 @@ class Customer < ApplicationRecord
 
   slugged_by -> { "#{first_name} #{last_name}" }, scope: :organization_id
 
+  has_one :customer_account, dependent: :destroy
   has_many :certifications, dependent: :destroy
   has_many :enrollments, dependent: :destroy
   has_many :medical_records, dependent: :destroy
