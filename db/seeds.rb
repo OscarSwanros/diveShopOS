@@ -9,7 +9,7 @@ puts "Seeding database..."
 org = Organization.find_or_create_by!(slug: "abucear") do |o|
   o.name = "A Bucear"
   o.subdomain = "localhost"
-  o.custom_domain = "abucear.mx"
+  o.custom_domain = "abucear.test"
   o.locale = "en"
   o.time_zone = "America/Mexico_City"
 end
@@ -1044,3 +1044,659 @@ end
 puts "  Checklist runs: #{org.checklist_runs.count}"
 
 puts "Done! Login with: oscar@abucear.mx / password"
+
+# ===========================================================================
+# TANIWHA DIVE -- Second shop for multi-tenant testing
+# ===========================================================================
+puts "\nSeeding Taniwha Dive..."
+
+taniwha = Organization.find_or_create_by!(slug: "taniwha") do |o|
+  o.name = "Taniwha Dive"
+  o.subdomain = "taniwha"
+  o.custom_domain = "taniwha.test"
+  o.locale = "en"
+  o.time_zone = "Pacific/Auckland"
+end
+puts "  Organization: #{taniwha.name} (#{taniwha.slug})"
+
+# --- Users ---
+tw_owner = User.find_or_create_by!(organization: taniwha, email_address: "aroha@taniwha.co.nz") do |u|
+  u.name = "Aroha Ngata"
+  u.password = "password"
+  u.role = :owner
+end
+puts "  Owner: #{tw_owner.email_address} / password"
+
+tw_manager = User.find_or_create_by!(organization: taniwha, email_address: "wiremu@taniwha.co.nz") do |u|
+  u.name = "Wiremu Henare"
+  u.password = "password"
+  u.role = :manager
+end
+puts "  Manager: #{tw_manager.email_address} / password"
+
+tw_kiri = User.find_or_create_by!(organization: taniwha, email_address: "kiri@taniwha.co.nz") do |u|
+  u.name = "Kiri Tūhoe"
+  u.password = "password"
+  u.role = :staff
+end
+puts "  Staff: #{tw_kiri.email_address} / password"
+
+tw_hemi = User.find_or_create_by!(organization: taniwha, email_address: "hemi@taniwha.co.nz") do |u|
+  u.name = "Hemi Parata"
+  u.password = "password"
+  u.role = :staff
+end
+puts "  Staff: #{tw_hemi.email_address} / password"
+
+# --- Dive Sites ---
+tw_knights = DiveSite.find_or_create_by!(organization: taniwha, name: "Poor Knights Islands") do |s|
+  s.description = "World-class subtropical dive site. Massive archways, soft corals, and schooling fish. Jacques Cousteau's top 10."
+  s.max_depth_meters = 40.0
+  s.difficulty_level = :intermediate
+  s.latitude = -35.4737
+  s.longitude = 174.7310
+  s.location_description = "24 km off Tutukaka coast, 45 min boat ride"
+end
+
+tw_rainbow = DiveSite.find_or_create_by!(organization: taniwha, name: "Rainbow Warrior") do |s|
+  s.description = "Greenpeace ship scuttled in 1987 as an artificial reef. Covered in marine life."
+  s.max_depth_meters = 26.0
+  s.difficulty_level = :advanced
+  s.latitude = -35.1547
+  s.longitude = 174.2678
+  s.location_description = "Matauri Bay, Cavalli Islands"
+end
+
+tw_rikoriko = DiveSite.find_or_create_by!(organization: taniwha, name: "Rikoriko Cave") do |s|
+  s.description = "Largest known sea cave in the world. Stunning light effects and stingray encounters."
+  s.max_depth_meters = 15.0
+  s.difficulty_level = :beginner
+  s.latitude = -35.4750
+  s.longitude = 174.7350
+  s.location_description = "Poor Knights Islands, northern archway"
+end
+
+tw_middle_arch = DiveSite.find_or_create_by!(organization: taniwha, name: "Middle Arch") do |s|
+  s.description = "Spectacular swim-through archway with dense kelp forests and nudibranchs."
+  s.max_depth_meters = 30.0
+  s.difficulty_level = :intermediate
+  s.latitude = -35.4760
+  s.longitude = 174.7295
+  s.location_description = "Poor Knights Islands, between Aorangi and Tawhiti Rahi"
+end
+
+puts "  Dive sites: #{taniwha.dive_sites.count}"
+
+# --- Excursions ---
+tw_tomorrow = Date.current + 1.day
+tw_next_week = Date.current + 7.days
+
+tw_knights_trip = Excursion.find_or_create_by!(organization: taniwha, title: "Poor Knights Discovery", scheduled_date: tw_tomorrow) do |e|
+  e.description = "Two-tank dive exploring the archways and walls of the Poor Knights Islands."
+  e.departure_time = "07:00"
+  e.return_time = "14:00"
+  e.capacity = 16
+  e.price_cents = 28_000
+  e.status = :published
+end
+
+tw_rainbow_trip = Excursion.find_or_create_by!(organization: taniwha, title: "Rainbow Warrior Wreck Dive", scheduled_date: tw_next_week) do |e|
+  e.description = "Advanced wreck dive on the Rainbow Warrior. Two tanks, deep profiles."
+  e.departure_time = "06:30"
+  e.return_time = "15:00"
+  e.capacity = 8
+  e.price_cents = 35_000
+  e.status = :published
+end
+
+tw_night_trip = Excursion.find_or_create_by!(organization: taniwha, title: "Night Dive - Tutukaka", scheduled_date: tw_next_week + 2.days) do |e|
+  e.description = "Shore-entry night dive off the Tutukaka marina. Crayfish, octopus, and bioluminescence."
+  e.departure_time = "19:30"
+  e.return_time = "22:00"
+  e.capacity = 6
+  e.price_cents = 12_000
+  e.status = :draft
+end
+
+puts "  Excursions: #{taniwha.excursions.count}"
+
+# --- Trip Dives ---
+TripDive.find_or_create_by!(excursion: tw_knights_trip, dive_number: 1) do |td|
+  td.dive_site = tw_middle_arch
+  td.planned_max_depth_meters = 25.0
+  td.planned_bottom_time_minutes = 45
+end
+
+TripDive.find_or_create_by!(excursion: tw_knights_trip, dive_number: 2) do |td|
+  td.dive_site = tw_rikoriko
+  td.planned_max_depth_meters = 12.0
+  td.planned_bottom_time_minutes = 55
+  td.notes = "Shallower second dive inside the cave"
+end
+
+TripDive.find_or_create_by!(excursion: tw_rainbow_trip, dive_number: 1) do |td|
+  td.dive_site = tw_rainbow
+  td.planned_max_depth_meters = 24.0
+  td.planned_bottom_time_minutes = 35
+end
+
+TripDive.find_or_create_by!(excursion: tw_rainbow_trip, dive_number: 2) do |td|
+  td.dive_site = tw_rainbow
+  td.planned_max_depth_meters = 16.0
+  td.planned_bottom_time_minutes = 50
+  td.notes = "Shallower second pass along the hull"
+end
+
+puts "  Trip dives: #{taniwha.excursions.sum { |e| e.trip_dives.count }}"
+
+# --- Trip Participants ---
+TripParticipant.find_or_create_by!(excursion: tw_knights_trip, name: "Sam Fletcher", role: :diver) do |tp|
+  tp.email = "sam.fletcher@example.com"
+  tp.phone = "+64-21-555-0101"
+  tp.certification_level = "Open Water"
+  tp.certification_agency = "PADI"
+  tp.paid = true
+end
+
+TripParticipant.find_or_create_by!(excursion: tw_knights_trip, name: "Maia Tūhoe", role: :diver) do |tp|
+  tp.email = "maia@example.com"
+  tp.phone = "+64-21-555-0102"
+  tp.certification_level = "Advanced Open Water"
+  tp.certification_agency = "SSI"
+  tp.paid = true
+end
+
+TripParticipant.find_or_create_by!(excursion: tw_knights_trip, name: "Hemi Parata", role: :divemaster) do |tp|
+  tp.email = "hemi@taniwha.co.nz"
+  tp.certification_level = "Divemaster"
+  tp.certification_agency = "PADI"
+  tp.paid = true
+  tp.notes = "Staff guide"
+end
+
+puts "  Trip participants: #{taniwha.excursions.sum { |e| e.trip_participants.count }}"
+
+# --- Customers ---
+tw_sam = Customer.find_or_create_by!(organization: taniwha, email: "sam.fletcher@example.com") do |c|
+  c.first_name = "Sam"
+  c.last_name = "Fletcher"
+  c.phone = "+64-21-555-0101"
+  c.date_of_birth = "1991-03-12"
+  c.emergency_contact_name = "Beth Fletcher"
+  c.emergency_contact_phone = "+64-21-555-0100"
+end
+
+tw_maia = Customer.find_or_create_by!(organization: taniwha, email: "maia.tuhoe@example.com") do |c|
+  c.first_name = "Maia"
+  c.last_name = "Tūhoe"
+  c.phone = "+64-21-555-0102"
+  c.date_of_birth = "1994-07-28"
+  c.emergency_contact_name = "Rangi Tūhoe"
+  c.emergency_contact_phone = "+64-21-555-0103"
+end
+
+tw_liam = Customer.find_or_create_by!(organization: taniwha, email: "liam.odonnell@example.com") do |c|
+  c.first_name = "Liam"
+  c.last_name = "O'Donnell"
+  c.phone = "+64-22-555-0201"
+  c.date_of_birth = "1987-11-05"
+  c.emergency_contact_name = "Fiona O'Donnell"
+  c.emergency_contact_phone = "+64-22-555-0200"
+  c.notes = "Experienced wreck diver, owns full gear"
+end
+
+tw_anika = Customer.find_or_create_by!(organization: taniwha, email: "anika.kumar@example.com") do |c|
+  c.first_name = "Anika"
+  c.last_name = "Kumar"
+  c.phone = "+64-27-555-0301"
+  c.date_of_birth = "2000-01-20"
+  c.emergency_contact_name = "Priya Kumar"
+  c.emergency_contact_phone = "+64-27-555-0300"
+end
+
+tw_jack = Customer.find_or_create_by!(organization: taniwha, email: "jack.wilson@example.com") do |c|
+  c.first_name = "Jack"
+  c.last_name = "Wilson"
+  c.phone = "+64-21-555-0401"
+  c.date_of_birth = "1979-09-15"
+  c.emergency_contact_name = "Karen Wilson"
+  c.emergency_contact_phone = "+64-21-555-0400"
+  c.notes = "Local regular, dives weekly"
+end
+
+tw_yuna = Customer.find_or_create_by!(organization: taniwha, email: "yuna.park@example.com") do |c|
+  c.first_name = "Yuna"
+  c.last_name = "Park"
+  c.phone = "+64-22-555-0501"
+  c.date_of_birth = "1996-04-03"
+  c.emergency_contact_name = "Jiwon Park"
+  c.emergency_contact_phone = "+64-22-555-0500"
+end
+
+puts "  Customers: #{taniwha.customers.count}"
+
+# --- Medical Records ---
+MedicalRecord.find_or_create_by!(customer: tw_sam, clearance_date: Date.current - 1.month) do |m|
+  m.status = :cleared
+  m.expiration_date = Date.current + 11.months
+  m.physician_name = "Dr. Patel"
+end
+
+MedicalRecord.find_or_create_by!(customer: tw_maia, clearance_date: Date.current - 3.months) do |m|
+  m.status = :cleared
+  m.expiration_date = Date.current + 9.months
+  m.physician_name = "Dr. Harrison"
+end
+
+MedicalRecord.find_or_create_by!(customer: tw_liam, clearance_date: Date.current - 2.months) do |m|
+  m.status = :cleared
+  m.expiration_date = Date.current + 10.months
+  m.physician_name = "Dr. Thompson"
+end
+
+MedicalRecord.find_or_create_by!(customer: tw_anika, clearance_date: Date.current - 5.months) do |m|
+  m.status = :cleared
+  m.expiration_date = Date.current + 7.months
+  m.physician_name = "Dr. Patel"
+end
+
+MedicalRecord.find_or_create_by!(customer: tw_jack, clearance_date: Date.current - 11.months) do |m|
+  m.status = :cleared
+  m.expiration_date = Date.current + 1.month
+  m.physician_name = "Dr. Harrison"
+  m.notes = "Renewal coming up soon"
+end
+
+MedicalRecord.find_or_create_by!(customer: tw_yuna, clearance_date: Date.current - 1.week) do |m|
+  m.status = :pending_review
+  m.expiration_date = Date.current + 1.year
+  m.physician_name = "Dr. Kim"
+  m.notes = "New patient, awaiting records transfer"
+end
+
+puts "  Medical records: #{taniwha.customers.sum { |c| c.medical_records.count }}"
+
+# --- Certifications ---
+Certification.find_or_create_by!(customer: tw_sam, agency: "PADI", certification_level: "Open Water") do |c|
+  c.certification_number = "PD-NZ-10001"
+  c.issued_date = Date.current - 8.months
+end
+
+Certification.find_or_create_by!(customer: tw_maia, agency: "SSI", certification_level: "Advanced Adventurer") do |c|
+  c.certification_number = "SSI-NZ-20001"
+  c.issued_date = Date.current - 1.year
+end
+
+Certification.find_or_create_by!(customer: tw_liam, agency: "PADI", certification_level: "Rescue Diver") do |c|
+  c.certification_number = "PD-NZ-30001"
+  c.issued_date = Date.current - 3.years
+end
+
+Certification.find_or_create_by!(customer: tw_liam, agency: "PADI", certification_level: "Deep Diver") do |c|
+  c.certification_number = "PD-NZ-30002"
+  c.issued_date = Date.current - 2.years
+end
+
+Certification.find_or_create_by!(customer: tw_anika, agency: "SSI", certification_level: "Open Water") do |c|
+  c.issued_date = Date.current - 4.months
+end
+
+Certification.find_or_create_by!(customer: tw_jack, agency: "NAUI", certification_level: "Master Diver") do |c|
+  c.certification_number = "NAUI-NZ-40001"
+  c.issued_date = Date.current - 8.years
+end
+
+Certification.find_or_create_by!(customer: tw_jack, agency: "PADI", certification_level: "Enriched Air Diver") do |c|
+  c.issued_date = Date.current - 5.years
+end
+
+puts "  Certifications: #{taniwha.customers.sum { |c| c.certifications.count }}"
+
+# --- Instructor Ratings ---
+InstructorRating.find_or_create_by!(user: tw_owner, agency: "PADI", rating_level: "Open Water Scuba Instructor") do |r|
+  r.rating_number = "OWSI-NZ-001"
+  r.expiration_date = Date.current + 14.months
+end
+
+InstructorRating.find_or_create_by!(user: tw_owner, agency: "SSI", rating_level: "Instructor") do |r|
+  r.rating_number = "SSI-NZ-002"
+  r.expiration_date = Date.current + 10.months
+end
+
+InstructorRating.find_or_create_by!(user: tw_manager, agency: "PADI", rating_level: "Divemaster") do |r|
+  r.rating_number = "DM-NZ-003"
+  r.expiration_date = Date.current + 8.months
+end
+
+InstructorRating.find_or_create_by!(user: tw_hemi, agency: "PADI", rating_level: "Divemaster") do |r|
+  r.rating_number = "DM-NZ-004"
+  r.expiration_date = Date.current + 11.months
+end
+
+InstructorRating.find_or_create_by!(user: tw_kiri, agency: "NAUI", rating_level: "Instructor") do |r|
+  r.rating_number = "NAUI-NZ-005"
+  r.expiration_date = Date.current + 1.year
+end
+
+puts "  Instructor ratings: #{taniwha.users.sum { |u| u.instructor_ratings.count }}"
+
+# --- Courses ---
+tw_ow = Course.find_or_create_by!(organization: taniwha, name: "PADI Open Water Diver") do |c|
+  c.description = "Learn to dive in the stunning waters of Northland. Four days of theory, pool, and ocean dives."
+  c.agency = "PADI"
+  c.level = "Open Water"
+  c.course_type = :certification
+  c.min_age = 10
+  c.max_students = 6
+  c.duration_days = 4
+  c.price_cents = 69_900
+  c.price_currency = "NZD"
+end
+
+tw_aow = Course.find_or_create_by!(organization: taniwha, name: "PADI Advanced Open Water") do |c|
+  c.description = "Five adventure dives including deep and navigation at the Poor Knights."
+  c.agency = "PADI"
+  c.level = "Advanced Open Water"
+  c.course_type = :certification
+  c.min_age = 12
+  c.max_students = 8
+  c.duration_days = 2
+  c.price_cents = 59_900
+  c.price_currency = "NZD"
+end
+
+tw_nitrox = Course.find_or_create_by!(organization: taniwha, name: "SSI Enriched Air Nitrox") do |c|
+  c.description = "Extend your bottom time with enriched air. Theory plus two optional nitrox dives."
+  c.agency = "SSI"
+  c.level = "Specialty"
+  c.course_type = :specialty
+  c.max_students = 10
+  c.price_cents = 29_900
+  c.price_currency = "NZD"
+end
+
+tw_discover = Course.find_or_create_by!(organization: taniwha, name: "Discover Scuba Diving") do |c|
+  c.description = "Try scuba for the first time in a sheltered bay. No experience needed."
+  c.agency = "PADI"
+  c.level = "Introductory"
+  c.course_type = :non_certification
+  c.max_students = 4
+  c.duration_days = 1
+  c.price_cents = 24_900
+  c.price_currency = "NZD"
+end
+
+puts "  Courses: #{taniwha.courses.count}"
+
+# --- Course Offerings ---
+tw_ow_offering = CourseOffering.find_or_create_by!(
+  course: tw_ow,
+  organization: taniwha,
+  start_date: Date.current + 10.days
+) do |o|
+  o.instructor = tw_owner
+  o.end_date = Date.current + 14.days
+  o.max_students = 6
+  o.status = :published
+end
+
+tw_nitrox_offering = CourseOffering.find_or_create_by!(
+  course: tw_nitrox,
+  organization: taniwha,
+  start_date: Date.current + 5.days
+) do |o|
+  o.instructor = tw_kiri
+  o.end_date = Date.current + 5.days
+  o.max_students = 8
+  o.status = :published
+end
+
+tw_discover_offering = CourseOffering.find_or_create_by!(
+  course: tw_discover,
+  organization: taniwha,
+  start_date: Date.current + 2.days
+) do |o|
+  o.instructor = tw_hemi
+  o.end_date = Date.current + 2.days
+  o.max_students = 4
+  o.status = :published
+  o.notes = "Weekend session"
+end
+
+puts "  Course offerings: #{taniwha.course_offerings.count}"
+
+# --- Class Sessions ---
+ClassSession.find_or_create_by!(course_offering: tw_ow_offering, scheduled_date: Date.current + 10.days, start_time: "09:00") do |s|
+  s.session_type = :classroom
+  s.title = "Module 1: Dive Theory & Planning"
+  s.end_time = "13:00"
+  s.location_description = "Taniwha Dive classroom, Tutukaka Marina"
+end
+
+ClassSession.find_or_create_by!(course_offering: tw_ow_offering, scheduled_date: Date.current + 11.days, start_time: "08:00") do |s|
+  s.session_type = :confined_water
+  s.title = "Confined Water Dives 1 & 2"
+  s.end_time = "12:00"
+  s.location_description = "Tutukaka heated pool"
+end
+
+ClassSession.find_or_create_by!(course_offering: tw_ow_offering, scheduled_date: Date.current + 13.days, start_time: "07:00") do |s|
+  s.session_type = :open_water
+  s.title = "Open Water Dives 1 & 2"
+  s.end_time = "14:00"
+  s.dive_site = tw_rikoriko
+end
+
+ClassSession.find_or_create_by!(course_offering: tw_ow_offering, scheduled_date: Date.current + 14.days, start_time: "07:00") do |s|
+  s.session_type = :open_water
+  s.title = "Open Water Dives 3 & 4"
+  s.end_time = "14:00"
+  s.dive_site = tw_knights
+end
+
+puts "  Class sessions: #{taniwha.course_offerings.sum { |o| o.class_sessions.count }}"
+
+# --- Enrollments ---
+Enrollment.find_or_create_by!(course_offering: tw_ow_offering, customer: tw_sam) do |e|
+  e.status = :confirmed
+  e.enrolled_at = Time.current - 5.days
+  e.paid = true
+end
+
+Enrollment.find_or_create_by!(course_offering: tw_ow_offering, customer: tw_yuna) do |e|
+  e.status = :pending
+  e.enrolled_at = Time.current - 1.day
+  e.paid = false
+  e.notes = "Waiting on medical clearance"
+end
+
+Enrollment.find_or_create_by!(course_offering: tw_nitrox_offering, customer: tw_maia) do |e|
+  e.status = :confirmed
+  e.enrolled_at = Time.current - 3.days
+  e.paid = true
+end
+
+Enrollment.find_or_create_by!(course_offering: tw_nitrox_offering, customer: tw_jack) do |e|
+  e.status = :confirmed
+  e.enrolled_at = Time.current - 2.days
+  e.paid = true
+end
+
+Enrollment.find_or_create_by!(course_offering: tw_discover_offering, customer: tw_anika) do |e|
+  e.status = :confirmed
+  e.enrolled_at = Time.current - 1.day
+  e.paid = true
+end
+
+puts "  Enrollments: #{taniwha.course_offerings.sum { |o| o.enrollments.count }}"
+
+# --- Equipment Items ---
+tw_bcd1 = EquipmentItem.find_or_create_by!(organization: taniwha, serial_number: "TW-BCD-001") do |e|
+  e.category = :bcd
+  e.name = "Cressi Start BCD #1"
+  e.size = "M"
+  e.manufacturer = "Cressi"
+  e.product_model = "Start"
+  e.status = :available
+  e.life_support = true
+  e.purchase_date = Date.current - 8.months
+end
+
+tw_bcd2 = EquipmentItem.find_or_create_by!(organization: taniwha, serial_number: "TW-BCD-002") do |e|
+  e.category = :bcd
+  e.name = "Cressi Start BCD #2"
+  e.size = "L"
+  e.manufacturer = "Cressi"
+  e.product_model = "Start"
+  e.status = :available
+  e.life_support = true
+  e.purchase_date = Date.current - 8.months
+end
+
+tw_reg1 = EquipmentItem.find_or_create_by!(organization: taniwha, serial_number: "TW-REG-001") do |e|
+  e.category = :regulator
+  e.name = "Aqualung Calypso Reg #1"
+  e.manufacturer = "Aqualung"
+  e.product_model = "Calypso"
+  e.status = :available
+  e.life_support = true
+  e.purchase_date = Date.current - 1.year
+end
+
+tw_reg2 = EquipmentItem.find_or_create_by!(organization: taniwha, serial_number: "TW-REG-002") do |e|
+  e.category = :regulator
+  e.name = "Aqualung Calypso Reg #2"
+  e.manufacturer = "Aqualung"
+  e.product_model = "Calypso"
+  e.status = :in_service
+  e.life_support = true
+  e.purchase_date = Date.current - 1.year
+  e.notes = "Sent for annual service"
+end
+
+tw_tank1 = EquipmentItem.find_or_create_by!(organization: taniwha, serial_number: "TW-TANK-001") do |e|
+  e.category = :tank
+  e.name = "AL80 Tank #1"
+  e.size = "AL80"
+  e.manufacturer = "Luxfer"
+  e.status = :available
+  e.life_support = true
+  e.purchase_date = Date.current - 2.years
+end
+
+tw_tank2 = EquipmentItem.find_or_create_by!(organization: taniwha, serial_number: "TW-TANK-002") do |e|
+  e.category = :tank
+  e.name = "AL80 Tank #2"
+  e.size = "AL80"
+  e.manufacturer = "Luxfer"
+  e.status = :available
+  e.life_support = true
+  e.purchase_date = Date.current - 2.years
+end
+
+tw_comp1 = EquipmentItem.find_or_create_by!(organization: taniwha, serial_number: "TW-COMP-001") do |e|
+  e.category = :computer
+  e.name = "Suunto Zoop Novo #1"
+  e.manufacturer = "Suunto"
+  e.product_model = "Zoop Novo"
+  e.status = :available
+  e.life_support = true
+  e.purchase_date = Date.current - 6.months
+end
+
+4.times do |i|
+  EquipmentItem.find_or_create_by!(organization: taniwha, name: "Fins M ##{i + 1}") do |e|
+    e.category = :fins
+    e.size = "M"
+    e.manufacturer = "Mares"
+    e.product_model = "Avanti Quattro"
+    e.status = :available
+    e.life_support = false
+  end
+end
+
+4.times do |i|
+  EquipmentItem.find_or_create_by!(organization: taniwha, name: "Wetsuit 7mm M ##{i + 1}") do |e|
+    e.category = :wetsuit
+    e.size = "M"
+    e.manufacturer = "Aqualung"
+    e.product_model = "AquaFlex 7mm"
+    e.status = :available
+    e.life_support = false
+  end
+end
+
+puts "  Equipment items: #{taniwha.equipment_items.count}"
+
+# --- Service Records ---
+ServiceRecord.find_or_create_by!(equipment_item: tw_bcd1, service_date: Date.current - 2.months) do |s|
+  s.service_type = :annual_service
+  s.next_due_date = Date.current + 10.months
+  s.performed_by = "NZ Dive Service Centre"
+  s.cost_cents = 18_000
+  s.description = "Annual service and inspection"
+end
+
+ServiceRecord.find_or_create_by!(equipment_item: tw_reg1, service_date: Date.current - 4.months) do |s|
+  s.service_type = :annual_service
+  s.next_due_date = Date.current + 8.months
+  s.performed_by = "Aqualung NZ Authorized"
+  s.cost_cents = 22_000
+  s.description = "Full regulator overhaul"
+end
+
+ServiceRecord.find_or_create_by!(equipment_item: tw_tank1, service_date: Date.current - 5.months) do |s|
+  s.service_type = :visual_inspection
+  s.next_due_date = Date.current + 7.months
+  s.performed_by = "Dive NZ Inspector"
+  s.description = "Annual VIP passed"
+end
+
+puts "  Service records: #{taniwha.equipment_items.sum { |e| e.service_records.count }}"
+
+# --- Checklist Templates ---
+tw_pre_dep = ChecklistTemplate.find_or_create_by!(organization: taniwha, title: "Pre-Departure Safety Check") do |t|
+  t.description = "Safety items to verify before any boat departure from Tutukaka Marina."
+  t.category = :safety
+end
+
+tw_post_trip = ChecklistTemplate.find_or_create_by!(organization: taniwha, title: "Post-Trip Gear Wash") do |t|
+  t.description = "Equipment accounting and freshwater rinse after every trip."
+  t.category = :safety
+end
+
+puts "  Checklist templates: #{taniwha.checklist_templates.count}"
+
+# --- Checklist Items ---
+[
+  { title: "O2 kit onboard and pressure checked", position: 0, required: true },
+  { title: "First aid kit stocked", position: 1, required: true },
+  { title: "VHF radio charged and tested", position: 2, required: true },
+  { title: "Dive flag onboard", position: 3, required: true },
+  { title: "Emergency action plan posted", position: 4, required: true },
+  { title: "Headcount matches manifest", position: 5, required: true },
+  { title: "Weather and sea forecast reviewed", position: 6, required: true },
+  { title: "Hot drinks and snacks stocked", position: 7, required: false }
+].each do |attrs|
+  ChecklistItem.find_or_create_by!(checklist_template: tw_pre_dep, title: attrs[:title]) do |i|
+    i.position = attrs[:position]
+    i.required = attrs[:required]
+  end
+end
+
+[
+  { title: "All tanks accounted for", position: 0, required: true },
+  { title: "All rental gear returned and counted", position: 1, required: true },
+  { title: "Freshwater rinse all equipment", position: 2, required: true },
+  { title: "Hang BCDs and wetsuits to dry", position: 3, required: true },
+  { title: "Log any equipment issues", position: 4, required: true }
+].each do |attrs|
+  ChecklistItem.find_or_create_by!(checklist_template: tw_post_trip, title: attrs[:title]) do |i|
+    i.position = attrs[:position]
+    i.required = attrs[:required]
+  end
+end
+
+puts "  Checklist items: #{taniwha.checklist_templates.sum { |t| t.checklist_items.count }}"
+
+puts "Done! Login with: aroha@taniwha.co.nz / password"
