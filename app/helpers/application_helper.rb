@@ -1,4 +1,12 @@
 module ApplicationHelper
+  def page_title
+    title = content_for(:page_title).presence ||
+            I18n.t("#{controller_name}.#{action_name}.title", default: nil) ||
+            controller_name.humanize.titleize
+    org = current_organization&.name
+    org ? "#{title} | #{org}" : title
+  end
+
   def nav_link(label, path, active: false, mobile: false)
     if mobile
       css = active ?
