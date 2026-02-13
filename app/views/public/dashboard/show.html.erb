@@ -1,0 +1,115 @@
+<% content_for(:page_title) { I18n.t("public.dashboard.title") } %>
+
+<div class="space-y-8">
+  <h1 class="text-2xl font-bold text-gray-900"><%= I18n.t("public.dashboard.title") %></h1>
+
+  <%# Enrollments %>
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <h2 class="text-lg font-semibold text-gray-900 mb-4"><%= I18n.t("public.dashboard.enrollments.title") %></h2>
+
+    <% if @enrollments.any? %>
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= I18n.t("public.dashboard.enrollments.course") %></th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= I18n.t("public.dashboard.enrollments.start_date") %></th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= I18n.t("public.dashboard.enrollments.status") %></th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <% @enrollments.each do |enrollment| %>
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  <%= enrollment.course_offering.course.name %>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <%= I18n.l(enrollment.course_offering.start_date, format: :long) %>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <%= render "public/shared/status_badge", status: enrollment.status %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% else %>
+      <p class="text-sm text-gray-500"><%= I18n.t("public.dashboard.enrollments.empty") %></p>
+    <% end %>
+  </div>
+
+  <%# Excursions %>
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <h2 class="text-lg font-semibold text-gray-900 mb-4"><%= I18n.t("public.dashboard.excursions.title") %></h2>
+
+    <% if @trip_participations.any? %>
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= @trip_participations.first.excursion.class.human_attribute_name(:title) %></th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= I18n.t("public.dashboard.excursions.date") %></th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= I18n.t("public.dashboard.excursions.status") %></th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <% @trip_participations.each do |participation| %>
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  <%= participation.excursion.title %>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <%= I18n.l(participation.excursion.scheduled_date, format: :long) %>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <% if participation.status.present? %>
+                    <%= render "public/shared/status_badge", status: participation.status.sub("tp_", "") %>
+                  <% else %>
+                    <%= render "public/shared/status_badge", status: "confirmed" %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% else %>
+      <p class="text-sm text-gray-500"><%= I18n.t("public.dashboard.excursions.empty") %></p>
+    <% end %>
+  </div>
+
+  <%# Certifications %>
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-lg font-semibold text-gray-900"><%= I18n.t("public.dashboard.certifications.title") %></h2>
+      <%= link_to my_certifications_path, class: "text-sm text-blue-600 hover:text-blue-700 font-medium" do %>
+        <%= I18n.t("common.actions") %>
+      <% end %>
+    </div>
+
+    <% if @certifications.any? %>
+      <div class="space-y-3">
+        <% @certifications.each do |cert| %>
+          <div class="flex items-center justify-between p-3 bg-gray-50 rounded-md">
+            <div>
+              <p class="font-medium text-gray-900"><%= cert.certification_level %></p>
+              <p class="text-sm text-gray-500"><%= cert.agency %></p>
+            </div>
+            <% if cert.active? %>
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                <%= I18n.t("certifications.status.active") %>
+              </span>
+            <% else %>
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                <%= I18n.t("certifications.status.expired") %>
+              </span>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-sm text-gray-500"><%= I18n.t("public.dashboard.certifications.empty") %></p>
+    <% end %>
+  </div>
+</div>

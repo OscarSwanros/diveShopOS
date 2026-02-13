@@ -1,0 +1,43 @@
+<% content_for(:page_title) { I18n.t("public.certifications.title") } %>
+
+<div class="max-w-2xl mx-auto space-y-6">
+  <div class="flex items-center justify-between">
+    <h1 class="text-2xl font-bold text-gray-900"><%= I18n.t("public.certifications.title") %></h1>
+    <%= link_to I18n.t("public.certifications.new_title"), new_my_certification_path,
+          class: "inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+  </div>
+
+  <% if @certifications.any? %>
+    <div class="space-y-3">
+      <% @certifications.each do |cert| %>
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+          <div class="flex items-start justify-between">
+            <div>
+              <p class="font-medium text-gray-900"><%= cert.certification_level %></p>
+              <p class="text-sm text-gray-500"><%= cert.agency %></p>
+              <% if cert.certification_number.present? %>
+                <p class="text-sm text-gray-500">#<%= cert.certification_number %></p>
+              <% end %>
+              <% if cert.issued_date.present? %>
+                <p class="text-sm text-gray-500"><%= I18n.t("certifications.show.issued_date") %>: <%= I18n.l(cert.issued_date, format: :long) %></p>
+              <% end %>
+            </div>
+            <% if cert.active? %>
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                <%= I18n.t("certifications.status.active") %>
+              </span>
+            <% else %>
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                <%= I18n.t("certifications.status.expired") %>
+              </span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-center">
+      <p class="text-sm text-gray-500"><%= I18n.t("public.dashboard.certifications.empty") %></p>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,40 @@
+<% content_for(:page_title) { I18n.t("public.certifications.new_title") } %>
+
+<div class="max-w-md mx-auto space-y-6">
+  <h1 class="text-2xl font-bold text-gray-900"><%= I18n.t("public.certifications.new_title") %></h1>
+
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <%= form_with model: @certification, url: my_certifications_path, method: :post, class: "space-y-4" do |f| %>
+      <div>
+        <%= f.label :agency, I18n.t("public.certifications.form.agency"), class: "block text-sm font-medium text-gray-700" %>
+        <%= f.text_field :agency, required: true, placeholder: I18n.t("public.certifications.form.agency_placeholder"),
+              class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm" %>
+      </div>
+
+      <div>
+        <%= f.label :certification_level, I18n.t("public.certifications.form.level"), class: "block text-sm font-medium text-gray-700" %>
+        <%= f.text_field :certification_level, required: true, placeholder: I18n.t("public.certifications.form.level_placeholder"),
+              class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm" %>
+      </div>
+
+      <div>
+        <%= f.label :certification_number, I18n.t("public.certifications.form.number"), class: "block text-sm font-medium text-gray-700" %>
+        <%= f.text_field :certification_number,
+              class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm" %>
+      </div>
+
+      <div>
+        <%= f.label :issued_date, I18n.t("public.certifications.form.issued_date"), class: "block text-sm font-medium text-gray-700" %>
+        <%= f.date_field :issued_date,
+              class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm" %>
+      </div>
+
+      <div class="flex items-center space-x-3 pt-2">
+        <%= f.submit I18n.t("public.certifications.form.submit"),
+              class: "inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+        <%= link_to I18n.t("common.cancel"), my_certifications_path,
+              class: "inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-md border border-gray-300 hover:bg-gray-50" %>
+      </div>
+    <% end %>
+  </div>
+</div>
