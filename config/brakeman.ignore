@@ -9,6 +9,16 @@
       "file": "app/controllers/trip_participants_controller.rb",
       "line": 59,
       "note": "Trip participant role (diver/guide/divemaster/instructor) is a dive role, not an authorization role"
+    },
+    {
+      "warning_type": "Mass Assignment",
+      "warning_code": 105,
+      "fingerprint": "3af913d4a29d5a5a88bed5bfd3f85272e3ae5f6adf8d36c0a99d56779db228e8",
+      "check_name": "PermitAttributes",
+      "message": "Potentially dangerous key allowed for mass assignment",
+      "file": "app/controllers/api/v1/trip_participants_controller.rb",
+      "line": 61,
+      "note": "Trip participant role (diver/guide/divemaster/instructor) is a dive role, not an authorization role"
     }
   ],
   "updated": "2026-02-12",

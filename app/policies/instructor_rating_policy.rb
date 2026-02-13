@@ -5,6 +5,10 @@ class InstructorRatingPolicy < ApplicationPolicy
     true
   end
 
+  def show?
+    true
+  end
+
   def create?
     user.manager? || user.owner?
   end

@@ -54,8 +54,17 @@ app/services/excursions/create_trip.rb
 app/services/excursions/validate_participant_eligibility.rb
 app/jobs/excursions/send_manifest_job.rb
 app/policies/excursion_policy.rb
+app/controllers/api/v1/excursions_controller.rb
+app/controllers/api/v1/trip_dives_controller.rb
+app/controllers/api/v1/trip_participants_controller.rb
+app/views/api/v1/excursions/
+app/views/api/v1/trip_dives/
+app/views/api/v1/trip_participants/
 test/models/excursion_test.rb
 test/services/excursions/validate_participant_eligibility_test.rb
+test/controllers/api/v1/excursions_controller_test.rb
+test/controllers/api/v1/trip_dives_controller_test.rb
+test/controllers/api/v1/trip_participants_controller_test.rb
 ```
 
 ## Adding a New Module

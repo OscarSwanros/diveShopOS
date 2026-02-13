@@ -123,3 +123,18 @@
 **Rationale**: `Rails.cache.fetch` expects the block to yield the value to cache. A `return` bypasses the cache write entirely. This is a subtle bug that causes silent performance degradation — the cache appears to work but never stores anything.
 
 **Consequences**: Use the block's implicit return value. If early exit logic is needed, compute the value in a local variable and let it be the last expression.
+
+---
+
+## ADR-009: API Token Authentication
+
+**Date**: 2026-02-12
+**Status**: Accepted
+
+**Context**: DiveShopOS needs a JSON API for integrations and future mobile apps. The API needs authentication that works without sessions/cookies.
+
+**Decision**: SHA256-hashed bearer tokens stored in an `api_tokens` table. Plain token returned once on creation via email+password exchange. Only the digest is stored. Lookup by computing `Digest::SHA256.hexdigest(bearer_token)`.
+
+**Rationale**: Same pattern as GitHub Personal Access Tokens. Simple, secure, no external dependencies. Token reveals organization via User association, so no tenant header needed. Tokens support expiration and revocation.
+
+**Consequences**: Users must store their tokens securely after creation. Token rotation requires creating a new token and revoking the old one. No refresh token mechanism (simplicity over complexity for target scale).

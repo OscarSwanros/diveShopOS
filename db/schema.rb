@@ -10,7 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_13_000009) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_13_000010) do
+  create_table "api_tokens", id: :string, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "expires_at"
+    t.datetime "last_used_at"
+    t.string "name", null: false
+    t.datetime "revoked_at"
+    t.string "token_digest", null: false
+    t.datetime "updated_at", null: false
+    t.string "user_id", null: false
+    t.index ["token_digest"], name: "index_api_tokens_on_token_digest", unique: true
+    t.index ["user_id"], name: "index_api_tokens_on_user_id"
+  end
+
   create_table "certifications", id: :string, force: :cascade do |t|
     t.string "agency", null: false
     t.string "certification_level", null: false
@@ -261,6 +274,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_000009) do
     t.index ["organization_id"], name: "index_users_on_organization_id"
   end
 
+  add_foreign_key "api_tokens", "users"
   add_foreign_key "certifications", "customers"
   add_foreign_key "certifications", "organizations", column: "issuing_organization_id"
   add_foreign_key "class_sessions", "course_offerings"

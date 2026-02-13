@@ -129,6 +129,18 @@ All safety gates are auditable and override-able by authorized staff with a docu
 - Pundit policies in `app/policies/`
 - One policy per model
 - Scope all queries through policy scopes
+- Policies must include `index?` and `show?` for API endpoints
+
+### API
+- Versioned JSON API under `Api::V1::` namespace
+- Token-based auth via `Authorization: Bearer <token>` header (ADR-009)
+- Every web UI action must have a corresponding API endpoint
+- API controllers inherit from `Api::V1::BaseController` (not `ApplicationController`)
+- Include `ApiPagination` concern for index actions
+- jbuilder templates in `app/views/api/v1/<resource>/`
+- Tests in `test/controllers/api/v1/`
+- Routes exclude `new`/`edit` actions (HTML-only)
+- See @Documentation/Architecture/API_CONVENTIONS.md for full conventions
 
 ## Agent Roster
 
@@ -144,6 +156,7 @@ All safety gates are auditable and override-able by authorized staff with a docu
 ## Key Documentation
 
 - @Documentation/Architecture/ARCHITECTURE_OVERVIEW.md -- System architecture
+- @Documentation/Architecture/API_CONVENTIONS.md -- API authentication, errors, endpoints
 - @Documentation/Architecture/DATABASE_DESIGN.md -- Schema conventions
 - @Documentation/Architecture/RAILS_CONVENTIONS.md -- Project Rails patterns
 - @Documentation/Design/DESIGN_SYSTEM.md -- UI components and accessibility

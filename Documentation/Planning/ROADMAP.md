@@ -38,7 +38,7 @@
 - [ ] Reporting dashboards
 
 ## Phase 4: Scale
-- [ ] API (`Api::V1::`) for integrations
+- [x] API (`Api::V1::`) for integrations -- token auth, all CRUD endpoints, safety gates, pagination (ADR-009)
 - [ ] Multi-currency support
 - [ ] Advanced reporting and analytics
 - [ ] Mobile-optimized workflows

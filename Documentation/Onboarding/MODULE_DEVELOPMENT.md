@@ -63,20 +63,33 @@ end
 - All strings use `I18n.t()`
 - Follow patterns in `Documentation/Design/DESIGN_SYSTEM.md`
 
-### 6. Write Tests
+### 6. Create API Controller + Tests
+
+Every web controller action must have a corresponding API endpoint:
+
+1. Create `app/controllers/api/v1/<resource>_controller.rb` inheriting from `Api::V1::BaseController`
+2. Include `ApiPagination` for index actions
+3. Add jbuilder templates in `app/views/api/v1/<resource>/` (`_resource.json.jbuilder`, `index.json.jbuilder`, `show.json.jbuilder`)
+4. Add routes in `config/routes.rb` under `namespace :api { namespace :v1 { ... } }` (exclude `new`/`edit`)
+5. Add tests in `test/controllers/api/v1/<resource>_controller_test.rb`
+6. Ensure Pundit policies include `index?` and `show?` methods
+
+See `Documentation/Architecture/API_CONVENTIONS.md` for full patterns.
+
+### 7. Write Tests
 
 - Model tests: validations, associations, scopes
 - Service tests: all branches, especially safety gate rejections
-- Controller tests: authorization, happy path, error cases
+- Controller tests: authorization, happy path, error cases (both web and API)
 - System tests: critical user workflows
 
-### 7. Update Documentation
+### 8. Update Documentation
 
 - Add module to `Documentation/Domains/README.md`
 - Update CLAUDE.md domain module registry if needed
 - Add any new safety gates to the safety gates list
 
-### 8. Review Legal Documents
+### 9. Review Legal Documents
 
 When adding a new feature that collects, stores, or processes user data, review and update:
 - `docs/privacy-policy.md` -- ensure all new data types and processing are covered

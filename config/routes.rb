@@ -39,6 +39,47 @@ Rails.application.routes.draw do
     resources :trip_participants, only: [ :new, :create, :edit, :update, :destroy ]
   end
 
+  # API v1
+  namespace :api do
+    namespace :v1 do
+      resource :authentication, only: [ :create ]
+      resources :api_tokens, only: [ :index, :create, :destroy ]
+
+      concern :api_resource do
+        # Excludes new/edit actions (HTML-only)
+      end
+
+      resources :customers, except: [ :new, :edit ] do
+        resources :certifications, except: [ :new, :edit ]
+        resources :medical_records, except: [ :new, :edit ]
+      end
+
+      resources :users, except: [ :new, :edit ]
+
+      resources :instructor_ratings, only: [ :index, :show, :create, :update, :destroy ]
+
+      resources :courses, except: [ :new, :edit ] do
+        resources :course_offerings, except: [ :new, :edit ] do
+          resources :class_sessions, except: [ :new, :edit ] do
+            resource :session_attendances, only: [] do
+              patch :batch_update, on: :collection
+            end
+          end
+          resources :enrollments, except: [ :new, :edit ] do
+            member { post :complete }
+          end
+        end
+      end
+
+      resources :dive_sites, except: [ :new, :edit ]
+
+      resources :excursions, except: [ :new, :edit ] do
+        resources :trip_dives, except: [ :new, :edit ]
+        resources :trip_participants, except: [ :new, :edit ]
+      end
+    end
+  end
+
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check

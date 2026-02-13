@@ -1,4 +1,13 @@
 en:
+  api:
+    errors:
+      unauthorized: "Invalid or missing API token."
+      forbidden: "You are not authorized to perform this action."
+      not_found: "Resource not found."
+      validation_failed: "Validation failed."
+      parameter_missing: "Required parameter missing: %{param}."
+      invalid_credentials: "Invalid email or password."
+
   navigation:
     excursions: "Excursions"
     courses: "Courses"

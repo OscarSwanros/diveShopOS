@@ -1,0 +1,33 @@
+maria_token:
+  id: "api-token-maria-uuid-0001"
+  user_id: "user-maria-uuid-0001"
+  token_digest: <%= Digest::SHA256.hexdigest("test-token-maria-0001") %>
+  name: "Maria's API Token"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+expired_token:
+  id: "api-token-expired-uuid-0002"
+  user_id: "user-maria-uuid-0001"
+  token_digest: <%= Digest::SHA256.hexdigest("test-token-expired-0002") %>
+  name: "Expired Token"
+  expires_at: <%= 1.day.ago %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+revoked_token:
+  id: "api-token-revoked-uuid-0003"
+  user_id: "user-maria-uuid-0001"
+  token_digest: <%= Digest::SHA256.hexdigest("test-token-revoked-0003") %>
+  name: "Revoked Token"
+  revoked_at: <%= 1.day.ago %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+other_org_token:
+  id: "api-token-other-uuid-0004"
+  user_id: "user-other-uuid-0004"
+  token_digest: <%= Digest::SHA256.hexdigest("test-token-other-0004") %>
+  name: "Other Org Token"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

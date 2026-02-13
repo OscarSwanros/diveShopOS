@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class MedicalRecordPolicy < ApplicationPolicy
+  def index?
+    user.manager? || user.owner?
+  end
+
   def show?
     user.manager? || user.owner?
   end

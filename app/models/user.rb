@@ -3,6 +3,7 @@
 class User < ApplicationRecord
   belongs_to :organization
 
+  has_many :api_tokens, dependent: :destroy
   has_many :instructor_ratings, dependent: :destroy
   has_many :taught_offerings, class_name: "CourseOffering", foreign_key: :instructor_id, dependent: :restrict_with_error
 
